@@ -8,8 +8,8 @@
   "use strict";
 
   /* ─── Constantes ─────────────────────────────────────────── */
-  const AVATAR_SVG = `<img src="avatar_chucho/Don%20Chucho.png" alt="Don Chucho" width="36" height="36" style="border-radius:50%;display:block;object-fit:cover;" />`;
-  const AVATAR_BTN = `<img src="avatar_chucho/Don%20Chucho.png" alt="Don Chucho" width="44" height="44" style="border-radius:50%;display:block;object-fit:cover;" />`;
+  const AVATAR_SVG = `<img src="avatar_chucho/don-chucho-bust.png" alt="Don Chucho" width="40" height="40" style="border-radius:50%;display:block;object-fit:cover;object-position:center top;" />`;
+  const AVATAR_BTN = `<img src="avatar_chucho/don-chucho-bust.png" alt="Don Chucho" width="52" height="52" style="border-radius:50%;display:block;object-fit:cover;object-position:center top;" />`;
 
   const SALUDOS = [
     "¡Buenas, parce! Soy Don Chucho, su arriero digital. ¿Qué quiere conocer de Armenia?",
@@ -233,9 +233,19 @@
     const btn = document.createElement("button");
     btn.type = "button";
     btn.className = "cafeto-btn";
-    btn.setAttribute("aria-label", "Abrir asistente Don Chucho");
+    btn.setAttribute("aria-label", "Abrir asistente Don Chucho — Guía turístico de Armenia");
     btn.setAttribute("aria-expanded", "false");
-    btn.innerHTML = `${AVATAR_BTN}<span class="cafeto-btn-badge" aria-hidden="true"></span>`;
+    btn.innerHTML = `
+      <div class="cafeto-btn-figure" aria-hidden="true">
+        <img src="avatar_chucho/don-chucho-bust.png" alt="" />
+      </div>
+      <div class="cafeto-btn-card">
+        <span class="cafeto-btn-name">Don Chucho</span>
+        <span class="cafeto-btn-role">☕ Guía turístico · Armenia</span>
+        <span class="cafeto-btn-cta">¡Pregúntame algo!</span>
+        <span class="cafeto-btn-badge" aria-hidden="true"></span>
+      </div>
+    `;
 
     // Ventana
     const win = document.createElement("div");
@@ -249,7 +259,8 @@
         <div class="cafeto-header-avatar" aria-hidden="true">${AVATAR_SVG}</div>
         <div class="cafeto-header-info">
           <p class="cafeto-header-name">Don Chucho</p>
-          <p class="cafeto-header-status">Arriero quindiano · En línea</p>
+          <p class="cafeto-header-role">Arriero quindiano · Guía turístico</p>
+          <p class="cafeto-header-status">En línea · Armenia 2026</p>
         </div>
         <button type="button" class="cafeto-close-btn" aria-label="Cerrar asistente">✕</button>
       </div>

@@ -1,63 +1,128 @@
 /* ============================================
-   CAFETO — Asistente turístico de Armenia 2026
+   DON CHUCHO — Asistente turístico Armenia 2026
    ============================================ */
 
-/* Botón flotante */
+/* ── Tarjeta flotante del botón ─────────────────────────── */
 .cafeto-btn {
   position: fixed;
   bottom: 1.5rem;
   right: 1.5rem;
   z-index: 9000;
-  width: 64px;
-  height: 64px;
-  border-radius: 50%;
+  display: flex;
+  align-items: flex-end;
+  gap: 0;
+  background: none;
   border: none;
   cursor: pointer;
-  background: linear-gradient(135deg, #198754 0%, #0f5132 100%);
-  box-shadow: 0 6px 24px rgba(15, 81, 50, 0.5);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: transform 0.2s, box-shadow 0.2s;
   padding: 0;
+  filter: drop-shadow(0 8px 24px rgba(15, 81, 50, 0.45));
+  transition: filter 0.2s, transform 0.2s;
 }
 
 .cafeto-btn:hover {
-  transform: scale(1.1) translateY(-2px);
-  box-shadow: 0 10px 32px rgba(15, 81, 50, 0.6);
+  transform: translateY(-4px);
+  filter: drop-shadow(0 14px 32px rgba(15, 81, 50, 0.55));
 }
 
-.cafeto-btn-avatar {
-  font-size: 2rem;
-  line-height: 1;
-  user-select: none;
+/* Imagen del personaje — sobresale por encima de la tarjeta */
+.cafeto-btn-figure {
+  position: relative;
+  z-index: 2;
+  width: 80px;
+  flex-shrink: 0;
+  margin-bottom: -4px; /* se asienta sobre la tarjeta */
+  margin-right: -10px; /* se superpone levemente */
 }
 
+.cafeto-btn-figure img {
+  width: 80px;
+  height: auto;
+  display: block;
+  object-fit: contain;
+  object-position: center top;
+  /* sombra suave bajo el personaje */
+  filter: drop-shadow(0 4px 8px rgba(0,0,0,0.25));
+}
+
+/* Tarjeta de texto */
+.cafeto-btn-card {
+  background: linear-gradient(135deg, #198754 0%, #0f5132 100%);
+  border-radius: 16px 16px 16px 4px;
+  padding: 0.6rem 1rem 0.6rem 1.2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.15rem;
+  min-width: 148px;
+  position: relative;
+}
+
+/* Borde dorado */
+.cafeto-btn-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  border: 2px solid #f1c40f;
+  pointer-events: none;
+}
+
+.cafeto-btn-name {
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: #f1c40f;
+  line-height: 1.1;
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+}
+
+.cafeto-btn-role {
+  font-size: 0.7rem;
+  color: rgba(255,255,255,0.92);
+  line-height: 1.2;
+  white-space: nowrap;
+}
+
+.cafeto-btn-cta {
+  margin-top: 0.25rem;
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: #fff;
+  background: rgba(241, 196, 15, 0.22);
+  border: 1px solid rgba(241, 196, 15, 0.55);
+  border-radius: 999px;
+  padding: 0.18rem 0.6rem;
+  white-space: nowrap;
+  letter-spacing: 0.02em;
+}
+
+/* Badge de notificación */
 .cafeto-btn-badge {
   position: absolute;
-  top: 2px;
-  right: 2px;
-  width: 18px;
-  height: 18px;
+  top: -4px;
+  right: -4px;
+  width: 16px;
+  height: 16px;
   background: #f1c40f;
   border-radius: 50%;
   border: 2px solid #fff;
   animation: cafeto-pulse 2s infinite;
+  z-index: 3;
 }
 
 @keyframes cafeto-pulse {
   0%, 100% { transform: scale(1); opacity: 1; }
-  50% { transform: scale(1.2); opacity: 0.8; }
+  50%       { transform: scale(1.3); opacity: 0.75; }
 }
 
-/* Ventana del chat */
+/* ── Ventana del chat ────────────────────────────────────── */
 .cafeto-window {
   position: fixed;
-  bottom: 5.5rem;
+  bottom: 6rem;
   right: 1.5rem;
   z-index: 9001;
-  width: min(360px, calc(100vw - 2rem));
-  height: min(520px, calc(100vh - 8rem));
+  width: min(370px, calc(100vw - 2rem));
+  height: min(530px, calc(100vh - 8rem));
   display: flex;
   flex-direction: column;
   background: #fff;
@@ -82,28 +147,36 @@
   to   { transform: scale(1);   opacity: 1; }
 }
 
-/* Header del chat */
+/* ── Header del chat ─────────────────────────────────────── */
 .cafeto-header {
   flex-shrink: 0;
   display: flex;
   align-items: center;
   gap: 0.75rem;
-  padding: 0.85rem 1rem;
+  padding: 0.75rem 1rem;
   background: linear-gradient(135deg, #198754 0%, #0f5132 100%);
   color: #fff;
+  border-bottom: 2px solid #f1c40f;
 }
 
 .cafeto-header-avatar {
-  font-size: 2rem;
-  line-height: 1;
-  background: rgba(255,255,255,0.15);
+  flex-shrink: 0;
+  width: 52px;
+  height: 52px;
   border-radius: 50%;
-  width: 44px;
-  height: 44px;
+  overflow: hidden;
+  border: 2px solid #f1c40f;
+  background: rgba(255,255,255,0.1);
   display: flex;
   align-items: center;
   justify-content: center;
-  flex-shrink: 0;
+}
+
+.cafeto-header-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
 }
 
 .cafeto-header-info {
@@ -113,28 +186,38 @@
 
 .cafeto-header-name {
   font-size: 1rem;
-  font-weight: 700;
+  font-weight: 800;
   margin: 0;
   line-height: 1.2;
+  color: #f1c40f;
+}
+
+.cafeto-header-role {
+  font-size: 0.7rem;
+  color: rgba(255,255,255,0.85);
+  margin: 0;
+  line-height: 1.3;
 }
 
 .cafeto-header-status {
-  font-size: 0.72rem;
+  font-size: 0.68rem;
   opacity: 0.85;
-  margin: 0;
+  margin: 0.1rem 0 0;
   display: flex;
   align-items: center;
   gap: 0.3rem;
+  color: #fff;
 }
 
 .cafeto-header-status::before {
   content: "";
   width: 7px;
   height: 7px;
-  background: #4caf50;
+  background: #69f0ae;
   border-radius: 50%;
   display: inline-block;
-  box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.4);
+  box-shadow: 0 0 0 2px rgba(105, 240, 174, 0.35);
+  flex-shrink: 0;
 }
 
 .cafeto-close-btn {
@@ -157,7 +240,7 @@
   background: rgba(255,255,255,0.3);
 }
 
-/* Mensajes */
+/* ── Mensajes ────────────────────────────────────────────── */
 .cafeto-messages {
   flex: 1;
   min-height: 0;
@@ -183,20 +266,25 @@
   to   { opacity: 1; transform: translateY(0); }
 }
 
-.cafeto-msg--bot {
-  align-self: flex-start;
-}
-
-.cafeto-msg--user {
-  align-self: flex-end;
-  flex-direction: row-reverse;
-}
+.cafeto-msg--bot  { align-self: flex-start; }
+.cafeto-msg--user { align-self: flex-end; flex-direction: row-reverse; }
 
 .cafeto-msg-avatar {
-  font-size: 1.3rem;
-  line-height: 1;
   flex-shrink: 0;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 1.5px solid #c8e6c9;
+  background: #e8f5e9;
   margin-top: 2px;
+}
+
+.cafeto-msg-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
 }
 
 .cafeto-msg-bubble {
@@ -221,12 +309,12 @@
   border-bottom-right-radius: 4px;
 }
 
-/* Chips de sugerencias */
+/* ── Chips de sugerencias ────────────────────────────────── */
 .cafeto-chips {
   display: flex;
   flex-wrap: wrap;
   gap: 0.4rem;
-  margin-top: 0.4rem;
+  margin-top: 0.5rem;
 }
 
 .cafeto-chip {
@@ -248,7 +336,7 @@
   transform: translateY(-1px);
 }
 
-/* Enlace de lugar en el mapa */
+/* ── Enlace POI ──────────────────────────────────────────── */
 .cafeto-poi-link {
   display: inline-flex;
   align-items: center;
@@ -264,11 +352,9 @@
   padding: 0;
 }
 
-.cafeto-poi-link:hover {
-  color: #0f5132;
-}
+.cafeto-poi-link:hover { color: #0f5132; }
 
-/* Typing indicator */
+/* ── Typing indicator ────────────────────────────────────── */
 .cafeto-typing {
   display: flex;
   gap: 4px;
@@ -289,10 +375,10 @@
 
 @keyframes cafeto-typing {
   0%, 60%, 100% { transform: translateY(0); opacity: 0.4; }
-  30% { transform: translateY(-6px); opacity: 1; }
+  30%            { transform: translateY(-6px); opacity: 1; }
 }
 
-/* Input */
+/* ── Input ───────────────────────────────────────────────── */
 .cafeto-input-area {
   flex-shrink: 0;
   display: flex;
@@ -340,24 +426,26 @@
   box-shadow: 0 5px 14px rgba(15, 81, 50, 0.45);
 }
 
-.cafeto-send-btn svg {
-  width: 18px;
-  height: 18px;
-}
+.cafeto-send-btn svg { width: 18px; height: 18px; }
 
-/* Mobile */
+/* ── Mobile ──────────────────────────────────────────────── */
 @media (max-width: 480px) {
   .cafeto-window {
     bottom: 0;
     right: 0;
     width: 100vw;
-    height: 75vh;
+    height: 78vh;
     border-radius: 20px 20px 0 0;
     border-bottom: none;
   }
 
   .cafeto-btn {
     bottom: 1rem;
-    right: 1rem;
+    right: 0.75rem;
   }
+
+  .cafeto-btn-figure { width: 68px; }
+  .cafeto-btn-figure img { width: 68px; }
+  .cafeto-btn-card { min-width: 130px; padding: 0.5rem 0.85rem 0.5rem 1rem; }
+  .cafeto-btn-name { font-size: 0.88rem; }
 }
