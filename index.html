@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Mapa turístico, comercial y gastronómico de Armenia, Quindío — Colombia 2026" />
+  <title>Mapa Armenia 2026 · Quindío</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="" />
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-brand">
+      <img src="logo_armenia.jpg" alt="Mapa turístico, comercial y gastronómico de Armenia 2026" class="logo-main" />
+      <div class="header-meta">
+        <p class="tagline">Explora Armenia · Ciudad Milagro</p>
+        <p class="edition">Edición digital 2026 · Quindío, Colombia</p>
+      </div>
+    </div>
+    <div class="header-actions">
+      <img src="logo_anatolia.jpg" alt="Anatolia" class="logo-partner" />
+      <button type="button" id="btn-locate" class="btn btn-secondary" title="Centrar en mi ubicación">
+        Mi ubicación
+      </button>
+    </div>
+  </header>
+
+  <div class="app-layout">
+    <aside class="sidebar" aria-label="Filtros y lugares">
+      <section class="filters">
+        <h2>Categorías</h2>
+        <div class="filter-group" role="group" aria-label="Filtrar por categoría">
+          <label class="filter-chip filter-all">
+            <input type="checkbox" name="cat" value="all" checked />
+            <span>Todos</span>
+          </label>
+          <label class="filter-chip filter-turistico">
+            <input type="checkbox" name="cat" value="turistico" checked />
+            <span>Turístico</span>
+          </label>
+          <label class="filter-chip filter-comercial">
+            <input type="checkbox" name="cat" value="comercial" checked />
+            <span>Comercial</span>
+          </label>
+          <label class="filter-chip filter-gastronomico">
+            <input type="checkbox" name="cat" value="gastronomico" checked />
+            <span>Gastronómico</span>
+          </label>
+        </div>
+      </section>
+
+      <section class="search-box">
+        <label for="search-poi">Buscar lugar</label>
+        <input type="search" id="search-poi" placeholder="Plaza de Bolívar, café, museo…" autocomplete="off" />
+      </section>
+
+      <section class="poi-list">
+        <h2>Lugares <span id="poi-count" class="badge">0</span></h2>
+        <ul id="poi-list" class="poi-items"></ul>
+      </section>
+
+      <section class="legend">
+        <h2>Leyenda</h2>
+        <ul class="legend-items">
+          <li><span class="dot dot-turistico"></span> Turístico</li>
+          <li><span class="dot dot-comercial"></span> Comercial</li>
+          <li><span class="dot dot-gastronomico"></span> Gastronómico</li>
+        </ul>
+        <p class="legend-note">Haz clic en un lugar para ver detalles y centrar el mapa.</p>
+      </section>
+    </aside>
+
+    <main class="map-panel">
+      <div id="map" role="application" aria-label="Mapa interactivo de Armenia"></div>
+      <div id="map-status" class="map-status" aria-live="polite"></div>
+    </main>
+  </div>
+
+  <footer class="site-footer">
+    <p>Mapa turístico, comercial y gastronómico · Armenia, Quindío · 2026</p>
+    <p class="footer-credit">Diseño digital · <strong>Anatolia</strong></p>
+  </footer>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
+  <script src="js/map.js" type="module"></script>
+</body>
+</html>

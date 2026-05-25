@@ -1,0 +1,120 @@
+{
+  "meta": {
+    "city": "Armenia",
+    "department": "Quindío",
+    "country": "Colombia",
+    "year": 2026,
+    "center": [4.5339, -75.6811],
+    "defaultZoom": 14
+  },
+  "pois": [
+    {
+      "id": "plaza-bolivar",
+      "name": "Plaza de Bolívar",
+      "category": "turistico",
+      "lat": 4.5358,
+      "lng": -75.6725,
+      "address": "Carreras 13–14, calles 20–21",
+      "description": "Corazón histórico de la ciudad: Catedral de la Inmaculada Concepción, Gobernación del Quindío y monumento al Libertador."
+    },
+    {
+      "id": "parque-sucre",
+      "name": "Parque Sucre",
+      "category": "turistico",
+      "lat": 4.5342,
+      "lng": -75.6748,
+      "address": "Centro",
+      "description": "Eje peatonal conectado con la Plaza de Bolívar. Centro comercial de cielos abiertos, mecatos y gastronomía típica."
+    },
+    {
+      "id": "parque-vida",
+      "name": "Parque de la Vida",
+      "category": "turistico",
+      "lat": 4.5486,
+      "lng": -75.6672,
+      "address": "Zona norte",
+      "description": "Pulmón verde con senderos, cascadas, lago, concha acústica y espacios culturales al aire libre."
+    },
+    {
+      "id": "parque-fundadores",
+      "name": "Parque Los Fundadores",
+      "category": "turistico",
+      "lat": 4.5371,
+      "lng": -75.6789,
+      "address": "Carreras 73–74, calles 4–7 norte",
+      "description": "Diseño en forma de mapa de la ciudad (1963), acequia, jardines y monumento al tronco y el hacha."
+    },
+    {
+      "id": "museo-oro",
+      "name": "Museo del Oro Quimbaya",
+      "category": "turistico",
+      "lat": 4.5406,
+      "lng": -75.6752,
+      "address": "Carrera 5 #15-80",
+      "description": "Colección de orfebrería y cultura precolombina quimbaya. Referente cultural del departamento."
+    },
+    {
+      "id": "puente-occidente",
+      "name": "Puente de Occidente (acceso)",
+      "category": "turistico",
+      "lat": 4.5128,
+      "lng": -75.7421,
+      "address": "Vía hacia Calarcá",
+      "description": "Patrimonio histórico sobre el río Cauca. Punto de partida para paisajes cafeteros hacia el occidente."
+    },
+    {
+      "id": "portal-quindio",
+      "name": "Portal del Quindío",
+      "category": "comercial",
+      "lat": 4.5412,
+      "lng": -75.6658,
+      "address": "Zona norte",
+      "description": "Centro comercial con locales, plazoleta de comidas, casino y parque infantil."
+    },
+    {
+      "id": "unicentro",
+      "name": "Unicentro Armenia",
+      "category": "comercial",
+      "lat": 4.5451,
+      "lng": -75.6694,
+      "address": "Av. Bolívar",
+      "description": "Gran centro comercial de la ciudad con marcas nacionales e internacionales."
+    },
+    {
+      "id": "carrera-14",
+      "name": "Carrera 14 · Zona comercial",
+      "category": "comercial",
+      "lat": 4.5328,
+      "lng": -75.6761,
+      "address": "Carrera 14",
+      "description": "Corredor comercial del centro con tiendas, servicios y oferta local."
+    },
+    {
+      "id": "sol-cafe",
+      "name": "Sol de Café",
+      "category": "gastronomico",
+      "lat": 4.5315,
+      "lng": -75.6778,
+      "address": "Carrera 14 con calle 25",
+      "description": "Espacio emblemático de la cultura cafetera quindiana."
+    },
+    {
+      "id": "zona-gastronomica-norte",
+      "name": "Zona gastronómica norte",
+      "category": "gastronomico",
+      "lat": 4.5468,
+      "lng": -75.6645,
+      "address": "Av. Centenario / Bolívar",
+      "description": "Restaurantes, cafés y cocina regional cerca de los principales centros comerciales."
+    },
+    {
+      "id": "centro-gastronomico",
+      "name": "Centro · Cafés y restaurantes",
+      "category": "gastronomico",
+      "lat": 4.5348,
+      "lng": -75.6735,
+      "address": "Parque Sucre – Plaza de Bolívar",
+      "description": "Tradicional oferta de café quindiano, arepas, empanadas y cocina de autor en el centro histórico."
+    }
+  ]
+}
