@@ -29,9 +29,8 @@ python -m http.server 8080
 
 ## Compartir (QR)
 
-1. Edita `data/site.json` → `shareUrl` (por defecto GitHub Pages).
-2. Activa **Pages** en el repo: Settings → Pages → origen **GitHub Actions**.
-3. Tras el deploy, el QR en `compartir.html` apunta a la URL pública.
+1. Edita `data/site.json` → `shareUrl` (producción: `https://mapa-armenia-2026.vercel.app/`).
+2. El QR en `compartir.html` y `assets/qr-mapa-armenia-2026.png` usan esa URL.
 
 Generar PNG del QR:
 

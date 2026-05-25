@@ -15,7 +15,7 @@ OUT.mkdir(exist_ok=True)
 
 def main() -> None:
     data = json.loads(SITE.read_text(encoding="utf-8"))
-    url = data.get("shareUrl", "https://dphack1987.github.io/mapa_armenia_2026/")
+    url = data.get("shareUrl", "https://mapa-armenia-2026.vercel.app/")
     dest = OUT / "qr-mapa-armenia-2026.png"
 
     qr = qrcode.QRCode(version=None, box_size=12, border=2)
