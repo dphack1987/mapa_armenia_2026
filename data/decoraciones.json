@@ -7,31 +7,44 @@
     {
       "id": "body",
       "archivo": "decoraciones/2151973988.jpg",
-      "opacidad": 0.18
+      "opacidad": 0.12
     },
     {
       "id": "header",
       "archivo": "decoraciones/56855.jpg",
-      "opacidad": 0.32
+      "opacidad": 0.25
     },
     {
       "id": "sidebar",
-      "archivo": "decoraciones/10623587_4478904.jpg",
-      "opacidad": 0.22
+      "archivo": "decoraciones/9081966_4092826.jpg",
+      "opacidad": 0.18
     },
     {
       "id": "mapa",
       "archivo": "decoraciones/8940221_4042181.jpg",
-      "opacidad": 0.08
+      "opacidad": 0.05
     }
   ],
-  "acentos": [],
+  "acentos": [
+    {
+      "id": "acento1",
+      "archivo": "decoraciones/2149015443.jpg",
+      "zona": "header",
+      "tamano": "80px"
+    },
+    {
+      "id": "acento2",
+      "archivo": "decoraciones/10623587_4478904.jpg",
+      "zona": "sidebar",
+      "tamano": "60px"
+    }
+  ],
   "compartir": {
     "fondo": "decoraciones/2149015443.jpg",
-    "opacidad": 0.28
+    "opacidad": 0.22
   },
   "ficha": {
-    "fondo": "decoraciones/8940221_4042181.jpg",
-    "opacidad": 0.12
+    "fondo": "decoraciones/56855.jpg",
+    "opacidad": 0.08
   }
 }
