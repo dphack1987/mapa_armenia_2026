@@ -1,15 +1,20 @@
 /**
  * Don Chucho — Asistente turístico de Armenia 2026
  * Arriero quindiano con sombrero aguadeño
- * Chatbot local sin API externa: responde con datos de pois.json y pautas.json
+ * Respuestas locales para POIs/pautas + Gemini 1.5 Flash para todo lo demás
  */
 
 (function () {
   "use strict";
 
-  /* ─── Constantes ─────────────────────────────────────────── */
+  /* ─── Config Gemini ──────────────────────────────────────── */
+  const GEMINI_KEY = "AIzaSyCiuzmYhLX4QxrMK3pm3go9e8ve8GZE4DY";
+  const GEMINI_URL =
+    "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=" +
+    GEMINI_KEY;
+
+  /* ─── Constantes UI ──────────────────────────────────────── */
   const AVATAR_SVG = `<img src="avatar_chucho/don-chucho-bust.png" alt="Don Chucho" width="40" height="40" style="border-radius:50%;display:block;object-fit:cover;object-position:center top;" />`;
-  const AVATAR_BTN = `<img src="avatar_chucho/don-chucho-bust.png" alt="Don Chucho" width="52" height="52" style="border-radius:50%;display:block;object-fit:cover;object-position:center top;" />`;
 
   const SALUDOS = [
     "¡Buenas, parce! Soy Don Chucho, su arriero digital. ¿Qué quiere conocer de Armenia?",
@@ -25,129 +30,149 @@
     "¿Cómo llegar?",
   ];
 
-  /* ─── Base de conocimiento local ─────────────────────────── */
+  /* ─── Datos del mapa ─────────────────────────────────────── */
   let _pois = [];
   let _pautas = [];
 
-  function setPoisData(pois) { _pois = pois || []; }
-  function setPautasData(pautas) { _pautas = pautas || []; }
+  function setPoisData(pois)   { _pois   = pois   || []; }
+  function setPautasData(p)    { _pautas = p      || []; }
 
-  /* ─── Motor de respuestas ─────────────────────────────────── */
-  const INTENTS = [
+  /* ─── System prompt para Gemini ──────────────────────────── */
+  function buildSystemPrompt() {
+    const poisResumen = _pois.map((p) =>
+      `- ${p.name} (${p.category}): ${p.description}${p.address ? " · " + p.address : ""}${p.horario ? " · " + p.horario : ""}`
+    ).join("\n");
+
+    const pautasResumen = _pautas.map((p) =>
+      `- ${p.nombre}: ${p.ficha?.descripcion || p.slogan || ""}. Tel: ${p.telefono || "N/A"}. Horario: ${p.horario || "N/A"}`
+    ).join("\n");
+
+    return `Eres Don Chucho, un arriero quindiano con sombrero aguadeño, personaje típico de la región cafetera de Colombia. Eres el guía turístico virtual del Mapa Digital de Armenia 2026.
+
+PERSONALIDAD:
+- Hablas con calidez y humor paisa: usas "parce", "paisano", "bacano", "chévere", "a la orden", "eso es", "pa'" en vez de "para"
+- Eres orgulloso de Armenia, el Quindío y el Eje Cafetero
+- Conoces la cultura cafetera, la gastronomía, la historia y las tradiciones quindianas
+- Eres amable, servicial y siempre invitas a explorar más
+- Terminas muchas respuestas con ☕ o con una invitación a seguir explorando
+
+REGLAS:
+- Responde SIEMPRE en español
+- Sé conciso pero completo (máximo 4-5 oraciones por respuesta)
+- Si preguntan por lugares del mapa, menciona que pueden hacer clic en el mapa para verlos
+- Si no sabes algo específico de Armenia, di que no tienes esa info pero sugiere alternativas
+- No inventes datos de contacto, horarios ni precios que no estén en el contexto
+- No respondas temas que no tengan relación con turismo, gastronomía, cultura o Armenia/Quindío
+
+LUGARES EN EL MAPA (Armenia 2026):
+${poisResumen}
+
+ANUNCIANTES DEL MAPA:
+${pautasResumen}
+
+CONTEXTO GENERAL:
+Armenia es la capital del departamento del Quindío, Colombia. Conocida como "La Ciudad Milagro", fue fundada el 14 de octubre de 1889. Es el corazón del Eje Cafetero, Patrimonio de la Humanidad UNESCO. Tiene clima templado (~18-22°C), es famosa por el café, la arquitectura de bahareque, el paisaje cultural cafetero, el Parque Nacional del Café, el Jardín Botánico del Quindío y la amabilidad de su gente.`;
+  }
+
+  /* ─── Historial de conversación para Gemini ─────────────── */
+  const _history = []; // [{role:"user"|"model", parts:[{text}]}]
+
+  async function askGemini(userText) {
+    _history.push({ role: "user", parts: [{ text: userText }] });
+
+    const body = {
+      system_instruction: { parts: [{ text: buildSystemPrompt() }] },
+      contents: _history,
+      generationConfig: {
+        temperature: 0.8,
+        maxOutputTokens: 400,
+        topP: 0.9,
+      },
+      safetySettings: [
+        { category: "HARM_CATEGORY_HARASSMENT",        threshold: "BLOCK_ONLY_HIGH" },
+        { category: "HARM_CATEGORY_HATE_SPEECH",       threshold: "BLOCK_ONLY_HIGH" },
+        { category: "HARM_CATEGORY_SEXUALLY_EXPLICIT", threshold: "BLOCK_ONLY_HIGH" },
+        { category: "HARM_CATEGORY_DANGEROUS_CONTENT", threshold: "BLOCK_ONLY_HIGH" },
+      ],
+    };
+
+    const res = await fetch(GEMINI_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(body),
+    });
+
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({}));
+      throw new Error(err?.error?.message || `HTTP ${res.status}`);
+    }
+
+    const data = await res.json();
+    const text = data?.candidates?.[0]?.content?.parts?.[0]?.text || "";
+
+    if (text) {
+      _history.push({ role: "model", parts: [{ text }] });
+      // Mantener historial corto (últimas 10 rondas = 20 entradas)
+      if (_history.length > 20) _history.splice(0, 2);
+    }
+
+    return text || "¡Uy, parce! Se me fue la señal. Intente de nuevo.";
+  }
+
+  /* ─── Intents locales (respuesta inmediata con botones del mapa) ── */
+  const LOCAL_INTENTS = [
     {
-      keys: ["hola", "buenas", "buenos", "hey", "ey", "saludos", "buen día", "buenas tardes"],
-      reply: () => aleatorio([
-        "¡Buenas, parce! ¿En qué le ayudo hoy?",
-        "¡Ey, paisano! Cuénteme qué quiere conocer.",
-        "¡Bienvenido! Aquí Don Chucho, listo pa' guiarlo.",
-      ]),
-      chips: ["¿Qué visitar?", "¿Dónde comer?", "¿Dónde comprar?"],
-    },
-    {
-      keys: ["visitar", "turismo", "turístico", "turistico", "atractivo", "lugar", "sitio", "ver", "conocer", "pasear"],
+      keys: ["visitar", "turismo", "turístico", "turistico", "atractivo", "sitio turístico"],
       reply: () => buildPoiList("turistico"),
       chips: ["Plaza de Bolívar", "Museo del Oro", "Parque de la Vida", "¿Dónde comer?"],
     },
     {
-      keys: ["comer", "gastronomía", "gastronomia", "restaurante", "café", "cafe", "comida", "almorzar", "desayunar", "cenar"],
+      keys: ["comer", "gastronomía", "gastronomia", "restaurante", "comida", "almorzar", "cenar"],
       reply: () => buildPoiList("gastronomico"),
       chips: ["Anatolia", "Sol de Café", "¿Dónde comprar?", "¿Qué visitar?"],
     },
     {
-      keys: ["comprar", "comercial", "tienda", "centro comercial", "shopping", "mercado"],
+      keys: ["comprar", "comercial", "centro comercial", "shopping"],
       reply: () => buildPoiList("comercial"),
-      chips: ["Portal del Quindío", "Unicentro", "¿Dónde comer?", "¿Qué visitar?"],
+      chips: ["Portal del Quindío", "Unicentro", "¿Dónde comer?"],
     },
     {
-      keys: ["pauta", "pautas", "anunciante", "patrocinador", "publicidad"],
+      keys: ["pauta", "pautas", "anunciante", "patrocinador"],
       reply: () => buildPautasList(),
       chips: ["Anatolia", "Diana Seguros", "Quindío Travel"],
     },
     {
-      keys: ["llegar", "cómo llegar", "como llegar", "ruta", "dirección", "direccion", "ubicación", "ubicacion", "mapa", "google maps"],
-      reply: () => "Para llegar a cualquier lugar, haga clic en el marcador del mapa y luego en <strong>«Cómo llegar»</strong>. ¡Lo lleva directo a Google Maps, parce!",
-      chips: ["¿Qué visitar?", "¿Dónde comer?"],
-    },
-    {
       keys: ["anatolia"],
       reply: () => buildPautaDetalle("anatolia"),
-      chips: ["¿Dónde comer?", "Quindío Travel", "Diana Seguros"],
+      chips: ["¿Dónde comer?", "Quindío Travel"],
     },
     {
-      keys: ["diana", "seguros", "diana seguros"],
+      keys: ["diana seguros", "diana_seguros"],
       reply: () => buildPautaDetalle("diana_seguros"),
-      chips: ["Anatolia", "Quindío Travel", "¿Dónde comprar?"],
+      chips: ["Anatolia", "Quindío Travel"],
     },
     {
-      keys: ["quindío travel", "quindio travel", "travel", "tours", "tour", "ecoturismo", "aventura"],
+      keys: ["quindío travel", "quindio travel"],
       reply: () => buildPautaDetalle("quindio_travel"),
-      chips: ["Anatolia", "¿Qué visitar?", "¿Cómo llegar?"],
-    },
-    {
-      keys: ["plaza", "bolívar", "bolivar", "catedral"],
-      reply: () => buildPoiDetalle("plaza-bolivar"),
-      chips: ["Museo del Oro", "Parque Sucre", "¿Dónde comer?"],
-    },
-    {
-      keys: ["museo", "oro", "quimbaya"],
-      reply: () => buildPoiDetalle("museo-oro"),
-      chips: ["Plaza de Bolívar", "Parque de la Vida", "¿Dónde comer?"],
-    },
-    {
-      keys: ["parque vida", "parque de la vida"],
-      reply: () => buildPoiDetalle("parque-vida"),
-      chips: ["Plaza de Bolívar", "¿Dónde comer?", "Quindío Travel"],
-    },
-    {
-      keys: ["fundadores", "parque fundadores", "los fundadores"],
-      reply: () => buildPoiDetalle("parque-fundadores"),
-      chips: ["Plaza de Bolívar", "Museo del Oro", "¿Dónde comer?"],
-    },
-    {
-      keys: ["sucre", "parque sucre"],
-      reply: () => buildPoiDetalle("parque-sucre"),
-      chips: ["Plaza de Bolívar", "¿Dónde comer?", "¿Dónde comprar?"],
-    },
-    {
-      keys: ["sol de café", "sol de cafe", "sol cafe"],
-      reply: () => buildPoiDetalle("sol-cafe"),
-      chips: ["Anatolia", "¿Dónde comer?", "¿Qué visitar?"],
-    },
-    {
-      keys: ["portal", "portal quindío", "portal quindio"],
-      reply: () => buildPoiDetalle("portal-quindio"),
-      chips: ["Unicentro", "¿Dónde comer?", "¿Qué visitar?"],
-    },
-    {
-      keys: ["unicentro"],
-      reply: () => buildPoiDetalle("unicentro"),
-      chips: ["Portal del Quindío", "¿Dónde comer?", "¿Qué visitar?"],
-    },
-    {
-      keys: ["armenia", "ciudad milagro", "quindío", "quindio", "colombia", "cafetera", "eje cafetero"],
-      reply: () => "Armenia es la <strong>Ciudad Milagro</strong> del Quindío, corazón del Eje Cafetero colombiano. Fundada en 1889, combina historia, gastronomía y naturaleza. ¿Qué quiere explorar?",
-      chips: ["¿Qué visitar?", "¿Dónde comer?", "¿Dónde comprar?"],
-    },
-    {
-      keys: ["gracias", "muchas gracias", "gracia", "chévere", "chevere", "bacano", "genial", "perfecto"],
-      reply: () => aleatorio([
-        "¡Con mucho gusto, parce! Pa' lo que necesite, aquí estoy.",
-        "¡Eso es! Que disfrute Armenia. ¿Algo más le cuento?",
-        "¡A la orden, paisano! ¿Quiere saber algo más?",
-      ]),
-      chips: ["¿Qué visitar?", "¿Dónde comer?", "¿Dónde comprar?"],
-    },
-    {
-      keys: ["adiós", "adios", "chao", "hasta luego", "bye", "nos vemos"],
-      reply: () => "¡Hasta luego, parce! Que disfrute Armenia y el Quindío. ¡Vuelva pronto! ☕",
-      chips: [],
+      chips: ["Anatolia", "¿Qué visitar?"],
     },
   ];
 
-  /* ─── Helpers de respuesta ───────────────────────────────── */
-  function aleatorio(arr) {
-    return arr[Math.floor(Math.random() * arr.length)];
+  function checkLocalIntent(text) {
+    const q = text.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+    for (const intent of LOCAL_INTENTS) {
+      if (intent.keys.some((k) => {
+        const kn = k.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+        return q.includes(kn);
+      })) {
+        return { reply: intent.reply(), chips: intent.chips || [] };
+      }
+    }
+    return null;
   }
+
+  /* ─── Builders de respuesta local ───────────────────────── */
+  function aleatorio(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
 
   function buildPoiList(category) {
     const labels = { turistico: "turísticos", comercial: "comerciales", gastronomico: "gastronómicos" };
@@ -156,18 +181,7 @@
     const lista = items
       .map((p) => `• <button class="cafeto-poi-link" data-poi-id="${p.id}">${p.name}</button>`)
       .join("<br>");
-    return `Aquí los lugares <strong>${labels[category]}</strong> en el mapa:<br><br>${lista}<br><br>Haga clic en el nombre para verlo en el mapa.`;
-  }
-
-  function buildPoiDetalle(id) {
-    const poi = _pois.find((p) => p.id === id);
-    if (!poi) return "No encontré ese lugar, parce. ¿Me da más detalles?";
-    let html = `<strong>${poi.name}</strong><br>${poi.description}`;
-    if (poi.address) html += `<br><em>📍 ${poi.address}</em>`;
-    if (poi.telefono) html += `<br>📞 ${poi.telefono}`;
-    if (poi.horario) html += `<br>🕐 ${poi.horario}`;
-    html += `<br><br><button class="cafeto-poi-link" data-poi-id="${poi.id}">Ver en el mapa →</button>`;
-    return html;
+    return `Aquí los lugares <strong>${labels[category]}</strong> en el mapa:<br><br>${lista}<br><br>Haga clic en el nombre para verlo en el mapa. ☕`;
   }
 
   function buildPautasList() {
@@ -184,8 +198,8 @@
     let html = `<strong>${p.nombre}</strong><br><em>${p.slogan || ""}</em>`;
     if (p.ficha?.descripcion) html += `<br><br>${p.ficha.descripcion}`;
     if (p.direccion) html += `<br><br>📍 ${p.direccion}`;
-    if (p.horario) html += `<br>🕐 ${p.horario}`;
-    if (p.telefono) html += `<br>📞 ${p.telefono}`;
+    if (p.horario)   html += `<br>🕐 ${p.horario}`;
+    if (p.telefono)  html += `<br>📞 ${p.telefono}`;
     if (p.whatsapp) {
       const num = p.whatsapp.replace(/\D/g, "");
       const msg = encodeURIComponent(p.whatsappMensaje || `Hola, vi ${p.nombre} en el Mapa Armenia 2026.`);
@@ -195,27 +209,6 @@
     return html;
   }
 
-  function processMessage(text) {
-    const q = text.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-    for (const intent of INTENTS) {
-      if (intent.keys.some((k) => {
-        const kn = k.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-        return q.includes(kn);
-      })) {
-        return { reply: intent.reply(), chips: intent.chips || [] };
-      }
-    }
-    // Fallback
-    return {
-      reply: aleatorio([
-        "Mmm, no le entendí bien, parce. ¿Me pregunta sobre turismo, gastronomía o comercio en Armenia?",
-        "Eso sí me cogió fuera de la ruta. ¿Me pregunta sobre lugares, comida o cómo llegar?",
-        "No le caché, paisano. Pruebe con una de estas opciones:",
-      ]),
-      chips: ["¿Qué visitar?", "¿Dónde comer?", "¿Dónde comprar?", "Pautas del mapa"],
-    };
-  }
-
   /* ─── DOM helpers ────────────────────────────────────────── */
   function escHtml(str) {
     const d = document.createElement("div");
@@ -223,13 +216,19 @@
     return d.innerHTML;
   }
 
-  function scrollBottom(el) {
-    el.scrollTop = el.scrollHeight;
+  // Convierte saltos de línea y **negrita** básica del texto de Gemini a HTML
+  function formatGeminiText(text) {
+    return text
+      .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
+      .replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>")
+      .replace(/\*(.+?)\*/g, "<em>$1</em>")
+      .replace(/\n/g, "<br>");
   }
 
-  /* ─── Construcción del widget ────────────────────────────── */
+  function scrollBottom(el) { el.scrollTop = el.scrollHeight; }
+
+  /* ─── Widget HTML ────────────────────────────────────────── */
   function buildWidget() {
-    // Botón flotante
     const btn = document.createElement("button");
     btn.type = "button";
     btn.className = "cafeto-btn";
@@ -247,7 +246,6 @@
       </div>
     `;
 
-    // Ventana
     const win = document.createElement("div");
     win.className = "cafeto-window";
     win.setAttribute("hidden", "");
@@ -268,11 +266,13 @@
       <div class="cafeto-input-area">
         <input type="text" class="cafeto-input" id="dc-input"
           placeholder="Pregúntele a Don Chucho…"
-          autocomplete="off" maxlength="200"
+          autocomplete="off" maxlength="300"
           aria-label="Mensaje para Don Chucho" />
         <button type="button" class="cafeto-send-btn" id="dc-send" aria-label="Enviar mensaje">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+               stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <line x1="22" y1="2" x2="11" y2="13"/>
+            <polygon points="22 2 15 22 11 13 2 9 22 2"/>
           </svg>
         </button>
       </div>
@@ -309,7 +309,6 @@
         c.textContent = label;
         chipsWrap.appendChild(c);
       });
-      // Chips van dentro del bubble del bot
       wrap.querySelector(".cafeto-msg-bubble")?.appendChild(chipsWrap);
     }
 
@@ -333,36 +332,48 @@
     return wrap;
   }
 
+  /* ─── Bind de eventos en mensaje del bot ────────────────── */
+  function bindMsgEvents(msgEl, closeChat) {
+    msgEl.querySelectorAll(".cafeto-chip").forEach((chip) => {
+      chip.addEventListener("click", () => {
+        chip.closest(".cafeto-chips")?.remove();
+        // Re-dispatch como si el usuario lo escribiera
+        chip.dispatchEvent(new CustomEvent("dc:chip", { bubbles: true, detail: chip.textContent }));
+      });
+    });
+    msgEl.querySelectorAll(".cafeto-poi-link[data-poi-id]").forEach((link) => {
+      link.addEventListener("click", (e) => {
+        e.preventDefault();
+        if (typeof focusPoi === "function") { focusPoi(link.dataset.poiId); closeChat(); }
+      });
+    });
+  }
+
   /* ─── Lógica principal ───────────────────────────────────── */
   function initDonChucho() {
     const { btn, win } = buildWidget();
     const messages = win.querySelector("#dc-messages");
-    const input = win.querySelector("#dc-input");
-    const sendBtn = win.querySelector("#dc-send");
+    const input    = win.querySelector("#dc-input");
+    const sendBtn  = win.querySelector("#dc-send");
     const closeBtn = win.querySelector(".cafeto-close-btn");
 
-    let isOpen = false;
+    let isOpen  = false;
     let greeted = false;
+    let busy    = false; // evita doble envío mientras espera Gemini
 
-    /* Abrir / cerrar */
+    /* ── Abrir / cerrar ── */
     function openChat() {
       isOpen = true;
       win.removeAttribute("hidden");
       win.classList.add("cafeto-opening");
       btn.setAttribute("aria-expanded", "true");
-      // Quitar badge
       const badge = btn.querySelector(".cafeto-btn-badge");
       if (badge) badge.style.display = "none";
-
       setTimeout(() => win.classList.remove("cafeto-opening"), 350);
       input.focus();
-
       if (!greeted) {
         greeted = true;
-        const saludo = aleatorio(SALUDOS);
-        setTimeout(() => {
-          addMessage(messages, "bot", saludo, CHIPS_INICIO);
-        }, 300);
+        setTimeout(() => addMessage(messages, "bot", aleatorio(SALUDOS), CHIPS_INICIO), 300);
       }
     }
 
@@ -375,99 +386,71 @@
 
     btn.addEventListener("click", () => (isOpen ? closeChat() : openChat()));
     closeBtn.addEventListener("click", closeChat);
+    document.addEventListener("keydown", (e) => { if (e.key === "Escape" && isOpen) closeChat(); });
 
-    document.addEventListener("keydown", (e) => {
-      if (e.key === "Escape" && isOpen) closeChat();
-    });
-
-    /* Enviar mensaje */
-    function sendMessage() {
-      const text = input.value.trim();
-      if (!text) return;
+    /* ── Enviar mensaje (texto libre → Gemini o local) ── */
+    async function sendMessage(text) {
+      text = (text || input.value).trim();
+      if (!text || busy) return;
       input.value = "";
+      busy = true;
+      sendBtn.disabled = true;
+      input.disabled   = true;
 
       addMessage(messages, "user", text);
-
       const typing = showTyping(messages);
-      const delay = 600 + Math.random() * 500;
 
-      setTimeout(() => {
+      try {
+        // 1. Intentar respuesta local (POIs / pautas con botones del mapa)
+        const local = checkLocalIntent(text);
+        if (local) {
+          await new Promise((r) => setTimeout(r, 500)); // pequeña pausa natural
+          typing.remove();
+          const msgEl = addMessage(messages, "bot", local.reply, local.chips);
+          bindMsgEvents(msgEl, closeChat);
+        } else {
+          // 2. Gemini para todo lo demás
+          const geminiText = await askGemini(text);
+          typing.remove();
+          const html = formatGeminiText(geminiText);
+          const msgEl = addMessage(messages, "bot", html, []);
+          bindMsgEvents(msgEl, closeChat);
+        }
+      } catch (err) {
         typing.remove();
-        const { reply, chips } = processMessage(text);
-        const msgEl = addMessage(messages, "bot", reply, chips);
-
-        // Chips → enviar como mensaje
-        msgEl.querySelectorAll(".cafeto-chip").forEach((chip) => {
-          chip.addEventListener("click", () => {
-            chip.closest(".cafeto-chips")?.remove();
-            sendChip(chip.textContent);
-          });
-        });
-
-        // POI links → enfocar en mapa
-        msgEl.querySelectorAll(".cafeto-poi-link[data-poi-id]").forEach((link) => {
-          link.addEventListener("click", (e) => {
-            e.preventDefault();
-            const id = link.dataset.poiId;
-            if (typeof focusPoi === "function") {
-              focusPoi(id);
-              closeChat();
-            }
-          });
-        });
-      }, delay);
-    }
-
-    function sendChip(label) {
-      addMessage(messages, "user", label);
-      const typing = showTyping(messages);
-      setTimeout(() => {
-        typing.remove();
-        const { reply, chips } = processMessage(label);
-        const msgEl = addMessage(messages, "bot", reply, chips);
-
-        msgEl.querySelectorAll(".cafeto-chip").forEach((chip) => {
-          chip.addEventListener("click", () => {
-            chip.closest(".cafeto-chips")?.remove();
-            sendChip(chip.textContent);
-          });
-        });
-
-        msgEl.querySelectorAll(".cafeto-poi-link[data-poi-id]").forEach((link) => {
-          link.addEventListener("click", (e) => {
-            e.preventDefault();
-            if (typeof focusPoi === "function") {
-              focusPoi(link.dataset.poiId);
-              closeChat();
-            }
-          });
-        });
-      }, 600 + Math.random() * 400);
-    }
-
-    sendBtn.addEventListener("click", sendMessage);
-    input.addEventListener("keydown", (e) => {
-      if (e.key === "Enter" && !e.shiftKey) {
-        e.preventDefault();
-        sendMessage();
+        console.error("Don Chucho / Gemini error:", err);
+        addMessage(messages, "bot",
+          "¡Uy, parce! Se me fue la señal del Quindío. Intente de nuevo en un momento. ☕",
+          ["¿Qué visitar?", "¿Dónde comer?"]
+        );
+      } finally {
+        busy = false;
+        sendBtn.disabled = false;
+        input.disabled   = false;
+        input.focus();
       }
-    });
+    }
 
-    // Chips iniciales en mensajes ya renderizados (delegación)
+    /* ── Chips ── */
+    messages.addEventListener("dc:chip", (e) => sendMessage(e.detail));
     messages.addEventListener("click", (e) => {
+      // Delegación para chips y poi-links en mensajes ya renderizados
       const chip = e.target.closest(".cafeto-chip");
       if (chip) {
         chip.closest(".cafeto-chips")?.remove();
-        sendChip(chip.textContent);
+        sendMessage(chip.textContent);
       }
       const poiLink = e.target.closest(".cafeto-poi-link[data-poi-id]");
       if (poiLink) {
         e.preventDefault();
-        if (typeof focusPoi === "function") {
-          focusPoi(poiLink.dataset.poiId);
-          closeChat();
-        }
+        if (typeof focusPoi === "function") { focusPoi(poiLink.dataset.poiId); closeChat(); }
       }
+    });
+
+    /* ── Input ── */
+    sendBtn.addEventListener("click", () => sendMessage());
+    input.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); sendMessage(); }
     });
   }
 
