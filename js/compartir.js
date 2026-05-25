@@ -1,8 +1,4 @@
-import {
-  loadDecoraciones,
-  initDecoracionesCompartir,
-  getQrAsset,
-} from "./decoraciones.js";
+// Compartir - JavaScript sin módulos ES
 
 async function getShareUrl() {
   const localUrl = new URL("index.html", window.location.href).href;
@@ -27,12 +23,59 @@ async function getShareUrl() {
 }
 
 async function init() {
-  const decor = await loadDecoraciones();
-  initDecoracionesCompartir(decor);
+  // Cargar decoraciones
+  let decor = null;
+  try {
+    const res = await fetch("data/decoraciones.json");
+    if (res.ok) {
+      decor = await res.json();
+    }
+  } catch {
+    // Silently handle errors
+  }
+
+  // Inicializar decoraciones para compartir
+  if (decor && decor.compartir) {
+    const { fondo, opacidad, acentos } = decor.compartir;
+    document.documentElement.style.setProperty("--compartir-bg", `url("${fondo}")`);
+    document.documentElement.style.setProperty(
+      "--compartir-bg-opacity",
+      String(opacidad ?? 0.25)
+    );
+
+    document.body.classList.add("decor-compartir");
+
+    if (acentos && decor.acentos?.length) {
+      let el = document.getElementById("decor-accents");
+      if (!el) {
+        el = document.createElement("div");
+        el.id = "decor-accents";
+        el.className = "decor-accents";
+        el.setAttribute("aria-hidden", "true");
+        document.body.prepend(el);
+      }
+      el.innerHTML = decor.acentos
+        .map(
+          (a) => `
+        <img
+          class="decor-acento decor-acento--${a.zona}"
+          src="${a.archivo}"
+          alt=""
+          aria-hidden="true"
+          loading="lazy"
+          decoding="async"
+          style="--acento-size: ${a.tamano || "120px"}"
+          data-acento-id="${a.id || ""}"
+        />
+      `
+        )
+        .join("");
+    }
+  }
 
   const qrImg = document.getElementById("qr-pauta-img");
   if (qrImg && decor) {
-    qrImg.src = getQrAsset(decor);
+    qrImg.src = decor.qr?.imagen || "assets/qr-mapa-armenia-display.jpg";
   }
 
   const shareUrl = await getShareUrl();
@@ -46,7 +89,7 @@ async function init() {
   document.getElementById("btn-download").addEventListener("click", () => {
     const a = document.createElement("a");
     a.download = "qr-mapa-armenia-2026.jpg";
-    a.href = qrImg?.src || getQrAsset(decor);
+    a.href = qrImg?.src || (decor?.qr?.imagen || "assets/qr-mapa-armenia-display.jpg");
     a.click();
   });
 }
