@@ -1,126 +1,68 @@
-/* Capas decorativas (imágenes en /decoraciones) */
-.decor-layer {
+/* Solo estilos visuales — no cambia la estructura del mapa */
+
+body::before {
+  content: "";
   position: fixed;
   inset: 0;
+  z-index: 0;
   pointer-events: none;
-  z-index: 0;
-  background-repeat: no-repeat;
+  background-image: var(--decor-body, none);
   background-size: cover;
+  background-position: center;
+  opacity: var(--decor-body-opacity, 0.12);
+  mix-blend-mode: multiply;
 }
 
-.decor-layer--body {
-  z-index: 0;
-}
-
-.decor-layer--header {
+.site-header::before {
+  content: "";
   position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 220px;
+  inset: 0;
   z-index: 0;
+  pointer-events: none;
+  background-image: var(--decor-header, none);
+  background-size: cover;
+  background-position: top center;
+  opacity: var(--decor-header-opacity, 0.2);
 }
 
-.decor-layer--sidebar {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: min(340px, 40vw);
-  height: 45%;
-  z-index: 0;
-}
-
-.decor-layer--mapa {
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 35%;
-  z-index: 0;
-}
-
-.site-header,
-.app-layout,
-.site-footer {
+.site-header > * {
   position: relative;
   z-index: 1;
+}
+
+.sidebar::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 50%;
+  z-index: 0;
+  pointer-events: none;
+  background-image: var(--decor-sidebar, none);
+  background-size: cover;
+  background-position: bottom center;
+  opacity: var(--decor-sidebar-opacity, 0.16);
 }
 
 .sidebar {
   position: relative;
-  overflow: hidden;
 }
 
-.sidebar > * {
+.sidebar > section {
   position: relative;
   z-index: 1;
 }
 
-.map-panel {
-  position: relative;
-}
-
-.map-panel #map {
+.site-header,
+.app-layout,
+.site-footer,
+#ficha-modal {
   position: relative;
   z-index: 1;
 }
 
-/* Panel QR en sidebar */
-.qr-panel {
-  margin-bottom: 1.25rem;
-  padding: 0.85rem;
-  border-radius: var(--radius);
-  background: rgba(255, 255, 255, 0.92);
-  border: 2px solid #d8e6df;
-  box-shadow: var(--shadow);
-  text-align: center;
-}
-
-.qr-panel h2 {
-  margin: 0 0 0.5rem;
-  font-size: 0.9rem;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-  color: var(--green-dark);
-}
-
-.qr-panel-lead {
-  margin: 0 0 0.65rem;
-  font-size: 0.75rem;
-  color: var(--text-muted);
-  line-height: 1.4;
-}
-
-.qr-panel-visual {
-  display: block;
-  width: 100%;
-  max-width: 220px;
-  margin: 0 auto;
-  border-radius: 10px;
-  box-shadow: 0 4px 16px rgba(27, 77, 62, 0.15);
-  cursor: pointer;
-  transition: transform 0.2s;
-}
-
-.qr-panel-visual:hover {
-  transform: scale(1.02);
-}
-
-.qr-panel-link {
-  display: inline-block;
-  margin-top: 0.65rem;
-  font-size: 0.8rem;
-  font-weight: 600;
-  color: var(--green-mid);
-  text-decoration: none;
-}
-
-.qr-panel-link:hover {
-  color: var(--green-dark);
-  text-decoration: underline;
-}
-
-/* Página compartir con decoración */
+/* Página compartir (QR) — solo diseño de fondo */
 .compartir-page {
   position: relative;
   overflow: hidden;

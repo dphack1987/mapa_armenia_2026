@@ -133,6 +133,19 @@ body {
   opacity: 0.92;
 }
 
+.pauta-card-meta,
+.pauta-card-tel {
+  margin: 0;
+  padding: 0.4rem 0.65rem;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.pauta-card-tel a {
+  color: var(--green-mid);
+  font-weight: 600;
+}
+
 body.ficha-open {
   overflow: hidden;
 }

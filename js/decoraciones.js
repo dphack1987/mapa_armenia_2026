@@ -1,3 +1,5 @@
+/** Aplica fondos desde decoraciones/ sin modificar el HTML del mapa. */
+
 export async function loadDecoraciones() {
   try {
     const res = await fetch("data/decoraciones.json");
@@ -8,38 +10,18 @@ export async function loadDecoraciones() {
   }
 }
 
-function applyCapa(capa) {
-  const el = document.querySelector(`[data-decor="${capa.id}"]`);
-  if (!el || !capa.archivo) return;
-
-  el.style.backgroundImage = `url("${capa.archivo}")`;
-  el.style.opacity = String(capa.opacidad ?? 0.15);
-  if (capa.blend) el.style.mixBlendMode = capa.blend;
-  if (capa.posicion) el.style.backgroundPosition = capa.posicion;
-  if (capa.size) el.style.backgroundSize = capa.size;
+function setDecorVar(id, capa) {
+  if (!capa?.archivo) return;
+  const root = document.documentElement;
+  root.style.setProperty(`--decor-${id}`, `url("${capa.archivo}")`);
+  root.style.setProperty(`--decor-${id}-opacity`, String(capa.opacidad ?? 0.15));
 }
 
 export function initDecoracionesMapa(config) {
-  if (!config) return;
-
-  for (const capa of config.capas || []) {
-    applyCapa(capa);
+  if (!config?.capas) return;
+  for (const capa of config.capas) {
+    setDecorVar(capa.id, capa);
   }
-
-  const qr = config.qr;
-  const panel = document.getElementById("qr-panel");
-  const img = document.getElementById("qr-panel-img");
-  const lead = document.getElementById("qr-panel-lead");
-
-  if (!panel || !img || !qr) return;
-
-  img.src = qr.imagen;
-  img.alt = qr.titulo || "Código QR Mapa Armenia 2026";
-  if (lead) lead.textContent = qr.subtitulo || "";
-
-  img.addEventListener("click", () => {
-    window.location.href = "compartir.html";
-  });
 }
 
 export function initDecoracionesCompartir(config) {

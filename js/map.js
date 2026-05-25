@@ -189,7 +189,8 @@ function renderPautas() {
       <button type="button" class="pauta-card-btn" data-pauta-id="${escapeHtml(p.id)}" title="Abrir ficha informativa">
         <img src="${escapeHtml(p.imagen)}" alt="${escapeHtml(p.nombre)} — ${escapeHtml(p.slogan || "")}" loading="lazy" />
       </button>
-      <p class="pauta-card-hint">Clic para ficha · WhatsApp disponible</p>
+      <p class="pauta-card-meta">${escapeHtml(p.direccion || "")}</p>
+      ${p.telefono ? `<p class="pauta-card-tel"><a href="tel:+57${p.telefono.replace(/\D/g, "")}">${escapeHtml(p.telefono)}</a></p>` : ""}
     </article>
   `
     )

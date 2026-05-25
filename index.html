@@ -11,10 +11,7 @@
   <link rel="stylesheet" href="css/decoraciones.css" />
 </head>
 <body>
-  <div class="decor-layer decor-layer--body" data-decor="body" aria-hidden="true"></div>
-
   <header class="site-header">
-    <div class="decor-layer decor-layer--header" data-decor="header" aria-hidden="true"></div>
     <div class="header-brand">
       <div class="logo-wrap">
         <img src="logo_armenia.png" alt="Mapa turístico, comercial y gastronómico de Armenia 2026" class="logo-main" />
@@ -34,23 +31,6 @@
 
   <div class="app-layout">
     <aside class="sidebar" aria-label="Filtros y lugares">
-      <div class="decor-layer decor-layer--sidebar" data-decor="sidebar" aria-hidden="true"></div>
-
-      <section class="qr-panel" id="qr-panel" aria-label="Código QR del mapa">
-        <h2>Mapa digital</h2>
-        <p class="qr-panel-lead" id="qr-panel-lead"></p>
-        <img
-          id="qr-panel-img"
-          class="qr-panel-visual"
-          src="assets/qr-mapa-armenia-display.jpg"
-          alt="Escanea el QR del Mapa Armenia 2026"
-          loading="lazy"
-          width="220"
-          height="280"
-        />
-        <a href="compartir.html" class="qr-panel-link">Ver QR completo y compartir</a>
-      </section>
-
       <section class="filters">
         <h2>Categorías</h2>
         <div class="filter-group" role="group" aria-label="Filtrar por categoría">
@@ -100,7 +80,6 @@
     </aside>
 
     <main class="map-panel">
-      <div class="decor-layer decor-layer--mapa" data-decor="mapa" aria-hidden="true"></div>
       <div id="map" role="application" aria-label="Mapa interactivo de Armenia"></div>
       <div id="map-status" class="map-status" aria-live="polite"></div>
     </main>
@@ -127,6 +106,5 @@
 
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
   <script src="js/map.js" type="module"></script>
-  <!-- decoraciones cargadas desde map.js -->
 </body>
 </html>
