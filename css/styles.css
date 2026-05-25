@@ -419,6 +419,11 @@ body.ficha-open {
   background: var(--brown);
 }
 
+.dot-pauta {
+  background: var(--teal);
+  box-shadow: 0 0 0 2px var(--gold);
+}
+
 .legend-note {
   font-size: 0.75rem;
   color: var(--text-muted);
@@ -475,26 +480,108 @@ body.ficha-open {
   color: var(--teal);
 }
 
-/* Marcadores Leaflet personalizados */
-.poi-marker {
-  width: 28px;
-  height: 28px;
+/* Marcadores Leaflet con nombre (y logo en pautas) */
+.poi-marker-leaflet {
+  background: transparent !important;
+  border: none !important;
+}
+
+.poi-marker-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  pointer-events: none;
+}
+
+.poi-marker-label {
+  display: block;
+  max-width: 130px;
+  padding: 0.2rem 0.45rem;
+  font-size: 0.65rem;
+  font-weight: 800;
+  line-height: 1.2;
+  color: var(--green-dark);
+  background: rgba(255, 255, 255, 0.96);
+  border: 2px solid #fff;
+  border-radius: 6px;
+  box-shadow: 0 2px 8px rgba(27, 77, 62, 0.28);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.poi-marker-wrap--turistico .poi-marker-label {
+  border-color: var(--green-mid);
+  background: #f0faf4;
+}
+
+.poi-marker-wrap--comercial .poi-marker-label {
+  border-color: var(--gold);
+  background: #fffbeb;
+}
+
+.poi-marker-wrap--gastronomico .poi-marker-label {
+  border-color: var(--brown);
+  background: #fdf6ee;
+}
+
+.poi-marker-wrap--pauta .poi-marker-label {
+  font-size: 0.72rem;
+  color: #fff;
+  background: var(--green-dark);
+  border-color: var(--gold);
+  padding: 0.3rem 0.55rem;
+  max-width: 140px;
+}
+
+.poi-marker-thumb {
+  width: 36px;
+  height: 36px;
+  margin: 2px 0;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 3px solid #fff;
+  box-shadow: 0 3px 10px rgba(27, 77, 62, 0.35);
+  background: #fff;
+  line-height: 0;
+}
+
+.poi-marker-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+}
+
+.poi-marker-pin {
+  width: 22px;
+  height: 22px;
   border-radius: 50% 50% 50% 0;
   transform: rotate(-45deg);
   border: 3px solid #fff;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
+  margin-top: 1px;
 }
 
-.poi-marker-turistico {
+.poi-marker-pin--turistico {
   background: var(--green-mid);
 }
 
-.poi-marker-comercial {
+.poi-marker-pin--comercial {
   background: var(--gold);
 }
 
-.poi-marker-gastronomico {
+.poi-marker-pin--gastronomico {
   background: var(--brown);
+}
+
+.poi-marker-wrap--pauta .poi-marker-pin {
+  width: 26px;
+  height: 26px;
+  border-width: 3px;
+  background: var(--teal);
+  box-shadow: 0 0 0 2px var(--gold), 0 4px 12px rgba(27, 77, 62, 0.4);
 }
 
 .leaflet-popup-content-wrapper {

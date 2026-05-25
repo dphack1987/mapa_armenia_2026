@@ -31,13 +31,38 @@ async function loadPois() {
   return data;
 }
 
-function createMarkerIcon(category) {
+function shortMarkerLabel(name) {
+  const text = (name || "").split("·")[0].trim();
+  if (text.length <= 22) return text;
+  return `${text.slice(0, 20)}…`;
+}
+
+function createMarkerIcon(poi) {
+  const pauta = poi.pautaId ? pautasById.get(poi.pautaId) : null;
+  const isPauta = Boolean(pauta);
+  const label = shortMarkerLabel(poi.name);
+  const thumb =
+    isPauta && pauta.imagen
+      ? `<div class="poi-marker-thumb"><img src="${escapeHtml(pauta.imagen)}" alt="" /></div>`
+      : "";
+
+  const html = `
+    <div class="poi-marker-wrap ${isPauta ? "poi-marker-wrap--pauta" : ""} poi-marker-wrap--${poi.category}">
+      <span class="poi-marker-label">${escapeHtml(label)}</span>
+      ${thumb}
+      <div class="poi-marker-pin poi-marker-pin--${poi.category}" aria-hidden="true"></div>
+    </div>
+  `;
+
+  const width = isPauta ? 116 : Math.min(130, Math.max(72, label.length * 6.5 + 24));
+  const height = isPauta ? 82 : 54;
+
   return L.divIcon({
-    className: "",
-    html: `<div class="poi-marker poi-marker-${category}" aria-hidden="true"></div>`,
-    iconSize: [28, 28],
-    iconAnchor: [14, 28],
-    popupAnchor: [0, -28],
+    className: "poi-marker-leaflet",
+    html,
+    iconSize: [width, height],
+    iconAnchor: [width / 2, height],
+    popupAnchor: [0, -height + 6],
   });
 }
 
@@ -242,8 +267,9 @@ function renderMarkers() {
 
   for (const poi of filteredPois()) {
     const marker = L.marker([poi.lat, poi.lng], {
-      icon: createMarkerIcon(poi.category),
+      icon: createMarkerIcon(poi),
       title: poi.name,
+      zIndexOffset: poi.pautaId ? 800 : 0,
     });
     marker.bindPopup(popupHtml(poi));
     marker.on("click", () => highlightListItem(poi.id));
