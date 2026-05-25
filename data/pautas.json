@@ -23,6 +23,54 @@
           "Ambiente familiar y accesible"
         ]
       }
+    },
+    {
+      "id": "diana_seguros",
+      "nombre": "Diana Seguros",
+      "categoria": "Comercial",
+      "imagen": "pautas publicitarias/diana_seguros.jpg",
+      "poiId": "anatolia",
+      "slogan": "Protección que cuida de lo que más valoras",
+      "direccion": "Armenia, Quindío",
+      "telefono": "311 000 0000",
+      "whatsapp": "573110000000",
+      "whatsappMensaje": "Hola, vi Diana Seguros en el Mapa Turístico Armenia 2026. Me gustaría recibir información.",
+      "horario": "Lun–Vie 8:00 a. m. – 6:00 p. m.",
+      "ficha": {
+        "destacado": "Seguros para tu tranquilidad · Armenia, Quindío",
+        "descripcion": "Diana Seguros ofrece soluciones de seguros personalizadas para proteger lo que más valoras. Con más de 20 años de experiencia en el Quindío, somos tu aliado en seguridad y tranquilidad.",
+        "servicios": [
+          "Seguro de vida",
+          "Seguro de salud",
+          "Seguro automotriz",
+          "Seguro de hogar",
+          "Seguro comercial"
+        ]
+      }
+    },
+    {
+      "id": "quindio_travel",
+      "nombre": "Quindío Travel",
+      "categoria": "Turístico",
+      "imagen": "pautas publicitarias/quindio_travel.jpg",
+      "poiId": "anatolia",
+      "slogan": "Explora la belleza del Quindío",
+      "direccion": "Armenia, Quindío",
+      "telefono": "322 000 0000",
+      "whatsapp": "573220000000",
+      "whatsappMensaje": "Hola, vi Quindío Travel en el Mapa Turístico Armenia 2026. Me gustaría recibir información.",
+      "horario": "Lun–Dom 8:00 a. m. – 8:00 p. m.",
+      "ficha": {
+        "destacado": "Tours y experiencias en el corazón de Colombia",
+        "descripcion": "Quindío Travel te lleva a descubrir los rincones más hermosos del Quindío. Desde tours por la Zona Cafetera hasta aventura y ecoturismo, creamos experiencias inolvidables.",
+        "servicios": [
+          "Tours por la Zona Cafetera",
+          "Aventura y ecoturismo",
+          "Traslados privados",
+          "Paquetes turísticos",
+          "Guías certificados"
+        ]
+      }
     }
   ]
 }

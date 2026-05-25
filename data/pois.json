@@ -127,6 +127,30 @@
       "pautaId": "anatolia",
       "telefono": "311 701 1653",
       "horario": "Lun–Sáb 12:00 m. – 8:00 p. m."
+    },
+    {
+      "id": "diana_seguros",
+      "name": "Diana Seguros",
+      "category": "comercial",
+      "lat": 4.5350,
+      "lng": -75.6750,
+      "address": "Carrera 14 # 20-50, Armenia",
+      "description": "Protección que cuida de lo que más valoras. Seguros para tu tranquilidad en el Quindío.",
+      "pautaId": "diana_seguros",
+      "telefono": "311 000 0000",
+      "horario": "Lun–Vie 8:00 a. m. – 6:00 p. m."
+    },
+    {
+      "id": "quindio_travel",
+      "name": "Quindío Travel",
+      "category": "turistico",
+      "lat": 4.5340,
+      "lng": -75.6740,
+      "address": "Carrera 13 # 19-30, Armenia",
+      "description": "Explora la belleza del Quindío con tours por la Zona Cafetera, aventura y ecoturismo.",
+      "pautaId": "quindio_travel",
+      "telefono": "322 000 0000",
+      "horario": "Lun–Dom 8:00 a. m. – 8:00 p. m."
     }
   ]
 }

@@ -1,15 +1,15 @@
 :root {
-  --green-dark: #1b4d3e;
-  --green-mid: #2d6a4f;
-  --green-light: #52b788;
-  --brown: #6b4423;
-  --gold: #c9a227;
-  --teal: #66c2be;
-  --bg: #f4f7f5;
+  --green-dark: #0f5132;
+  --green-mid: #198754;
+  --green-light: #4caf50;
+  --brown: #d35400;
+  --gold: #f1c40f;
+  --teal: #00bcd4;
+  --bg: #e8f5e9;
   --surface: #ffffff;
-  --text: #1a2e28;
-  --text-muted: #5a6f66;
-  --shadow: 0 4px 24px rgba(27, 77, 62, 0.12);
+  --text: #004d40;
+  --text-muted: #00695c;
+  --shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
   --radius: 12px;
   --font: "Segoe UI", system-ui, -apple-system, sans-serif;
 }
@@ -44,8 +44,8 @@ body {
   justify-content: space-between;
   gap: 1rem;
   padding: 0.5rem 1.25rem 0.75rem;
-  background: linear-gradient(135deg, #e8f5e9 0%, #eef6f0 50%, #f0ebe3 100%);
-  border-bottom: 3px solid var(--green-mid);
+  background: linear-gradient(135deg, #fff 0%, #e8f5e9 50%, #fff 100%);
+  border-bottom: 4px solid var(--green-mid);
   box-shadow: var(--shadow);
 }
 
@@ -101,10 +101,14 @@ body {
 
 .pautas-panel h2 {
   margin: 0 0 0.65rem;
-  font-size: 0.95rem;
+  font-size: 1rem;
   text-transform: uppercase;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.05em;
   color: var(--green-dark);
+  background: linear-gradient(90deg, var(--green-mid) 0%, var(--green-light) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 .pautas-list {
@@ -116,42 +120,38 @@ body {
 .pauta-card {
   border-radius: var(--radius);
   overflow: hidden;
-  border: 2px solid #e2ebe6;
-  background: #fafcf9;
-}
-
-.pauta-card-btn {
-  display: block;
-  width: 100%;
-  padding: 0;
-  border: none;
-  background: none;
-  cursor: pointer;
-  line-height: 0;
-}
-
-.pauta-card-btn img {
-  width: 100%;
-  height: auto;
-  display: block;
+  border: 3px solid var(--green-mid);
+  background: #fff;
+  box-shadow: 0 4px 12px rgba(25, 135, 84, 0.2);
 }
 
 .pauta-card-btn:hover img,
 .pauta-card-btn:focus-visible img {
-  opacity: 0.92;
+  opacity: 0.85;
+  transform: scale(1.02);
+  transition: transform 0.2s;
+}
+
+.pauta-card[data-pauta-id="diana_seguros"] {
+  border-color: var(--gold);
+}
+
+.pauta-card[data-pauta-id="quindio_travel"] {
+  border-color: var(--green-mid);
 }
 
 .pauta-card-meta,
 .pauta-card-tel {
   margin: 0;
-  padding: 0.4rem 0.65rem;
-  font-size: 0.75rem;
-  color: var(--text-muted);
+  padding: 0.5rem 0.75rem;
+  font-size: 0.8rem;
+  color: var(--text);
+  background: #e8f5e9;
 }
 
 .pauta-card-tel a {
   color: var(--green-mid);
-  font-weight: 600;
+  font-weight: 700;
 }
 
 body.ficha-open {
@@ -184,11 +184,13 @@ body.ficha-open {
 .btn-secondary {
   background: var(--green-mid);
   color: #fff;
+  box-shadow: 0 4px 12px rgba(25, 135, 84, 0.3);
 }
 
 .btn-secondary:hover {
   background: var(--green-dark);
-  transform: translateY(-1px);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(15, 81, 50, 0.4);
 }
 
 .app-layout {
@@ -261,18 +263,20 @@ body.ficha-open {
 
 .filter-turistico input:checked + span {
   background: var(--green-mid);
-  border-color: var(--green-mid);
+  border-color: #157347;
+  color: #fff;
 }
 
 .filter-comercial input:checked + span {
   background: var(--gold);
-  border-color: #a8861a;
-  color: #3d3010;
+  border-color: #d4ac0d;
+  color: #fff;
 }
 
 .filter-gastronomico input:checked + span {
   background: var(--brown);
-  border-color: var(--brown);
+  border-color: #c0392b;
+  color: #fff;
 }
 
 .search-box {
@@ -365,18 +369,18 @@ body.ficha-open {
 }
 
 .cat-turistico .poi-cat {
-  background: #d8f3dc;
-  color: var(--green-dark);
+  background: #4caf50;
+  color: #fff;
 }
 
 .cat-comercial .poi-cat {
-  background: #fff3cd;
-  color: #7a5c00;
+  background: #f1c40f;
+  color: #fff;
 }
 
 .cat-gastronomico .poi-cat {
-  background: #f5e6d3;
-  color: var(--brown);
+  background: #e67e22;
+  color: #fff;
 }
 
 .legend {
@@ -409,19 +413,22 @@ body.ficha-open {
 
 .dot-turistico {
   background: var(--green-mid);
+  box-shadow: 0 0 0 3px rgba(25, 135, 84, 0.3);
 }
 
 .dot-comercial {
   background: var(--gold);
+  box-shadow: 0 0 0 3px rgba(241, 196, 15, 0.3);
 }
 
 .dot-gastronomico {
   background: var(--brown);
+  box-shadow: 0 0 0 3px rgba(211, 84, 0, 0.3);
 }
 
 .dot-pauta {
   background: var(--teal);
-  box-shadow: 0 0 0 2px var(--gold);
+  box-shadow: 0 0 0 3px var(--gold);
 }
 
 .legend-note {
@@ -440,7 +447,7 @@ body.ficha-open {
   width: 100%;
   height: 100%;
   min-height: 280px;
-  background: #c8e6c9;
+  background: #a5d6a7;
 }
 
 .map-status {
@@ -513,26 +520,30 @@ body.ficha-open {
 
 .poi-marker-wrap--turistico .poi-marker-label {
   border-color: var(--green-mid);
-  background: #f0faf4;
+  background: #e8f5e9;
+  color: var(--green-dark);
 }
 
 .poi-marker-wrap--comercial .poi-marker-label {
   border-color: var(--gold);
-  background: #fffbeb;
+  background: #fffde7;
+  color: var(--brown);
 }
 
 .poi-marker-wrap--gastronomico .poi-marker-label {
   border-color: var(--brown);
-  background: #fdf6ee;
+  background: #fff3e0;
+  color: var(--brown);
 }
 
 .poi-marker-wrap--pauta .poi-marker-label {
   font-size: 0.72rem;
   color: #fff;
-  background: var(--green-dark);
+  background: var(--green-mid);
   border-color: var(--gold);
   padding: 0.3rem 0.55rem;
   max-width: 140px;
+  box-shadow: 0 0 0 3px var(--gold);
 }
 
 .poi-marker-thumb {
@@ -566,14 +577,17 @@ body.ficha-open {
 
 .poi-marker-pin--turistico {
   background: var(--green-mid);
+  box-shadow: 0 0 0 3px rgba(25, 135, 84, 0.4);
 }
 
 .poi-marker-pin--comercial {
   background: var(--gold);
+  box-shadow: 0 0 0 3px rgba(241, 196, 15, 0.4);
 }
 
 .poi-marker-pin--gastronomico {
   background: var(--brown);
+  box-shadow: 0 0 0 3px rgba(211, 84, 0, 0.4);
 }
 
 .poi-marker-wrap--pauta .poi-marker-pin {
@@ -581,7 +595,7 @@ body.ficha-open {
   height: 26px;
   border-width: 3px;
   background: var(--teal);
-  box-shadow: 0 0 0 2px var(--gold), 0 4px 12px rgba(27, 77, 62, 0.4);
+  box-shadow: 0 0 0 3px var(--gold), 0 4px 12px rgba(0, 0, 0, 0.4);
 }
 
 .leaflet-popup-content-wrapper {
