@@ -7,8 +7,16 @@ const CATEGORY_LABELS = {
 let map;
 let markersLayer;
 let poisData = [];
+let pautasById = new Map();
 let activeCategories = new Set(["turistico", "comercial", "gastronomico"]);
 let markerById = new Map();
+
+async function loadPautas() {
+  const res = await fetch("data/pautas.json");
+  if (!res.ok) return [];
+  const data = await res.json();
+  return data.pautas || [];
+}
 
 async function loadPois() {
   const res = await fetch("data/pois.json");
@@ -27,15 +35,64 @@ function createMarkerIcon(category) {
   });
 }
 
+function escapeHtml(text) {
+  const div = document.createElement("div");
+  div.textContent = text;
+  return div.innerHTML;
+}
+
 function popupHtml(poi) {
+  const pauta = poi.pautaId ? pautasById.get(poi.pautaId) : null;
+  const pautaBlock = pauta
+    ? `<figure class="popup-pauta"><img src="${escapeHtml(pauta.imagen)}" alt="Pauta ${escapeHtml(pauta.nombre)}" loading="lazy" /></figure>`
+    : "";
+  const tel = poi.telefono
+    ? `<p><strong>Tel:</strong> <a href="tel:+57${poi.telefono.replace(/\D/g, "")}">${escapeHtml(poi.telefono)}</a></p>`
+    : "";
+  const horario = poi.horario ? `<p><strong>Horario:</strong> ${escapeHtml(poi.horario)}</p>` : "";
+
   return `
-    <div>
+    <div class="popup-body">
+      ${pautaBlock}
       <span class="popup-cat">${CATEGORY_LABELS[poi.category]}</span>
-      <h3>${poi.name}</h3>
-      <p>${poi.description}</p>
-      ${poi.address ? `<p><strong>Dirección:</strong> ${poi.address}</p>` : ""}
+      <h3>${escapeHtml(poi.name)}</h3>
+      <p>${escapeHtml(poi.description)}</p>
+      ${poi.address ? `<p><strong>Dirección:</strong> ${escapeHtml(poi.address)}</p>` : ""}
+      ${tel}
+      ${horario}
     </div>
   `;
+}
+
+function renderPautas() {
+  const container = document.getElementById("pautas-list");
+  const panel = document.getElementById("pautas-panel");
+  if (!container) return;
+
+  const pautas = [...pautasById.values()];
+  if (pautas.length === 0) {
+    panel.hidden = true;
+    return;
+  }
+
+  panel.hidden = false;
+  container.innerHTML = pautas
+    .map(
+      (p) => `
+    <article class="pauta-card">
+      <button type="button" class="pauta-card-btn" data-poi-id="${escapeHtml(p.poiId)}" title="Ver en el mapa">
+        <img src="${escapeHtml(p.imagen)}" alt="${escapeHtml(p.nombre)} — ${escapeHtml(p.slogan || "")}" loading="lazy" />
+      </button>
+      <p class="pauta-card-meta">${escapeHtml(p.direccion || "")}</p>
+      ${p.telefono ? `<p class="pauta-card-tel"><a href="tel:+57${p.telefono.replace(/\D/g, "")}">${escapeHtml(p.telefono)}</a></p>` : ""}
+    </article>
+  `
+    )
+    .join("");
+
+  container.querySelectorAll(".pauta-card-btn").forEach((btn) => {
+    btn.addEventListener("click", () => focusPoi(btn.dataset.poiId));
+  });
 }
 
 function filteredPois() {
@@ -220,9 +277,11 @@ function initMap(meta) {
 
 async function init() {
   try {
-    const { meta, pois } = await loadPois();
+    const [{ meta, pois }, pautas] = await Promise.all([loadPois(), loadPautas()]);
     poisData = pois;
+    pautasById = new Map(pautas.map((p) => [p.id, p]));
     initMap(meta);
+    renderPautas();
     initFilters();
     initSearch();
     initLocate();

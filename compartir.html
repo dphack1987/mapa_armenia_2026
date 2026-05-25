@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Compartir · Mapa Armenia 2026</title>
+  <link rel="stylesheet" href="css/styles.css" />
+  <link rel="stylesheet" href="css/compartir.css" />
+</head>
+<body class="compartir-page">
+  <main class="compartir-card">
+    <a href="index.html" class="compartir-back">← Volver al mapa</a>
+    <img src="logo_armenia.png" alt="Mapa Armenia 2026" class="compartir-logo" />
+    <h1>Comparte el mapa</h1>
+    <p class="compartir-lead">Escanea el código QR para abrir el mapa turístico, comercial y gastronómico de Armenia.</p>
+
+    <div class="qr-wrap">
+      <canvas id="qr-canvas" aria-label="Código QR del mapa"></canvas>
+      <img id="qr-fallback" class="qr-fallback" alt="" hidden />
+    </div>
+
+    <p class="share-url"><a id="share-link" href="#" target="_blank" rel="noopener"></a></p>
+
+    <div class="compartir-actions">
+      <a id="btn-open" class="btn btn-secondary" href="#">Abrir mapa</a>
+      <button type="button" id="btn-download" class="btn btn-secondary">Descargar QR</button>
+    </div>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.4/build/qrcode.min.js"></script>
+  <script src="js/compartir.js" type="module"></script>
+</body>
+</html>

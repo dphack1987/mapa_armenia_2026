@@ -35,8 +35,8 @@ body {
   align-items: center;
   justify-content: space-between;
   gap: 1rem;
-  padding: 0.75rem 1.25rem;
-  background: linear-gradient(135deg, #e8f5e9 0%, #fff 55%, #f0ebe3 100%);
+  padding: 0.5rem 1.25rem 0.75rem;
+  background: linear-gradient(135deg, #e8f5e9 0%, #eef6f0 50%, #f0ebe3 100%);
   border-bottom: 3px solid var(--green-mid);
   box-shadow: var(--shadow);
 }
@@ -44,14 +44,21 @@ body {
 .header-brand {
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: 1.25rem;
   flex: 1;
   min-width: 280px;
 }
 
+.logo-wrap {
+  flex-shrink: 0;
+  line-height: 0;
+}
+
 .logo-main {
-  height: 72px;
+  display: block;
+  height: clamp(120px, 18vw, 200px);
   width: auto;
+  max-width: min(520px, 72vw);
   object-fit: contain;
 }
 
@@ -74,9 +81,81 @@ body {
   gap: 1rem;
 }
 
-.logo-partner {
-  height: 36px;
-  width: auto;
+.header-actions .btn {
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+}
+
+.pautas-panel {
+  margin-bottom: 1.25rem;
+}
+
+.pautas-panel h2 {
+  margin: 0 0 0.65rem;
+  font-size: 0.95rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--green-dark);
+}
+
+.pautas-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.pauta-card {
+  border-radius: var(--radius);
+  overflow: hidden;
+  border: 2px solid #e2ebe6;
+  background: #fafcf9;
+}
+
+.pauta-card-btn {
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+  line-height: 0;
+}
+
+.pauta-card-btn img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.pauta-card-btn:hover img,
+.pauta-card-btn:focus-visible img {
+  opacity: 0.92;
+}
+
+.pauta-card-meta,
+.pauta-card-tel {
+  margin: 0;
+  padding: 0.4rem 0.65rem;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.pauta-card-tel a {
+  color: var(--green-mid);
+  font-weight: 600;
+}
+
+.popup-pauta {
+  margin: 0 0 0.5rem;
+}
+
+.popup-pauta img {
+  width: 100%;
+  max-width: 280px;
+  height: auto;
+  border-radius: 8px;
+  display: block;
 }
 
 .btn {
@@ -103,7 +182,7 @@ body {
 .app-layout {
   display: grid;
   grid-template-columns: minmax(280px, 340px) 1fr;
-  height: calc(100vh - 140px);
+  height: calc(100vh - var(--header-offset, 200px));
   min-height: 420px;
 }
 
@@ -428,7 +507,7 @@ body {
     grid-template-columns: 1fr;
     grid-template-rows: auto 1fr;
     height: auto;
-    min-height: calc(100vh - 140px);
+    min-height: calc(100vh - 220px);
   }
 
   .sidebar {
@@ -442,6 +521,8 @@ body {
   }
 
   .logo-main {
-    height: 56px;
+    height: clamp(100px, 28vw, 140px);
+    max-width: 100%;
   }
+
 }

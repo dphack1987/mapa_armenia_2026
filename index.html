@@ -11,14 +11,16 @@
 <body>
   <header class="site-header">
     <div class="header-brand">
-      <img src="logo_armenia.jpg" alt="Mapa turístico, comercial y gastronómico de Armenia 2026" class="logo-main" />
+      <div class="logo-wrap">
+        <img src="logo_armenia.png" alt="Mapa turístico, comercial y gastronómico de Armenia 2026" class="logo-main" />
+      </div>
       <div class="header-meta">
         <p class="tagline">Explora Armenia · Ciudad Milagro</p>
         <p class="edition">Edición digital 2026 · Quindío, Colombia</p>
       </div>
     </div>
     <div class="header-actions">
-      <img src="logo_anatolia.jpg" alt="Anatolia" class="logo-partner" />
+      <a href="compartir.html" class="btn btn-secondary" title="Compartir mapa con QR">Compartir</a>
       <button type="button" id="btn-locate" class="btn btn-secondary" title="Centrar en mi ubicación">
         Mi ubicación
       </button>
@@ -47,6 +49,11 @@
             <span>Gastronómico</span>
           </label>
         </div>
+      </section>
+
+      <section class="pautas-panel" id="pautas-panel" aria-label="Pautas publicitarias">
+        <h2>Pautas publicitarias</h2>
+        <div id="pautas-list" class="pautas-list"></div>
       </section>
 
       <section class="search-box">
@@ -78,7 +85,6 @@
 
   <footer class="site-footer">
     <p>Mapa turístico, comercial y gastronómico · Armenia, Quindío · 2026</p>
-    <p class="footer-credit">Diseño digital · <strong>Anatolia</strong></p>
   </footer>
 
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>

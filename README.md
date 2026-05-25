@@ -4,44 +4,54 @@ Mapa turístico, comercial y gastronómico de **Armenia, Quindío · Colombia 20
 
 ## Contenido
 
-| Archivo | Descripción |
-|---------|-------------|
-| `index.html` | Mapa interactivo principal |
-| `logo_armenia.jpg` | Logo oficial del mapa |
-| `logo_anatolia.jpg` | Marca Anatolia |
-| `data/pois.json` | Lugares de interés (coordenadas y textos) |
-| `css/styles.css` | Estilos (colores del logo: verdes, café, dorado, teal) |
-| `js/map.js` | Lógica del mapa (Leaflet + OpenStreetMap) |
+| Archivo / carpeta | Descripción |
+|-------------------|-------------|
+| `index.html` | Mapa interactivo |
+| `compartir.html` | Página con código QR para compartir |
+| `logo_armenia.png` | Logo del mapa (sin fondo blanco) |
+| `pautas publicitarias/` | Creativos publicitarios de patrocinadores |
+| `data/pois.json` | Lugares en el mapa |
+| `data/pautas.json` | Pautas vinculadas a puntos (`poiId`) |
+| `data/site.json` | URL pública para el QR |
+| `js/map.js` | Lógica del mapa (Leaflet) |
 
-## Cómo ver el mapa
+**Nota:** No se usa el logo tipográfico de Anatolia en la interfaz; solo la **pauta** en `pautas publicitarias/anatolia.png`.
 
-Abre la carpeta con un servidor local (necesario para cargar `pois.json`):
+## Ver en local
 
 ```powershell
 cd "C:\Users\user\Documents\mapa armenia 2026\mapa digital armenia 2026"
 python -m http.server 8080
 ```
 
-Luego visita: http://localhost:8080
+- Mapa: http://localhost:8080  
+- QR: http://localhost:8080/compartir.html  
 
-## Agregar o editar lugares
+## Compartir (QR)
 
-Edita `data/pois.json`. Cada punto necesita:
+1. Edita `data/site.json` → `shareUrl` (por defecto GitHub Pages).
+2. Activa **Pages** en el repo: Settings → Pages → origen **GitHub Actions**.
+3. Tras el deploy, el QR en `compartir.html` apunta a la URL pública.
 
-- `id`: identificador único (sin espacios)
-- `name`, `category` (`turistico` | `comercial` | `gastronomico`)
-- `lat`, `lng` (coordenadas WGS84)
-- `address`, `description` (opcionales pero recomendados)
+Generar PNG del QR:
 
-Puedes obtener coordenadas en [OpenStreetMap](https://www.openstreetmap.org/) (clic derecho → mostrar dirección / copiar coordenadas).
+```powershell
+pip install qrcode[pil]
+python scripts/generate_qr.py
+```
 
-## Relación con el diseño impreso
+## Verificar imágenes
 
-En la carpeta superior hay archivos CorelDRAW (`.cdr`) de las caras 1 y 2 del mapa impreso. Este proyecto digital es la versión interactiva complementaria; puedes sincronizar los puntos del JSON con los del diseño en Corel.
+```powershell
+python scripts/verify_images.py
+```
 
-## Próximos pasos sugeridos
+## Nueva pauta publicitaria
 
-1. Completar `pois.json` con todos los establecimientos del mapa impreso.
-2. Añadir logos de patrocinadores si aplica.
-3. Exportar capturas o PDF desde el navegador para redes sociales.
-4. Publicar en hosting estático (Netlify, GitHub Pages, etc.).
+1. Guarda el PNG en `pautas publicitarias/nombre.png`.
+2. Añade entrada en `data/pautas.json` (`imagen`, `poiId`, datos de contacto).
+3. Añade el punto en `data/pois.json` con el mismo `id` que `poiId` y `"pautaId": "..."`.
+
+## Repositorio
+
+https://github.com/dphack1987/mapa_armenia_2026

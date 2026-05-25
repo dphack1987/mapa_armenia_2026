@@ -1,0 +1,14 @@
+{
+  "pautas": [
+    {
+      "id": "anatolia",
+      "nombre": "Anatolia",
+      "imagen": "pautas publicitarias/anatolia.png",
+      "poiId": "anatolia",
+      "slogan": "Un encuentro de sabores en Quindío",
+      "direccion": "Avenida 19 # 35 norte 41, Armenia",
+      "telefono": "311 701 1653",
+      "horario": "Lun–Sáb 12:00 m. – 8:00 p. m."
+    }
+  ]
+}

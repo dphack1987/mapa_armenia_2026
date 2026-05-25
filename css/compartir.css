@@ -1,0 +1,89 @@
+.compartir-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  background: linear-gradient(160deg, #e8f5e9 0%, #f4f7f5 45%, #f0ebe3 100%);
+}
+
+.compartir-card {
+  max-width: 420px;
+  width: 100%;
+  text-align: center;
+  background: var(--surface);
+  border-radius: 16px;
+  padding: 1.75rem 1.5rem 2rem;
+  box-shadow: var(--shadow);
+  border: 2px solid #d8e6df;
+}
+
+.compartir-back {
+  display: inline-block;
+  margin-bottom: 1rem;
+  font-size: 0.85rem;
+  color: var(--green-mid);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.compartir-back:hover {
+  color: var(--green-dark);
+}
+
+.compartir-logo {
+  height: 100px;
+  width: auto;
+  max-width: 100%;
+  object-fit: contain;
+}
+
+.compartir-card h1 {
+  margin: 0.75rem 0 0.35rem;
+  font-size: 1.35rem;
+  color: var(--green-dark);
+}
+
+.compartir-lead {
+  margin: 0 0 1.25rem;
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
+.qr-wrap {
+  display: flex;
+  justify-content: center;
+  padding: 1rem;
+  background: #fff;
+  border-radius: var(--radius);
+  border: 1px solid #e2ebe6;
+}
+
+#qr-canvas,
+.qr-fallback {
+  width: 240px;
+  height: 240px;
+  display: block;
+}
+
+.share-url {
+  margin: 1rem 0;
+  font-size: 0.8rem;
+  word-break: break-all;
+}
+
+.share-url a {
+  color: var(--green-mid);
+}
+
+.compartir-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  justify-content: center;
+}
+
+.compartir-actions .btn {
+  text-decoration: none;
+}

@@ -115,6 +115,18 @@
       "lng": -75.6735,
       "address": "Parque Sucre – Plaza de Bolívar",
       "description": "Tradicional oferta de café quindiano, arepas, empanadas y cocina de autor en el centro histórico."
+    },
+    {
+      "id": "anatolia",
+      "name": "Anatolia",
+      "category": "gastronomico",
+      "lat": 4.5512,
+      "lng": -75.6598,
+      "address": "Avenida 19 # 35 norte 41",
+      "description": "Café restaurante inclusivo. Un encuentro de sabores en Quindío.",
+      "pautaId": "anatolia",
+      "telefono": "311 701 1653",
+      "horario": "Lun–Sáb 12:00 m. – 8:00 p. m."
     }
   ]
 }
