@@ -57,8 +57,13 @@ export function initDecoracionesMapa(config) {
     setDecorVar(capa.id, capa);
   }
 
-  const container = ensureAccentContainer();
-  renderAcentos(config.acentos, container);
+  const container = document.getElementById("decor-accents");
+  if (container) container.innerHTML = "";
+
+  if (config.acentos?.length) {
+    renderAcentos(config.acentos, ensureAccentContainer());
+  }
+
   document.body.classList.add("decor-activo");
 }
 
@@ -71,11 +76,7 @@ export function initDecoracionesCompartir(config) {
     String(opacidad ?? 0.25)
   );
 
-  if (acentos && config.acentos) {
-    const container = ensureAccentContainer();
-    renderAcentos(config.acentos, container);
-    document.body.classList.add("decor-activo", "decor-compartir");
-  }
+  document.body.classList.add("decor-compartir");
 }
 
 export function initFichaDecor(config) {
@@ -85,9 +86,6 @@ export function initFichaDecor(config) {
   if (f.fondo) {
     root.style.setProperty("--ficha-bg", `url("${f.fondo}")`);
     root.style.setProperty("--ficha-bg-opacity", String(f.opacidad ?? 0.12));
-  }
-  if (f.acento) {
-    root.style.setProperty("--ficha-acento", `url("${f.acento}")`);
   }
 }
 

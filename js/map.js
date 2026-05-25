@@ -64,6 +64,17 @@ function telefonoHref(tel) {
   return `tel:+57${n.startsWith("57") ? n.slice(2) : n}`;
 }
 
+function comoLlegarUrl(pauta) {
+  const poi = poisData.find((p) => p.id === pauta.poiId);
+  if (poi) {
+    return `https://www.google.com/maps/dir/?api=1&destination=${poi.lat},${poi.lng}`;
+  }
+  const dest = pauta.direccion
+    ? `${pauta.direccion}, Armenia, Quindío, Colombia`
+    : "Armenia, Quindío";
+  return `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(dest)}`;
+}
+
 function popupHtml(poi) {
   const pauta = poi.pautaId ? pautasById.get(poi.pautaId) : null;
   const tel = poi.telefono || pauta?.telefono;
@@ -73,7 +84,9 @@ function popupHtml(poi) {
   let actions = "";
   if (pauta) {
     actions = `<div class="popup-actions">
-      <a href="#" class="popup-btn-ficha" data-ficha-id="${escapeHtml(pauta.id)}">Ficha informativa</a>
+      <a href="#" class="popup-btn-ficha" data-ficha-id="${escapeHtml(pauta.id)}">Ver ficha</a>
+      <a href="${comoLlegarUrl(pauta)}" class="popup-btn-llegar" target="_blank" rel="noopener">Cómo llegar</a>
+      ${pauta.telefono ? `<a href="${telefonoHref(pauta.telefono)}" class="popup-btn-llamar">Llamar</a>` : ""}
       ${pauta.whatsapp || pauta.telefono ? `<a href="${whatsappUrl(pauta)}" class="popup-btn-wa" target="_blank" rel="noopener">WhatsApp</a>` : ""}
     </div>`;
   }
@@ -123,11 +136,11 @@ function buildFichaHtml(pauta) {
         </div>
       </div>
       <footer class="ficha-actions">
-        ${wa ? `<a class="btn btn-whatsapp" href="${whatsappUrl(pauta)}" target="_blank" rel="noopener">${WA_ICON} Contactar por WhatsApp</a>` : ""}
-        <div class="ficha-actions-row">
-          <button type="button" class="btn btn-secondary btn-outline" data-ficha-mapa="${escapeHtml(pauta.poiId)}">Ver en el mapa</button>
-          ${pauta.telefono ? `<a class="btn btn-secondary btn-outline" href="${telefonoHref(pauta.telefono)}">Llamar</a>` : ""}
-        </div>
+        <p class="ficha-actions-title">Contacto y ubicación</p>
+        <a class="btn btn-llegar" href="${comoLlegarUrl(pauta)}" target="_blank" rel="noopener">Cómo llegar</a>
+        ${pauta.telefono ? `<a class="btn btn-llamar" href="${telefonoHref(pauta.telefono)}">Llamar</a>` : ""}
+        ${wa ? `<a class="btn btn-whatsapp" href="${whatsappUrl(pauta)}" target="_blank" rel="noopener">${WA_ICON} Escribir por WhatsApp</a>` : ""}
+        <button type="button" class="ficha-link-mapa" data-ficha-mapa="${escapeHtml(pauta.poiId)}">Ver ubicación en el mapa</button>
       </footer>
     </div>
   `;
@@ -151,6 +164,11 @@ function openFicha(pautaId) {
   content.querySelector("[data-ficha-mapa]")?.addEventListener("click", () => {
     closeFicha();
     focusPoi(pauta.poiId);
+  });
+
+  requestAnimationFrame(() => {
+    const dialog = modal.querySelector(".ficha-dialog");
+    if (dialog) dialog.scrollTop = 0;
   });
 }
 

@@ -109,56 +109,6 @@ body.decor-activo .pauta-card {
   z-index: 1;
 }
 
-/* Acentos flotantes: colibrí, mariposas */
-.decor-accents {
-  position: fixed;
-  inset: 0;
-  z-index: 2;
-  pointer-events: none;
-  overflow: hidden;
-}
-
-.decor-acento {
-  position: fixed;
-  width: var(--acento-size, 120px);
-  height: auto;
-  object-fit: contain;
-  filter: drop-shadow(0 6px 14px rgba(27, 77, 62, 0.2));
-  animation: decor-flotar 5s ease-in-out infinite;
-}
-
-.decor-acento--mapa-top {
-  top: 5.5rem;
-  right: 2rem;
-  animation-delay: 0s;
-  z-index: 500;
-}
-
-.decor-acento--sidebar {
-  top: 38%;
-  left: 0.5rem;
-  max-width: min(110px, 28vw);
-  animation-delay: 1.2s;
-  animation-duration: 6s;
-}
-
-.decor-acento--mapa {
-  bottom: 4rem;
-  right: 1.5rem;
-  animation-delay: 2s;
-  animation-duration: 7s;
-}
-
-@keyframes decor-flotar {
-  0%,
-  100% {
-    transform: translateY(0) rotate(0deg);
-  }
-  50% {
-    transform: translateY(-10px) rotate(2deg);
-  }
-}
-
 .site-header,
 .app-layout,
 .site-footer,
@@ -186,21 +136,6 @@ body.decor-activo .pauta-card {
   z-index: 0;
 }
 
-body.decor-compartir .decor-acento--sidebar {
-  display: none;
-}
-
-body.decor-compartir .decor-acento--mapa {
-  bottom: 2rem;
-  right: 5%;
-}
-
-body.decor-compartir .decor-acento--mapa-top {
-  top: 1rem;
-  left: 5%;
-  right: auto;
-}
-
 .compartir-page .compartir-card {
   position: relative;
   z-index: 1;
@@ -226,32 +161,7 @@ body.decor-compartir .decor-acento--mapa-top {
 }
 
 @media (max-width: 900px) {
-  .decor-acento--mapa-top {
-    width: min(80px, 18vw);
-    top: auto;
-    bottom: 48vh;
-    right: 0.5rem;
-    opacity: 0.8;
-  }
-
-  .decor-acento--sidebar {
-    top: 32%;
-    opacity: 0.75;
-  }
-
-  .decor-acento--mapa {
-    width: min(100px, 22vw);
-    bottom: 52vh;
-    opacity: 0.8;
-  }
-
   body.decor-activo .sidebar > section {
     padding: 0.65rem;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .decor-acento {
-    animation: none;
   }
 }
