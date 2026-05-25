@@ -15,28 +15,57 @@
 .ficha-backdrop {
   position: absolute;
   inset: 0;
-  background: rgba(27, 77, 62, 0.55);
-  backdrop-filter: blur(4px);
+  background: rgba(27, 77, 62, 0.6);
+  backdrop-filter: blur(6px);
 }
 
 .ficha-dialog {
   position: relative;
-  width: min(520px, 100%);
-  max-height: min(92vh, 900px);
+  width: min(540px, 100%);
+  max-height: min(92vh, 920px);
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  background: #fff;
-  border-radius: 16px;
-  box-shadow: 0 20px 60px rgba(27, 77, 62, 0.25);
+  background: linear-gradient(180deg, #fff 0%, #f8fcf9 100%);
+  border-radius: 18px;
+  box-shadow: 0 24px 64px rgba(27, 77, 62, 0.35);
   border: 3px solid var(--green-mid);
-  animation: ficha-in 0.25s ease-out;
+  animation: ficha-in 0.28s ease-out;
+}
+
+.ficha-dialog::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image: var(--ficha-bg, none);
+  background-size: cover;
+  background-position: center;
+  opacity: var(--ficha-bg-opacity, 0.1);
+  border-radius: 15px;
+}
+
+.ficha-dialog::after {
+  content: "";
+  position: absolute;
+  top: 0.5rem;
+  right: 3rem;
+  width: 72px;
+  height: 72px;
+  background-image: var(--ficha-acento, none);
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  opacity: 0.35;
+  pointer-events: none;
+  z-index: 1;
 }
 
 @keyframes ficha-in {
   from {
     opacity: 0;
-    transform: translateY(12px) scale(0.98);
+    transform: translateY(16px) scale(0.97);
   }
   to {
     opacity: 1;
@@ -48,17 +77,17 @@
   position: absolute;
   top: 0.5rem;
   right: 0.5rem;
-  z-index: 2;
-  width: 2.25rem;
-  height: 2.25rem;
+  z-index: 5;
+  width: 2.35rem;
+  height: 2.35rem;
   border: none;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.95);
+  background: rgba(255, 255, 255, 0.98);
   color: var(--green-dark);
   font-size: 1.5rem;
   line-height: 1;
   cursor: pointer;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.18);
 }
 
 .ficha-close:hover {
@@ -67,6 +96,55 @@
 }
 
 .ficha-content {
+  position: relative;
+  z-index: 2;
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.ficha-inner {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+}
+
+.ficha-hero {
+  position: relative;
+  flex-shrink: 0;
+  line-height: 0;
+  background: linear-gradient(180deg, #e8f5e9 0%, #fff 100%);
+  border-bottom: 2px solid #e2ebe6;
+}
+
+.ficha-hero img {
+  width: 100%;
+  height: auto;
+  max-height: 220px;
+  object-fit: contain;
+  object-position: center;
+  display: block;
+}
+
+.ficha-hero-badge {
+  position: absolute;
+  bottom: 0.5rem;
+  left: 0.75rem;
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #fff;
+  background: var(--green-mid);
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+  line-height: 1.3;
+}
+
+.ficha-scroll {
   flex: 1;
   min-height: 0;
   overflow-x: hidden;
@@ -75,21 +153,10 @@
   -webkit-overflow-scrolling: touch;
 }
 
-.ficha-hero {
-  line-height: 0;
-  background: linear-gradient(180deg, #e8f5e9 0%, #fff 100%);
-}
-
-.ficha-hero img {
-  width: 100%;
-  height: auto;
-  max-height: 200px;
-  object-fit: cover;
-  object-position: center top;
-}
-
 .ficha-body {
-  padding: 1.25rem 1.35rem 1.5rem;
+  padding: 1.15rem 1.35rem 1rem;
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(4px);
 }
 
 .ficha-cat {
@@ -107,14 +174,14 @@
 
 .ficha-body h2 {
   margin: 0 0 0.25rem;
-  font-size: 1.65rem;
+  font-size: 1.75rem;
   color: var(--green-dark);
   line-height: 1.15;
 }
 
 .ficha-slogan {
   margin: 0 0 0.75rem;
-  font-size: 1rem;
+  font-size: 1.05rem;
   font-style: italic;
   color: var(--teal);
   font-weight: 600;
@@ -122,63 +189,81 @@
 
 .ficha-destacado {
   margin: 0 0 0.85rem;
-  padding: 0.65rem 0.85rem;
-  background: #e8f5e9;
-  border-left: 4px solid var(--green-mid);
-  border-radius: 0 8px 8px 0;
-  font-size: 0.88rem;
+  padding: 0.7rem 0.9rem;
+  background: linear-gradient(90deg, #e8f5e9 0%, #f0faf2 100%);
+  border-left: 4px solid var(--gold);
+  border-radius: 0 10px 10px 0;
+  font-size: 0.9rem;
   color: var(--green-dark);
-  line-height: 1.45;
+  line-height: 1.5;
 }
 
 .ficha-descripcion {
   margin: 0 0 1rem;
-  font-size: 0.9rem;
-  line-height: 1.55;
+  font-size: 0.92rem;
+  line-height: 1.6;
   color: var(--text);
 }
 
 .ficha-servicios h3,
 .ficha-datos h3 {
-  margin: 0 0 0.5rem;
+  margin: 0 0 0.55rem;
   font-size: 0.8rem;
   text-transform: uppercase;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.05em;
   color: var(--green-dark);
 }
 
 .ficha-servicios ul {
   margin: 0 0 1rem;
   padding-left: 1.2rem;
-  font-size: 0.85rem;
-  line-height: 1.5;
+  font-size: 0.88rem;
+  line-height: 1.55;
   color: var(--text-muted);
 }
 
+.ficha-servicios li {
+  margin-bottom: 0.25rem;
+}
+
 .ficha-datos dl {
-  margin: 0 0 1.15rem;
+  margin: 0;
   display: grid;
-  gap: 0.5rem;
+  gap: 0.65rem;
+}
+
+.ficha-dato {
+  padding: 0.55rem 0.7rem;
+  background: #f4faf6;
+  border-radius: 8px;
+  border: 1px solid #e2ebe6;
 }
 
 .ficha-datos dt {
   font-size: 0.72rem;
   font-weight: 700;
-  text-transform: uppercase;
-  color: var(--text-muted);
-  letter-spacing: 0.03em;
+  color: var(--green-mid);
+  margin-bottom: 0.15rem;
 }
 
 .ficha-datos dd {
   margin: 0;
   font-size: 0.9rem;
   color: var(--text);
+  line-height: 1.45;
+}
+
+.ficha-datos dd a {
+  color: var(--green-mid);
+  font-weight: 600;
 }
 
 .ficha-actions {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
+  flex-shrink: 0;
+  padding: 1rem 1.25rem 1.25rem;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.95) 0%, #eef6f0 100%);
+  border-top: 2px solid #d8e6df;
+  box-shadow: 0 -4px 20px rgba(27, 77, 62, 0.08);
 }
 
 .ficha-actions .btn {
@@ -188,23 +273,38 @@
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
+  width: 100%;
+}
+
+.ficha-actions-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.ficha-actions-row .btn {
+  flex: 1;
+  min-width: 120px;
 }
 
 .btn-whatsapp {
-  background: #25d366;
+  background: linear-gradient(180deg, #2ee66d 0%, #25d366 100%);
   color: #fff;
-  font-size: 1rem;
-  padding: 0.75rem 1rem;
+  font-size: 1.05rem;
+  font-weight: 700;
+  padding: 0.85rem 1rem;
+  box-shadow: 0 4px 14px rgba(37, 211, 102, 0.35);
 }
 
 .btn-whatsapp:hover {
-  background: #1da851;
+  background: linear-gradient(180deg, #25d366 0%, #1da851 100%);
   transform: translateY(-1px);
 }
 
 .btn-whatsapp svg {
-  width: 1.35rem;
-  height: 1.35rem;
+  width: 1.4rem;
+  height: 1.4rem;
   flex-shrink: 0;
 }
 
@@ -245,9 +345,38 @@
 
 .pauta-card-hint {
   margin: 0;
-  padding: 0 0.65rem 0.5rem;
+  padding: 0.35rem 0.65rem 0.55rem;
   font-size: 0.7rem;
   color: var(--teal);
   font-weight: 600;
   text-align: center;
+}
+
+@media (max-width: 480px) {
+  .ficha-modal {
+    padding: 0.5rem;
+  }
+
+  .ficha-dialog {
+    max-height: 96vh;
+    border-radius: 14px;
+  }
+
+  .ficha-hero img {
+    max-height: 180px;
+  }
+
+  .ficha-actions-row {
+    flex-direction: column;
+  }
+
+  .ficha-actions-row .btn {
+    min-width: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ficha-dialog {
+    animation: none;
+  }
 }

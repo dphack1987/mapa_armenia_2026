@@ -78,6 +78,19 @@ export function initDecoracionesCompartir(config) {
   }
 }
 
+export function initFichaDecor(config) {
+  const f = config?.ficha;
+  if (!f) return;
+  const root = document.documentElement;
+  if (f.fondo) {
+    root.style.setProperty("--ficha-bg", `url("${f.fondo}")`);
+    root.style.setProperty("--ficha-bg-opacity", String(f.opacidad ?? 0.12));
+  }
+  if (f.acento) {
+    root.style.setProperty("--ficha-acento", `url("${f.acento}")`);
+  }
+}
+
 export function getQrAsset(config) {
   return config?.qr?.imagen || "assets/qr-mapa-armenia-display.jpg";
 }

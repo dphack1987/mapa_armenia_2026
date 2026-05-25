@@ -49,5 +49,10 @@
     "fondo": "decoraciones/2149015443.jpg",
     "opacidad": 0.28,
     "acentos": true
+  },
+  "ficha": {
+    "fondo": "decoraciones/8940221_4042181.jpg",
+    "opacidad": 0.12,
+    "acento": "decoraciones/mariposa_2.png"
   }
 }

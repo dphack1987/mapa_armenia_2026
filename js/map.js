@@ -1,6 +1,7 @@
 import {
   loadDecoraciones,
   initDecoracionesMapa,
+  initFichaDecor,
 } from "./decoraciones.js";
 
 const CATEGORY_LABELS = {
@@ -98,29 +99,36 @@ function buildFichaHtml(pauta) {
   const wa = pauta.whatsapp || pauta.telefono;
 
   return `
-    <div class="ficha-hero">
-      <img src="${escapeHtml(pauta.imagen)}" alt="${escapeHtml(pauta.nombre)}" />
-    </div>
-    <div class="ficha-body">
-      ${pauta.categoria ? `<span class="ficha-cat">${escapeHtml(pauta.categoria)}</span>` : ""}
-      <h2 id="ficha-titulo">${escapeHtml(pauta.nombre)}</h2>
-      ${pauta.slogan ? `<p class="ficha-slogan">${escapeHtml(pauta.slogan)}</p>` : ""}
-      ${ficha.destacado ? `<p class="ficha-destacado">${escapeHtml(ficha.destacado)}</p>` : ""}
-      ${ficha.descripcion ? `<p class="ficha-descripcion">${escapeHtml(ficha.descripcion)}</p>` : ""}
-      ${servicios ? `<section class="ficha-servicios"><h3>Servicios</h3><ul>${servicios}</ul></section>` : ""}
-      <section class="ficha-datos">
-        <h3>Información</h3>
-        <dl>
-          ${pauta.direccion ? `<div><dt>Dirección</dt><dd>${escapeHtml(pauta.direccion)}</dd></div>` : ""}
-          ${pauta.horario ? `<div><dt>Horario</dt><dd>${escapeHtml(pauta.horario)}</dd></div>` : ""}
-          ${pauta.telefono ? `<div><dt>Teléfono</dt><dd><a href="${telefonoHref(pauta.telefono)}">${escapeHtml(pauta.telefono)}</a></dd></div>` : ""}
-        </dl>
-      </section>
-      <div class="ficha-actions">
-        ${wa ? `<a class="btn btn-whatsapp" href="${whatsappUrl(pauta)}" target="_blank" rel="noopener">${WA_ICON} Escribir por WhatsApp</a>` : ""}
-        <button type="button" class="btn btn-secondary btn-outline" data-ficha-mapa="${escapeHtml(pauta.poiId)}">Ver en el mapa</button>
-        ${pauta.telefono ? `<a class="btn btn-secondary btn-outline" href="${telefonoHref(pauta.telefono)}">Llamar</a>` : ""}
+    <div class="ficha-inner">
+      <div class="ficha-hero">
+        <img src="${escapeHtml(pauta.imagen)}" alt="Pauta ${escapeHtml(pauta.nombre)}" />
+        <span class="ficha-hero-badge">Pauta publicitaria</span>
       </div>
+      <div class="ficha-scroll">
+        <div class="ficha-body">
+          ${pauta.categoria ? `<span class="ficha-cat">${escapeHtml(pauta.categoria)}</span>` : ""}
+          <h2 id="ficha-titulo">${escapeHtml(pauta.nombre)}</h2>
+          ${pauta.slogan ? `<p class="ficha-slogan">${escapeHtml(pauta.slogan)}</p>` : ""}
+          ${ficha.destacado ? `<p class="ficha-destacado">${escapeHtml(ficha.destacado)}</p>` : ""}
+          ${ficha.descripcion ? `<p class="ficha-descripcion">${escapeHtml(ficha.descripcion)}</p>` : ""}
+          ${servicios ? `<section class="ficha-servicios"><h3>Servicios</h3><ul>${servicios}</ul></section>` : ""}
+          <section class="ficha-datos">
+            <h3>Información de contacto</h3>
+            <dl>
+              ${pauta.direccion ? `<div class="ficha-dato"><dt>Dirección</dt><dd>${escapeHtml(pauta.direccion)}</dd></div>` : ""}
+              ${pauta.horario ? `<div class="ficha-dato"><dt>Horario</dt><dd>${escapeHtml(pauta.horario)}</dd></div>` : ""}
+              ${pauta.telefono ? `<div class="ficha-dato"><dt>Teléfono</dt><dd><a href="${telefonoHref(pauta.telefono)}">${escapeHtml(pauta.telefono)}</a></dd></div>` : ""}
+            </dl>
+          </section>
+        </div>
+      </div>
+      <footer class="ficha-actions">
+        ${wa ? `<a class="btn btn-whatsapp" href="${whatsappUrl(pauta)}" target="_blank" rel="noopener">${WA_ICON} Contactar por WhatsApp</a>` : ""}
+        <div class="ficha-actions-row">
+          <button type="button" class="btn btn-secondary btn-outline" data-ficha-mapa="${escapeHtml(pauta.poiId)}">Ver en el mapa</button>
+          ${pauta.telefono ? `<a class="btn btn-secondary btn-outline" href="${telefonoHref(pauta.telefono)}">Llamar</a>` : ""}
+        </div>
+      </footer>
     </div>
   `;
 }
@@ -132,9 +140,13 @@ function openFicha(pautaId) {
   if (!pauta || !modal || !content) return;
 
   content.innerHTML = buildFichaHtml(pauta);
+  content.scrollTop = 0;
   modal.hidden = false;
   modal.setAttribute("aria-hidden", "false");
   document.body.classList.add("ficha-open");
+
+  const scrollEl = content.querySelector(".ficha-scroll");
+  if (scrollEl) scrollEl.scrollTop = 0;
 
   content.querySelector("[data-ficha-mapa]")?.addEventListener("click", () => {
     closeFicha();
@@ -191,6 +203,7 @@ function renderPautas() {
       </button>
       <p class="pauta-card-meta">${escapeHtml(p.direccion || "")}</p>
       ${p.telefono ? `<p class="pauta-card-tel"><a href="tel:+57${p.telefono.replace(/\D/g, "")}">${escapeHtml(p.telefono)}</a></p>` : ""}
+      <p class="pauta-card-hint">Clic para abrir ficha informativa</p>
     </article>
   `
     )
@@ -391,6 +404,7 @@ async function init() {
     poisData = pois;
     pautasById = new Map(pautas.map((p) => [p.id, p]));
     initDecoracionesMapa(decor);
+    initFichaDecor(decor);
     initMap(meta);
     initFichaModal();
     renderPautas();
