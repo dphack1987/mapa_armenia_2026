@@ -25,12 +25,34 @@
       "opacidad": 0.08
     }
   ],
+  "acentos": [
+    {
+      "id": "colibri",
+      "archivo": "decoraciones/colibri.png",
+      "zona": "mapa-top",
+      "tamano": "min(130px, 20vw)"
+    },
+    {
+      "id": "mariposa-1",
+      "archivo": "decoraciones/mariposa_1.png",
+      "zona": "sidebar",
+      "tamano": "min(110px, 18vw)"
+    },
+    {
+      "id": "mariposa-2",
+      "archivo": "decoraciones/mariposa_2.png",
+      "zona": "mapa",
+      "tamano": "min(160px, 24vw)"
+    }
+  ],
   "compartir": {
     "fondo": "decoraciones/2149015443.jpg",
-    "opacidad": 0.28
+    "opacidad": 0.28,
+    "acentos": true
   },
   "ficha": {
     "fondo": "decoraciones/8940221_4042181.jpg",
-    "opacidad": 0.1
+    "opacidad": 0.12,
+    "acento": "decoraciones/mariposa_2.png"
   }
 }

@@ -77,6 +77,10 @@ export function initDecoracionesCompartir(config) {
   );
 
   document.body.classList.add("decor-compartir");
+
+  if (acentos && config.acentos?.length) {
+    renderAcentos(config.acentos, ensureAccentContainer());
+  }
 }
 
 export function initFichaDecor(config) {
@@ -86,6 +90,9 @@ export function initFichaDecor(config) {
   if (f.fondo) {
     root.style.setProperty("--ficha-bg", `url("${f.fondo}")`);
     root.style.setProperty("--ficha-bg-opacity", String(f.opacidad ?? 0.12));
+  }
+  if (f.acento) {
+    root.style.setProperty("--ficha-acento", `url("${f.acento}")`);
   }
 }
 

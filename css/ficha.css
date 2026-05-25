@@ -47,6 +47,22 @@
   border-radius: 15px;
 }
 
+.ficha-dialog::after {
+  content: "";
+  position: absolute;
+  top: 0.5rem;
+  right: 3rem;
+  width: 72px;
+  height: 72px;
+  background-image: var(--ficha-acento, none);
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  opacity: 0.35;
+  pointer-events: none;
+  z-index: 1;
+}
+
 @keyframes ficha-in {
   from {
     opacity: 0;
