@@ -1,0 +1,41 @@
+{
+  "qr": {
+    "imagen": "assets/qr-mapa-armenia-display.jpg",
+    "imagenOriginal": "pautas publicitarias/qr_mapa_armenia.png",
+    "titulo": "Escanea y explora Armenia",
+    "subtitulo": "Turismo, comercio y sabor · Edición 2026"
+  },
+  "capas": [
+    {
+      "id": "body",
+      "archivo": "decoraciones/2151973988.jpg",
+      "opacidad": 0.14,
+      "blend": "multiply"
+    },
+    {
+      "id": "header",
+      "archivo": "decoraciones/9081966_4092826.jpg",
+      "opacidad": 0.22,
+      "posicion": "top center",
+      "size": "cover"
+    },
+    {
+      "id": "sidebar",
+      "archivo": "decoraciones/10623587_4478904.jpg",
+      "opacidad": 0.18,
+      "posicion": "bottom center",
+      "size": "cover"
+    },
+    {
+      "id": "mapa",
+      "archivo": "decoraciones/8940221_4042181.jpg",
+      "opacidad": 0.06,
+      "posicion": "right center",
+      "size": "600px"
+    }
+  ],
+  "compartir": {
+    "fondo": "decoraciones/2151973988.jpg",
+    "opacidad": 0.2
+  }
+}

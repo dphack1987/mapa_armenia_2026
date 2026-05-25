@@ -9,7 +9,10 @@ Mapa turístico, comercial y gastronómico de **Armenia, Quindío · Colombia 20
 | `index.html` | Mapa interactivo |
 | `compartir.html` | Página con código QR para compartir |
 | `logo_armenia.png` | Logo del mapa (sin fondo blanco) |
-| `pautas publicitarias/` | Creativos publicitarios de patrocinadores |
+| `pautas publicitarias/` | Pautas y QR diseñado (`qr_mapa_armenia.png`) |
+| `decoraciones/` | Fondos y marcos para la interfaz |
+| `data/decoraciones.json` | Qué decoración va en cada zona |
+| `assets/qr-mapa-armenia-display.jpg` | QR optimizado para web |
 | `data/pois.json` | Lugares en el mapa |
 | `data/pautas.json` | Pautas vinculadas a puntos (`poiId`) |
 | `data/site.json` | URL pública para el QR |
@@ -32,7 +35,13 @@ python -m http.server 8080
 1. Edita `data/site.json` → `shareUrl` (producción: `https://mapa-armenia-2026.vercel.app/`).
 2. El QR en `compartir.html` y `assets/qr-mapa-armenia-2026.png` usan esa URL.
 
-Generar PNG del QR:
+Optimizar QR y assets pesados:
+
+```powershell
+python scripts/optimize_assets.py
+```
+
+Generar QR simple (alternativo):
 
 ```powershell
 pip install qrcode[pil]

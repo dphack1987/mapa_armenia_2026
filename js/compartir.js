@@ -1,3 +1,9 @@
+import {
+  loadDecoraciones,
+  initDecoracionesCompartir,
+  getQrAsset,
+} from "./decoraciones.js";
+
 async function getShareUrl() {
   const localUrl = new URL("index.html", window.location.href).href;
 
@@ -21,6 +27,14 @@ async function getShareUrl() {
 }
 
 async function init() {
+  const decor = await loadDecoraciones();
+  initDecoracionesCompartir(decor);
+
+  const qrImg = document.getElementById("qr-pauta-img");
+  if (qrImg && decor) {
+    qrImg.src = getQrAsset(decor);
+  }
+
   const shareUrl = await getShareUrl();
   const link = document.getElementById("share-link");
   const openBtn = document.getElementById("btn-open");
@@ -29,30 +43,10 @@ async function init() {
   link.textContent = shareUrl;
   openBtn.href = shareUrl;
 
-  const canvas = document.getElementById("qr-canvas");
-  const fallback = document.getElementById("qr-fallback");
-
-  try {
-    await QRCode.toCanvas(canvas, shareUrl, {
-      width: 240,
-      margin: 2,
-      color: { dark: "#1b4d3e", light: "#ffffff" },
-    });
-  } catch {
-    fallback.hidden = false;
-    canvas.hidden = true;
-    fallback.src = `https://api.qrserver.com/v1/create-qr-code/?size=240x240&data=${encodeURIComponent(shareUrl)}`;
-    fallback.alt = "Código QR del mapa";
-  }
-
   document.getElementById("btn-download").addEventListener("click", () => {
     const a = document.createElement("a");
-    a.download = "qr-mapa-armenia-2026.png";
-    if (!canvas.hidden) {
-      a.href = canvas.toDataURL("image/png");
-    } else {
-      a.href = fallback.src;
-    }
+    a.download = "qr-mapa-armenia-2026.jpg";
+    a.href = qrImg?.src || getQrAsset(decor);
     a.click();
   });
 }

@@ -1,3 +1,8 @@
+import {
+  loadDecoraciones,
+  initDecoracionesMapa,
+} from "./decoraciones.js";
+
 const CATEGORY_LABELS = {
   turistico: "Turístico",
   comercial: "Comercial",
@@ -377,9 +382,14 @@ function initMap(meta) {
 
 async function init() {
   try {
-    const [{ meta, pois }, pautas] = await Promise.all([loadPois(), loadPautas()]);
+    const [{ meta, pois }, pautas, decor] = await Promise.all([
+      loadPois(),
+      loadPautas(),
+      loadDecoraciones(),
+    ]);
     poisData = pois;
     pautasById = new Map(pautas.map((p) => [p.id, p]));
+    initDecoracionesMapa(decor);
     initMap(meta);
     initFichaModal();
     renderPautas();

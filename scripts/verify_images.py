@@ -8,11 +8,14 @@ ROOT = Path(__file__).resolve().parent.parent
 REQUIRED = [
     "logo_armenia.png",
     "pautas publicitarias/anatolia.png",
+    "assets/qr-mapa-armenia-display.jpg",
 ]
 
 OPTIONAL = [
-    "logo_armenia.jpg",
+    "pautas publicitarias/qr_mapa_armenia.png",
     "assets/qr-mapa-armenia-2026.png",
+    "decoraciones/2151973988.jpg",
+    "decoraciones/9081966_4092826.jpg",
 ]
 
 
@@ -45,6 +48,8 @@ def main() -> int:
 
     if any(r["path"] == "logo_armenia.png" and not r["ok"] for r in results):
         print("\nSugerencia: python scripts/remove_logo_bg.py")
+    if any(r["path"] == "assets/qr-mapa-armenia-display.jpg" and not r["ok"] for r in results):
+        print("\nSugerencia: python scripts/optimize_assets.py")
 
     return 1 if failed and any(p in r["path"] for r in failed for p in REQUIRED) else 0
 
