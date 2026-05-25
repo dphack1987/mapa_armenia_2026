@@ -554,6 +554,13 @@ async function init() {
     initLocate();
     renderMarkers();
     showStatus("Mapa listo · Armenia, Quindío 2026");
+
+    // Inicializar Don Chucho con los datos del mapa
+    if (window.DonChucho) {
+      window.DonChucho.setPoisData(pois);
+      window.DonChucho.setPautasData(pautas);
+      window.DonChucho.init();
+    }
   } catch (err) {
     console.error(err);
     document.getElementById("map-status").textContent =

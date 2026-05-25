@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120" role="img" aria-label="Don Chucho — arriero quindiano">
+  <!-- Fondo circular verde cafetero -->
+  <circle cx="60" cy="60" r="58" fill="#198754" stroke="#f1c40f" stroke-width="3"/>
+
+  <!-- Cuerpo / ruana -->
+  <polygon points="32,82 60,73 88,82 82,116 38,116" fill="#a0522d"/>
+  <!-- Franja central ruana -->
+  <line x1="60" y1="73" x2="60" y2="116" stroke="#f1c40f" stroke-width="2.5"/>
+  <!-- Detalle ruana izquierda -->
+  <line x1="46" y1="76" x2="40" y2="116" stroke="#8B4513" stroke-width="1.2" opacity="0.6"/>
+  <!-- Detalle ruana derecha -->
+  <line x1="74" y1="76" x2="80" y2="116" stroke="#8B4513" stroke-width="1.2" opacity="0.6"/>
+
+  <!-- Cuello / camisa blanca -->
+  <rect x="51" y="69" width="18" height="11" rx="4" fill="#fff8e1"/>
+
+  <!-- Cabeza -->
+  <ellipse cx="60" cy="57" rx="20" ry="21" fill="#d4956a"/>
+
+  <!-- Orejas -->
+  <ellipse cx="40" cy="57" rx="5" ry="7" fill="#d4956a"/>
+  <ellipse cx="80" cy="57" rx="5" ry="7" fill="#d4956a"/>
+  <!-- Detalle interior orejas -->
+  <ellipse cx="40" cy="57" rx="2.5" ry="4" fill="#c07850" opacity="0.5"/>
+  <ellipse cx="80" cy="57" rx="2.5" ry="4" fill="#c07850" opacity="0.5"/>
+
+  <!-- Ojos -->
+  <ellipse cx="53" cy="54" rx="3.2" ry="3.5" fill="#fff"/>
+  <circle cx="53" cy="54.5" r="2.1" fill="#3e2000"/>
+  <circle cx="53.8" cy="53.5" r="0.8" fill="#fff"/>
+  <ellipse cx="67" cy="54" rx="3.2" ry="3.5" fill="#fff"/>
+  <circle cx="67" cy="54.5" r="2.1" fill="#3e2000"/>
+  <circle cx="67.8" cy="53.5" r="0.8" fill="#fff"/>
+
+  <!-- Cejas expresivas -->
+  <path d="M49 49 Q53 46.5 57 49" stroke="#3e2000" stroke-width="2" fill="none" stroke-linecap="round"/>
+  <path d="M63 49 Q67 46.5 71 49" stroke="#3e2000" stroke-width="2" fill="none" stroke-linecap="round"/>
+
+  <!-- Nariz -->
+  <ellipse cx="60" cy="59" rx="3.2" ry="2.2" fill="#c07850"/>
+
+  <!-- Bigote frondoso -->
+  <path d="M50 64 Q55 67.5 60 64.5 Q65 67.5 70 64" stroke="#3e2000" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+  <path d="M52 65.5 Q56 68 60 65.5" stroke="#3e2000" stroke-width="1.2" fill="none" stroke-linecap="round" opacity="0.5"/>
+  <path d="M60 65.5 Q64 68 68 65.5" stroke="#3e2000" stroke-width="1.2" fill="none" stroke-linecap="round" opacity="0.5"/>
+
+  <!-- Sonrisa amigable -->
+  <path d="M54 70 Q60 75.5 66 70" stroke="#3e2000" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+
+  <!-- Sombrero aguadeño — ala amplia -->
+  <ellipse cx="60" cy="37" rx="30" ry="7.5" fill="#f5e6c8" stroke="#c8a96e" stroke-width="1.5"/>
+  <!-- Sombra ala -->
+  <ellipse cx="60" cy="38.5" rx="28" ry="4" fill="#c8a96e" opacity="0.25"/>
+  <!-- Copa del sombrero -->
+  <rect x="38" y="14" width="44" height="25" rx="7" fill="#f5e6c8" stroke="#c8a96e" stroke-width="1.5"/>
+  <!-- Pliegue copa -->
+  <path d="M38 26 Q60 22 82 26" stroke="#c8a96e" stroke-width="1" fill="none" opacity="0.5"/>
+  <!-- Banda verde cafetera -->
+  <rect x="38" y="33" width="44" height="5.5" rx="2" fill="#198754"/>
+  <!-- Hilo dorado banda -->
+  <rect x="38" y="34" width="44" height="2" rx="1" fill="#f1c40f" opacity="0.75"/>
+
+  <!-- Taza de café en mano derecha -->
+  <rect x="83" y="83" width="16" height="12" rx="3" fill="#fff8e1" stroke="#c8a96e" stroke-width="1.5"/>
+  <!-- Asa taza -->
+  <path d="M99 86.5 Q105 87 105 90 Q105 93.5 99 94" stroke="#c8a96e" stroke-width="1.5" fill="none"/>
+  <!-- Café dentro -->
+  <rect x="85" y="85" width="12" height="8" rx="2" fill="#6f4e37"/>
+  <!-- Espuma café -->
+  <ellipse cx="91" cy="85.5" rx="5.5" ry="1.2" fill="#a0724a" opacity="0.7"/>
+  <!-- Vapor -->
+  <path d="M87 81 Q88.5 77.5 87 74" stroke="#ddd" stroke-width="1.3" fill="none" stroke-linecap="round"/>
+  <path d="M91 80 Q92.5 76.5 91 73" stroke="#ddd" stroke-width="1.3" fill="none" stroke-linecap="round"/>
+  <path d="M95 81 Q96.5 77.5 95 74" stroke="#ddd" stroke-width="1.3" fill="none" stroke-linecap="round"/>
+</svg>

@@ -1,0 +1,363 @@
+/* ============================================
+   CAFETO — Asistente turístico de Armenia 2026
+   ============================================ */
+
+/* Botón flotante */
+.cafeto-btn {
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  z-index: 9000;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  background: linear-gradient(135deg, #198754 0%, #0f5132 100%);
+  box-shadow: 0 6px 24px rgba(15, 81, 50, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s, box-shadow 0.2s;
+  padding: 0;
+}
+
+.cafeto-btn:hover {
+  transform: scale(1.1) translateY(-2px);
+  box-shadow: 0 10px 32px rgba(15, 81, 50, 0.6);
+}
+
+.cafeto-btn-avatar {
+  font-size: 2rem;
+  line-height: 1;
+  user-select: none;
+}
+
+.cafeto-btn-badge {
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  width: 18px;
+  height: 18px;
+  background: #f1c40f;
+  border-radius: 50%;
+  border: 2px solid #fff;
+  animation: cafeto-pulse 2s infinite;
+}
+
+@keyframes cafeto-pulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.2); opacity: 0.8; }
+}
+
+/* Ventana del chat */
+.cafeto-window {
+  position: fixed;
+  bottom: 5.5rem;
+  right: 1.5rem;
+  z-index: 9001;
+  width: min(360px, calc(100vw - 2rem));
+  height: min(520px, calc(100vh - 8rem));
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  border-radius: 20px;
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.25);
+  border: 2px solid #198754;
+  overflow: hidden;
+  transform-origin: bottom right;
+  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.2s;
+}
+
+.cafeto-window[hidden] {
+  display: none;
+}
+
+.cafeto-window.cafeto-opening {
+  animation: cafeto-open 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+@keyframes cafeto-open {
+  from { transform: scale(0.5); opacity: 0; }
+  to   { transform: scale(1);   opacity: 1; }
+}
+
+/* Header del chat */
+.cafeto-header {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.85rem 1rem;
+  background: linear-gradient(135deg, #198754 0%, #0f5132 100%);
+  color: #fff;
+}
+
+.cafeto-header-avatar {
+  font-size: 2rem;
+  line-height: 1;
+  background: rgba(255,255,255,0.15);
+  border-radius: 50%;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.cafeto-header-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.cafeto-header-name {
+  font-size: 1rem;
+  font-weight: 700;
+  margin: 0;
+  line-height: 1.2;
+}
+
+.cafeto-header-status {
+  font-size: 0.72rem;
+  opacity: 0.85;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.cafeto-header-status::before {
+  content: "";
+  width: 7px;
+  height: 7px;
+  background: #4caf50;
+  border-radius: 50%;
+  display: inline-block;
+  box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.4);
+}
+
+.cafeto-close-btn {
+  background: rgba(255,255,255,0.15);
+  border: none;
+  color: #fff;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 1.1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: background 0.15s;
+}
+
+.cafeto-close-btn:hover {
+  background: rgba(255,255,255,0.3);
+}
+
+/* Mensajes */
+.cafeto-messages {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  background: #f8fdf9;
+  scroll-behavior: smooth;
+}
+
+.cafeto-msg {
+  display: flex;
+  gap: 0.5rem;
+  max-width: 88%;
+  animation: cafeto-msg-in 0.2s ease-out;
+}
+
+@keyframes cafeto-msg-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.cafeto-msg--bot {
+  align-self: flex-start;
+}
+
+.cafeto-msg--user {
+  align-self: flex-end;
+  flex-direction: row-reverse;
+}
+
+.cafeto-msg-avatar {
+  font-size: 1.3rem;
+  line-height: 1;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.cafeto-msg-bubble {
+  padding: 0.6rem 0.85rem;
+  border-radius: 16px;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  word-break: break-word;
+}
+
+.cafeto-msg--bot .cafeto-msg-bubble {
+  background: #fff;
+  color: #004d40;
+  border: 1.5px solid #d8e6df;
+  border-bottom-left-radius: 4px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+}
+
+.cafeto-msg--user .cafeto-msg-bubble {
+  background: linear-gradient(135deg, #198754 0%, #0f5132 100%);
+  color: #fff;
+  border-bottom-right-radius: 4px;
+}
+
+/* Chips de sugerencias */
+.cafeto-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-top: 0.4rem;
+}
+
+.cafeto-chip {
+  background: #e8f5e9;
+  border: 1.5px solid #198754;
+  color: #0f5132;
+  border-radius: 999px;
+  padding: 0.3rem 0.75rem;
+  font-size: 0.78rem;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+  transition: background 0.15s, transform 0.1s;
+}
+
+.cafeto-chip:hover {
+  background: #198754;
+  color: #fff;
+  transform: translateY(-1px);
+}
+
+/* Enlace de lugar en el mapa */
+.cafeto-poi-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  color: #198754;
+  font-weight: 700;
+  cursor: pointer;
+  text-decoration: underline;
+  background: none;
+  border: none;
+  font-family: inherit;
+  font-size: inherit;
+  padding: 0;
+}
+
+.cafeto-poi-link:hover {
+  color: #0f5132;
+}
+
+/* Typing indicator */
+.cafeto-typing {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+  padding: 0.5rem 0.75rem;
+}
+
+.cafeto-typing span {
+  width: 7px;
+  height: 7px;
+  background: #198754;
+  border-radius: 50%;
+  animation: cafeto-typing 1.2s infinite;
+}
+
+.cafeto-typing span:nth-child(2) { animation-delay: 0.2s; }
+.cafeto-typing span:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes cafeto-typing {
+  0%, 60%, 100% { transform: translateY(0); opacity: 0.4; }
+  30% { transform: translateY(-6px); opacity: 1; }
+}
+
+/* Input */
+.cafeto-input-area {
+  flex-shrink: 0;
+  display: flex;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem;
+  background: #fff;
+  border-top: 1.5px solid #d8e6df;
+}
+
+.cafeto-input {
+  flex: 1;
+  padding: 0.55rem 0.85rem;
+  border: 1.5px solid #d8e6df;
+  border-radius: 999px;
+  font-size: 0.875rem;
+  font-family: inherit;
+  outline: none;
+  transition: border-color 0.15s;
+  background: #f8fdf9;
+}
+
+.cafeto-input:focus {
+  border-color: #198754;
+  background: #fff;
+}
+
+.cafeto-send-btn {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  border: none;
+  background: linear-gradient(135deg, #198754 0%, #0f5132 100%);
+  color: #fff;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: transform 0.15s, box-shadow 0.15s;
+  box-shadow: 0 3px 10px rgba(15, 81, 50, 0.35);
+}
+
+.cafeto-send-btn:hover {
+  transform: scale(1.1);
+  box-shadow: 0 5px 14px rgba(15, 81, 50, 0.45);
+}
+
+.cafeto-send-btn svg {
+  width: 18px;
+  height: 18px;
+}
+
+/* Mobile */
+@media (max-width: 480px) {
+  .cafeto-window {
+    bottom: 0;
+    right: 0;
+    width: 100vw;
+    height: 75vh;
+    border-radius: 20px 20px 0 0;
+    border-bottom: none;
+  }
+
+  .cafeto-btn {
+    bottom: 1rem;
+    right: 1rem;
+  }
+}
