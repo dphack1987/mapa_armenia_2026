@@ -1,4 +1,4 @@
-/** Aplica fondos desde decoraciones/ sin modificar el HTML del mapa. */
+/** Decoración visual desde /decoraciones — no altera la estructura del mapa. */
 
 export async function loadDecoraciones() {
   try {
@@ -17,21 +17,65 @@ function setDecorVar(id, capa) {
   root.style.setProperty(`--decor-${id}-opacity`, String(capa.opacidad ?? 0.15));
 }
 
+function renderAcentos(acentos, contenedor) {
+  if (!contenedor || !acentos?.length) return;
+
+  contenedor.innerHTML = acentos
+    .map(
+      (a) => `
+    <img
+      class="decor-acento decor-acento--${a.zona}"
+      src="${a.archivo}"
+      alt=""
+      aria-hidden="true"
+      loading="lazy"
+      decoding="async"
+      style="--acento-size: ${a.tamano || "120px"}"
+      data-acento-id="${a.id || ""}"
+    />
+  `
+    )
+    .join("");
+}
+
+function ensureAccentContainer() {
+  let el = document.getElementById("decor-accents");
+  if (!el) {
+    el = document.createElement("div");
+    el.id = "decor-accents";
+    el.className = "decor-accents";
+    el.setAttribute("aria-hidden", "true");
+    document.body.prepend(el);
+  }
+  return el;
+}
+
 export function initDecoracionesMapa(config) {
-  if (!config?.capas) return;
-  for (const capa of config.capas) {
+  if (!config) return;
+
+  for (const capa of config.capas || []) {
     setDecorVar(capa.id, capa);
   }
+
+  const container = ensureAccentContainer();
+  renderAcentos(config.acentos, container);
+  document.body.classList.add("decor-activo");
 }
 
 export function initDecoracionesCompartir(config) {
   if (!config?.compartir) return;
-  const { fondo, opacidad } = config.compartir;
+  const { fondo, opacidad, acentos } = config.compartir;
   document.documentElement.style.setProperty("--compartir-bg", `url("${fondo}")`);
   document.documentElement.style.setProperty(
     "--compartir-bg-opacity",
-    String(opacidad ?? 0.2)
+    String(opacidad ?? 0.25)
   );
+
+  if (acentos && config.acentos) {
+    const container = ensureAccentContainer();
+    renderAcentos(config.acentos, container);
+    document.body.classList.add("decor-activo", "decor-compartir");
+  }
 }
 
 export function getQrAsset(config) {

@@ -11,7 +11,7 @@ Mapa turístico, comercial y gastronómico de **Armenia, Quindío · Colombia 20
 | `logo_armenia.png` | Logo del mapa (sin fondo blanco) |
 | `pautas publicitarias/` | Pautas y QR diseñado (`qr_mapa_armenia.png`) |
 | `decoraciones/` | Fondos y marcos para la interfaz |
-| `data/decoraciones.json` | Qué decoración va en cada zona |
+| `data/decoraciones.json` | Fondos (jpg) y acentos (colibrí, mariposas) por zona |
 | `assets/qr-mapa-armenia-display.jpg` | QR optimizado para web |
 | `data/pois.json` | Lugares en el mapa |
 | `data/pautas.json` | Pautas vinculadas a puntos (`poiId`) |

@@ -7,21 +7,47 @@
     {
       "id": "body",
       "archivo": "decoraciones/2151973988.jpg",
-      "opacidad": 0.12
+      "opacidad": 0.18
     },
     {
       "id": "header",
       "archivo": "decoraciones/9081966_4092826.jpg",
-      "opacidad": 0.2
+      "opacidad": 0.32
     },
     {
       "id": "sidebar",
       "archivo": "decoraciones/10623587_4478904.jpg",
-      "opacidad": 0.16
+      "opacidad": 0.22
+    },
+    {
+      "id": "mapa",
+      "archivo": "decoraciones/8940221_4042181.jpg",
+      "opacidad": 0.08
+    }
+  ],
+  "acentos": [
+    {
+      "id": "colibri",
+      "archivo": "decoraciones/colibri.png",
+      "zona": "mapa-top",
+      "tamano": "min(130px, 20vw)"
+    },
+    {
+      "id": "mariposa-1",
+      "archivo": "decoraciones/mariposa_1.png",
+      "zona": "sidebar",
+      "tamano": "min(110px, 18vw)"
+    },
+    {
+      "id": "mariposa-2",
+      "archivo": "decoraciones/mariposa_2.png",
+      "zona": "mapa",
+      "tamano": "min(160px, 24vw)"
     }
   ],
   "compartir": {
-    "fondo": "decoraciones/2151973988.jpg",
-    "opacidad": 0.2
+    "fondo": "decoraciones/2149015443.jpg",
+    "opacidad": 0.28,
+    "acentos": true
   }
 }
