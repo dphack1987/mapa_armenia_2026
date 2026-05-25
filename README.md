@@ -48,8 +48,10 @@ python scripts/verify_images.py
 ## Nueva pauta publicitaria
 
 1. Guarda el PNG en `pautas publicitarias/nombre.png`.
-2. Añade entrada en `data/pautas.json` (`imagen`, `poiId`, datos de contacto).
-3. Añade el punto en `data/pois.json` con el mismo `id` que `poiId` y `"pautaId": "..."`.
+2. Añade entrada en `data/pautas.json` con `ficha` (descripción, servicios), `whatsapp`, `whatsappMensaje`, `poiId`, etc.
+3. Añade el punto en `data/pois.json` con `"pautaId": "..."` vinculado a la pauta.
+
+Al hacer clic en la pauta se abre la **ficha informativa** con botón **WhatsApp** para contacto directo turista ↔ empresario.
 
 ## Repositorio
 

@@ -7,6 +7,7 @@
   <title>Mapa Armenia 2026 · Quindío</title>
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="" />
   <link rel="stylesheet" href="css/styles.css" />
+  <link rel="stylesheet" href="css/ficha.css" />
 </head>
 <body>
   <header class="site-header">
@@ -73,7 +74,7 @@
           <li><span class="dot dot-comercial"></span> Comercial</li>
           <li><span class="dot dot-gastronomico"></span> Gastronómico</li>
         </ul>
-        <p class="legend-note">Haz clic en un lugar para ver detalles y centrar el mapa.</p>
+        <p class="legend-note">Clic en una pauta para la ficha informativa y contacto por WhatsApp.</p>
       </section>
     </aside>
 
@@ -81,6 +82,21 @@
       <div id="map" role="application" aria-label="Mapa interactivo de Armenia"></div>
       <div id="map-status" class="map-status" aria-live="polite"></div>
     </main>
+  </div>
+
+  <div id="ficha-modal" class="ficha-modal" hidden aria-hidden="true">
+    <div class="ficha-backdrop" data-ficha-close></div>
+    <div
+      class="ficha-dialog"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="ficha-titulo"
+    >
+      <button type="button" class="ficha-close" data-ficha-close aria-label="Cerrar ficha">
+        ×
+      </button>
+      <div id="ficha-content" class="ficha-content"></div>
+    </div>
   </div>
 
   <footer class="site-footer">

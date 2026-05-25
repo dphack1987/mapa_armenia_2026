@@ -3,12 +3,26 @@
     {
       "id": "anatolia",
       "nombre": "Anatolia",
+      "categoria": "Gastronómico",
       "imagen": "pautas publicitarias/anatolia.png",
       "poiId": "anatolia",
       "slogan": "Un encuentro de sabores en Quindío",
-      "direccion": "Avenida 19 # 35 norte 41, Armenia",
+      "direccion": "Avenida 19 # 35 norte 41, Armenia, Quindío",
       "telefono": "311 701 1653",
-      "horario": "Lun–Sáb 12:00 m. – 8:00 p. m."
+      "whatsapp": "573117011653",
+      "whatsappMensaje": "Hola, vi Anatolia en el Mapa Turístico Armenia 2026. Me gustaría recibir información.",
+      "horario": "Lun–Sáb 12:00 m. – 8:00 p. m.",
+      "ficha": {
+        "destacado": "Café restaurante con inclusión laboral · Un lugar para todos",
+        "descripcion": "Anatolia es un espacio para compartir, disfrutar la gastronomía quindiana y vivir una experiencia cercana con el café de la región. Atendido por jóvenes con discapacidad cognitiva, invita a celebrar el talento local con desayunos, almuerzos, cenas y zonas de coworking.",
+        "servicios": [
+          "Café y chocolate de autor",
+          "Restaurante (desayuno, almuerzo y cena)",
+          "Espacio coworking",
+          "Inclusión laboral",
+          "Ambiente familiar y accesible"
+        ]
+      }
     }
   ]
 }

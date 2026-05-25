@@ -1,0 +1,248 @@
+.ficha-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.ficha-modal[hidden] {
+  display: none;
+}
+
+.ficha-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(27, 77, 62, 0.55);
+  backdrop-filter: blur(4px);
+}
+
+.ficha-dialog {
+  position: relative;
+  width: min(520px, 100%);
+  max-height: min(92vh, 900px);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 20px 60px rgba(27, 77, 62, 0.25);
+  border: 3px solid var(--green-mid);
+  animation: ficha-in 0.25s ease-out;
+}
+
+@keyframes ficha-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.ficha-close {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  z-index: 2;
+  width: 2.25rem;
+  height: 2.25rem;
+  border: none;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.95);
+  color: var(--green-dark);
+  font-size: 1.5rem;
+  line-height: 1;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.ficha-close:hover {
+  background: #fff;
+  color: var(--green-mid);
+}
+
+.ficha-content {
+  overflow-y: auto;
+}
+
+.ficha-hero {
+  line-height: 0;
+  background: linear-gradient(180deg, #e8f5e9 0%, #fff 100%);
+}
+
+.ficha-hero img {
+  width: 100%;
+  height: auto;
+  max-height: 200px;
+  object-fit: cover;
+  object-position: center top;
+}
+
+.ficha-body {
+  padding: 1.25rem 1.35rem 1.5rem;
+}
+
+.ficha-cat {
+  display: inline-block;
+  margin: 0 0 0.35rem;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--brown);
+  background: #f5e6d3;
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+}
+
+.ficha-body h2 {
+  margin: 0 0 0.25rem;
+  font-size: 1.65rem;
+  color: var(--green-dark);
+  line-height: 1.15;
+}
+
+.ficha-slogan {
+  margin: 0 0 0.75rem;
+  font-size: 1rem;
+  font-style: italic;
+  color: var(--teal);
+  font-weight: 600;
+}
+
+.ficha-destacado {
+  margin: 0 0 0.85rem;
+  padding: 0.65rem 0.85rem;
+  background: #e8f5e9;
+  border-left: 4px solid var(--green-mid);
+  border-radius: 0 8px 8px 0;
+  font-size: 0.88rem;
+  color: var(--green-dark);
+  line-height: 1.45;
+}
+
+.ficha-descripcion {
+  margin: 0 0 1rem;
+  font-size: 0.9rem;
+  line-height: 1.55;
+  color: var(--text);
+}
+
+.ficha-servicios h3,
+.ficha-datos h3 {
+  margin: 0 0 0.5rem;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--green-dark);
+}
+
+.ficha-servicios ul {
+  margin: 0 0 1rem;
+  padding-left: 1.2rem;
+  font-size: 0.85rem;
+  line-height: 1.5;
+  color: var(--text-muted);
+}
+
+.ficha-datos dl {
+  margin: 0 0 1.15rem;
+  display: grid;
+  gap: 0.5rem;
+}
+
+.ficha-datos dt {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  letter-spacing: 0.03em;
+}
+
+.ficha-datos dd {
+  margin: 0;
+  font-size: 0.9rem;
+  color: var(--text);
+}
+
+.ficha-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.ficha-actions .btn {
+  text-align: center;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.btn-whatsapp {
+  background: #25d366;
+  color: #fff;
+  font-size: 1rem;
+  padding: 0.75rem 1rem;
+}
+
+.btn-whatsapp:hover {
+  background: #1da851;
+  transform: translateY(-1px);
+}
+
+.btn-whatsapp svg {
+  width: 1.35rem;
+  height: 1.35rem;
+  flex-shrink: 0;
+}
+
+.btn-outline {
+  background: transparent;
+  color: var(--green-mid);
+  border: 2px solid var(--green-mid);
+}
+
+.btn-outline:hover {
+  background: #e8f5e9;
+}
+
+.popup-actions {
+  margin-top: 0.65rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+.popup-actions a {
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.35rem 0.6rem;
+  border-radius: 6px;
+  text-decoration: none;
+}
+
+.popup-btn-ficha {
+  background: var(--green-mid);
+  color: #fff;
+}
+
+.popup-btn-wa {
+  background: #25d366;
+  color: #fff;
+}
+
+.pauta-card-hint {
+  margin: 0;
+  padding: 0 0.65rem 0.5rem;
+  font-size: 0.7rem;
+  color: var(--teal);
+  font-weight: 600;
+  text-align: center;
+}
