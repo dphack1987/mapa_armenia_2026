@@ -226,12 +226,11 @@ function popupHtml(poi) {
   `;
 }
 
-function buildFichaHtml(pauta) {
+function buildFichaBodyHtml(pauta) {
   const ficha = pauta.ficha || {};
   const servicios = (ficha.servicios || [])
     .map((s) => `<li>${escapeHtml(s)}</li>`)
     .join("");
-  const wa = pauta.whatsapp || pauta.telefono;
 
   return `
     <div class="ficha-inner">
@@ -257,14 +256,18 @@ function buildFichaHtml(pauta) {
           </section>
         </div>
       </div>
-      <footer class="ficha-actions">
-        <p class="ficha-actions-title">Contacto y ubicación</p>
-        <a class="btn btn-llegar" href="${comoLlegarUrl(pauta)}" target="_blank" rel="noopener">Cómo llegar</a>
-        ${pauta.telefono ? `<a class="btn btn-llamar" href="${telefonoHref(pauta.telefono)}">Llamar</a>` : ""}
-        ${wa ? `<a class="btn btn-whatsapp" href="${whatsappUrl(pauta)}" target="_blank" rel="noopener">${WA_ICON} Escribir por WhatsApp</a>` : ""}
-        <button type="button" class="ficha-link-mapa" data-ficha-mapa="${escapeHtml(pauta.poiId)}">Ver ubicación en el mapa</button>
-      </footer>
     </div>
+  `;
+}
+
+function buildFichaActionsHtml(pauta) {
+  const wa = pauta.whatsapp || pauta.telefono;
+  return `
+    <p class="ficha-actions-title">Contacto y ubicación</p>
+    <a class="btn btn-llegar" href="${comoLlegarUrl(pauta)}" target="_blank" rel="noopener">Cómo llegar</a>
+    ${pauta.telefono ? `<a class="btn btn-llamar" href="${telefonoHref(pauta.telefono)}">Llamar</a>` : ""}
+    ${wa ? `<a class="btn btn-whatsapp" href="${whatsappUrl(pauta)}" target="_blank" rel="noopener">${WA_ICON} Escribir por WhatsApp</a>` : ""}
+    <button type="button" class="ficha-link-mapa" data-ficha-mapa="${escapeHtml(pauta.poiId)}">Ver ubicación en el mapa</button>
   `;
 }
 
@@ -272,10 +275,13 @@ function openFicha(pautaId) {
   const pauta = pautasById.get(pautaId);
   const modal = document.getElementById("ficha-modal");
   const content = document.getElementById("ficha-content");
-  if (!pauta || !modal || !content) return;
+  const actions = document.getElementById("ficha-actions");
+  if (!pauta || !modal || !content || !actions) return;
 
-  content.innerHTML = buildFichaHtml(pauta);
-  content.scrollTop = 0;
+  content.innerHTML = buildFichaBodyHtml(pauta);
+  actions.innerHTML = buildFichaActionsHtml(pauta);
+  actions.hidden = false;
+
   modal.hidden = false;
   modal.setAttribute("aria-hidden", "false");
   document.body.classList.add("ficha-open");
@@ -283,25 +289,23 @@ function openFicha(pautaId) {
   const scrollEl = content.querySelector(".ficha-scroll");
   if (scrollEl) scrollEl.scrollTop = 0;
 
-  content.querySelector("[data-ficha-mapa]")?.addEventListener("click", () => {
+  actions.querySelector("[data-ficha-mapa]")?.addEventListener("click", () => {
     closeFicha();
     focusPoi(pauta.poiId);
-  });
-
-  requestAnimationFrame(() => {
-    const dialog = modal.querySelector(".ficha-dialog");
-    if (dialog) dialog.scrollTop = 0;
-    const actions = content.querySelector(".ficha-actions");
-    if (actions) actions.scrollIntoView({ block: "end" });
   });
 }
 
 function closeFicha() {
   const modal = document.getElementById("ficha-modal");
+  const actions = document.getElementById("ficha-actions");
   if (!modal) return;
   modal.hidden = true;
   modal.setAttribute("aria-hidden", "true");
   document.body.classList.remove("ficha-open");
+  if (actions) {
+    actions.hidden = true;
+    actions.innerHTML = "";
+  }
 }
 
 function initFichaModal() {
