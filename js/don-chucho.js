@@ -19,6 +19,9 @@
     "¡Buenas, parce! Soy Don Chucho, su arriero digital. ¿Qué quiere conocer de Armenia?",
     "¡Bienvenido a la Ciudad Milagro! Soy Don Chucho. ¿Lo llevo a algún rincón del Quindío?",
     "¡Ey, paisano! Don Chucho a sus órdenes. ¿Qué le cuento de Armenia 2026?",
+    "¡Hola! ¡Qué gusto tenerte por aquí! Soy Don Chucho, tu guía por Armenia. ¿Por dónde empezamos? ☕",
+    "¡Buen día! Listo para explorar la capital del Quindío? Pregúntame lo que quieras.",
+    "¡Ey, qué tal! Don Chucho aquí para ayudarte a descubrir lo mejor de Armenia. ¿Qué te apetece?",
   ];
 
   const CHIPS_INICIO = [
@@ -172,30 +175,16 @@ Armenia es la capital del departamento del Quindío, Colombia. Conocida como "La
   function offlineFallback(userText) {
     const local = checkLocalIntent(userText);
     if (local) return { html: local.reply, chips: local.chips };
-    const q = userText.toLowerCase();
-    if (/caf[eé]|cafe/.test(q)) {
-      return {
-        html:
-          "Por acá el café es cultura, parce. Le recomiendo visitar fincas en el Quindío y probar el tinto en el centro de Armenia. Use el chip <strong>¿Qué visitar?</strong> para ver lugares en el mapa. ☕",
-        chips: CHIPS_INICIO,
-      };
-    }
-    if (/clima|tiempo|lluvia/.test(q)) {
-      return {
-        html: "En Armenia el clima es templado, entre 18 y 22 °C. Lleve chaqueta ligera y paraguas por si acaso. ☕",
-        chips: CHIPS_INICIO,
-      };
-    }
-    if (/armenia|quindio|eje cafetero|parque del cafe|hotel|hostal|precio|recomienda/.test(q)) {
-      return {
-        html:
-          "Le cuento lo que sé del mapa, parce: use los botones de abajo para <strong>lugares</strong>, <strong>comida</strong>, <strong>compras</strong> y <strong>pautas</strong>. Haga clic y lo llevo al punto en el mapa. ☕",
-        chips: CHIPS_INICIO,
-      };
-    }
+    
+    const respuestasFallback = [
+      "Parce, la IA está descansando un rato ☕ — pero yo sí le ayudo con el mapa! Toque un botón de abajo o pregunte por <em>qué visitar</em>, <em>dónde comer</em> o <em>pautas</em>.",
+      "¡Ey, la IA se fue a tomar un tinto! ☕ Pero yo estoy aquí. Use los chips para explorar el mapa — hay mucho que ver en Armenia.",
+      "La IA está descansando, pero Don Chucho no! 😊 Pregúntame por lugares, comida o compras, o toque los botones de abajo.",
+      "¡Listo para ayudarte, parce! La IA está fuera de servicio por un momento, pero yo te guío por el mapa. ¿Por dónde empezamos? ☕",
+    ];
+    
     return {
-      html:
-        "Parce, la IA está descansando un rato ☕ — pero yo sí le ayudo con el mapa. Toque un botón de abajo o pregunte por <em>qué visitar</em>, <em>dónde comer</em> o <em>pautas</em>.",
+      html: aleatorio(respuestasFallback),
       chips: CHIPS_INICIO,
     };
   }
