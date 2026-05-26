@@ -75,6 +75,8 @@ Armenia es la capital del departamento del Quindío, Colombia. Conocida como "La
 
   /* ─── Historial de conversación para Gemini ─────────────── */
   const _history = []; // [{role:"user"|"model", parts:[{text}]}]
+  let _systemSent = false;
+  const FETCH_TIMEOUT_MS = 45000;
 
   function extractGeminiText(data) {
     if (data?.error?.message) {
@@ -82,18 +84,22 @@ Armenia es la capital del departamento del Quindío, Colombia. Conocida como "La
       e.code = data.error.code;
       throw e;
     }
-    const parts = data?.candidates?.[0]?.content?.parts || [];
+    const candidate = data?.candidates?.[0];
+    if (candidate?.finishReason === "SAFETY") {
+      throw new Error("Respuesta bloqueada por seguridad");
+    }
+    const parts = candidate?.content?.parts || [];
     return parts.map((p) => p.text).filter(Boolean).join("").trim();
   }
 
   function buildGeminiBody() {
-    return {
-      system_instruction: { parts: [{ text: buildSystemPrompt() }] },
-      contents: _history,
+    const body = {
+      contents: _history.slice(),
       generationConfig: {
-        temperature: 0.8,
-        maxOutputTokens: 1024,
+        temperature: 0.85,
+        maxOutputTokens: 512,
         topP: 0.9,
+        thinkingConfig: { thinkingBudget: 0 },
       },
       safetySettings: [
         { category: "HARM_CATEGORY_HARASSMENT",        threshold: "BLOCK_ONLY_HIGH" },
@@ -102,63 +108,118 @@ Armenia es la capital del departamento del Quindío, Colombia. Conocida como "La
         { category: "HARM_CATEGORY_DANGEROUS_CONTENT", threshold: "BLOCK_ONLY_HIGH" },
       ],
     };
+    if (!_systemSent) {
+      body.system_instruction = { parts: [{ text: buildSystemPrompt() }] };
+      _systemSent = true;
+    }
+    return body;
+  }
+
+  async function fetchGeminiJson(url, body) {
+    const ctrl = new AbortController();
+    const timer = setTimeout(() => ctrl.abort(), FETCH_TIMEOUT_MS);
+    try {
+      const res = await fetch(url, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body),
+        signal: ctrl.signal,
+      });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) {
+        const msg = data?.error?.message || `HTTP ${res.status}`;
+        const e = new Error(msg);
+        e.code = data?.error?.code || res.status;
+        throw e;
+      }
+      return data;
+    } finally {
+      clearTimeout(timer);
+    }
   }
 
   async function askGeminiViaWorker(body) {
-    const res = await fetch(WORKER_URL, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(body),
-    });
-    const data = await res.json().catch(() => ({}));
-    if (!res.ok) {
-      const msg = data?.error?.message || `HTTP ${res.status}`;
-      const e = new Error(msg);
-      e.code = data?.error?.code || res.status;
-      throw e;
-    }
-    return extractGeminiText(data);
+    return extractGeminiText(await fetchGeminiJson(WORKER_URL, body));
   }
 
   async function askGeminiDirect(body) {
-    const key = _cfg().GEMINI_KEY;
-    if (!key) throw new Error("Sin GEMINI_KEY de respaldo");
+    const key = (_cfg().GEMINI_KEY || "").trim();
+    if (!key) throw new Error("Sin GEMINI_KEY");
+    const model = _cfg().GEMINI_MODEL || GEMINI_MODEL;
     const url =
-      `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent?key=` +
+      `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=` +
       key;
-    const res = await fetch(url, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(body),
-    });
-    const data = await res.json().catch(() => ({}));
-    if (!res.ok) {
-      const msg = data?.error?.message || `HTTP ${res.status}`;
-      const e = new Error(msg);
-      e.code = data?.error?.code || res.status;
-      throw e;
+    return extractGeminiText(await fetchGeminiJson(url, body));
+  }
+
+  function offlineFallback(userText) {
+    const local = checkLocalIntent(userText);
+    if (local) return { html: local.reply, chips: local.chips };
+    const q = userText.toLowerCase();
+    if (/caf[eé]|cafe/.test(q)) {
+      return {
+        html:
+          "Por acá el café es cultura, parce. Le recomiendo visitar fincas en el Quindío y probar el tinto en el centro de Armenia. Use el chip <strong>¿Qué visitar?</strong> para ver lugares en el mapa. ☕",
+        chips: CHIPS_INICIO,
+      };
     }
-    return extractGeminiText(data);
+    if (/clima|tiempo|lluvia/.test(q)) {
+      return {
+        html: "En Armenia el clima es templado, entre 18 y 22 °C. Lleve chaqueta ligera y paraguas por si acaso. ☕",
+        chips: CHIPS_INICIO,
+      };
+    }
+    return {
+      html:
+        "Parce, en este momento no tengo conexión con la IA, pero el mapa sí le ayuda. Elija una opción de abajo o pregunte por restaurantes, sitios turísticos o pautas. ☕",
+      chips: CHIPS_INICIO,
+    };
   }
 
   async function askGemini(userText) {
     _history.push({ role: "user", parts: [{ text: userText }] });
     const body = buildGeminiBody();
+    const preferDirect = _cfg().PREFER_DIRECT !== false && (_cfg().GEMINI_KEY || "").trim();
     let text = "";
+    const errors = [];
+
+    const tryDirect = () => askGeminiDirect(body);
+    const tryWorker = () => askGeminiViaWorker(body);
 
     try {
-      text = await askGeminiViaWorker(body);
-    } catch (workerErr) {
-      console.warn("Don Chucho: Worker falló, intentando Gemini directo.", workerErr);
-      text = await askGeminiDirect(body);
+      if (preferDirect) {
+        try {
+          text = await tryDirect();
+        } catch (e1) {
+          errors.push(e1);
+          text = await tryWorker();
+        }
+      } else {
+        try {
+          text = await tryWorker();
+        } catch (e1) {
+          errors.push(e1);
+          text = await tryDirect();
+        }
+      }
+    } catch (e2) {
+      errors.push(e2);
+      console.warn("Don Chucho: sin respuesta de IA", errors);
+      _history.pop();
+      const fb = offlineFallback(userText);
+      return { text: null, fallback: fb };
     }
 
-    if (text) {
-      _history.push({ role: "model", parts: [{ text }] });
-      if (_history.length > 20) _history.splice(0, 2);
+    if (!text) {
+      _history.pop();
+      const fb = offlineFallback(userText);
+      return { text: null, fallback: fb };
     }
 
-    return text || "¡Uy, parce! Se me fue la señal. Intente de nuevo.";
+    _history.push({ role: "model", parts: [{ text }] });
+    while (_history.length > 12) _history.splice(0, 2);
+
+    return { text, fallback: null };
   }
 
   /* ─── Intents locales (respuesta inmediata con botones del mapa) ── */
@@ -422,7 +483,9 @@ Armenia es la capital del departamento del Quindío, Colombia. Conocida como "La
     function openChat() {
       isOpen = true;
       win.removeAttribute("hidden");
-      win.classList.add("cafeto-opening");
+      win.classList.add("cafeto-opening", "cafeto-window--open");
+      btn.classList.add("cafeto-btn--hidden");
+      document.body.classList.add("cafeto-chat-open");
       btn.setAttribute("aria-expanded", "true");
       const badge = btn.querySelector(".cafeto-btn-badge");
       if (badge) badge.style.display = "none";
@@ -437,8 +500,22 @@ Armenia es la capital del departamento del Quindío, Colombia. Conocida como "La
     function closeChat() {
       isOpen = false;
       win.setAttribute("hidden", "");
+      win.classList.remove("cafeto-window--open");
+      btn.classList.remove("cafeto-btn--hidden");
+      document.body.classList.remove("cafeto-chat-open");
       btn.setAttribute("aria-expanded", "false");
       btn.focus();
+    }
+
+    if (window.visualViewport) {
+      const onViewport = () => {
+        if (!isOpen) return;
+        const vv = window.visualViewport;
+        const kb = Math.max(0, window.innerHeight - vv.height - vv.offsetTop);
+        win.style.setProperty("--cafeto-kb-offset", kb + "px");
+      };
+      window.visualViewport.addEventListener("resize", onViewport);
+      window.visualViewport.addEventListener("scroll", onViewport);
     }
 
     btn.addEventListener("click", () => (isOpen ? closeChat() : openChat()));
@@ -466,24 +543,23 @@ Armenia es la capital del departamento del Quindío, Colombia. Conocida como "La
           const msgEl = addMessage(messages, "bot", local.reply, local.chips);
           bindMsgEvents(msgEl, closeChat);
         } else {
-          // 2. Gemini para todo lo demás
-          const geminiText = await askGemini(text);
+          const result = await askGemini(text);
           typing.remove();
-          const html = formatGeminiText(geminiText);
-          const msgEl = addMessage(messages, "bot", html, []);
-          bindMsgEvents(msgEl, closeChat);
+          if (result.fallback) {
+            const msgEl = addMessage(messages, "bot", result.fallback.html, result.fallback.chips);
+            bindMsgEvents(msgEl, closeChat);
+          } else {
+            const html = formatGeminiText(result.text);
+            const msgEl = addMessage(messages, "bot", html, CHIPS_INICIO);
+            bindMsgEvents(msgEl, closeChat);
+          }
         }
       } catch (err) {
         typing.remove();
-        console.error("Don Chucho / Gemini error:", err);
-        const msg = String(err?.message || "");
-        let fallback =
-          "¡Uy, parce! Se me fue la señal del Quindío. Intente de nuevo en un momento. ☕";
-        if (err?.code === 429 || /quota/i.test(msg)) {
-          fallback =
-            "Parce, la IA está al límite de uso por hoy. Use los botones de abajo: le muestro el mapa al instante. ☕";
-        }
-        addMessage(messages, "bot", fallback, CHIPS_INICIO);
+        console.error("Don Chucho error:", err);
+        const fb = offlineFallback(text);
+        const msgEl = addMessage(messages, "bot", fb.html, fb.chips);
+        bindMsgEvents(msgEl, closeChat);
       } finally {
         busy = false;
         sendBtn.disabled = false;

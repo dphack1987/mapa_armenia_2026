@@ -3,5 +3,6 @@ Thumbs.db
 *.log
 .env
 .env.local
+config/don-chucho-config.js
 response.json
 node_modules/

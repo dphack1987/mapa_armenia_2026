@@ -34,8 +34,7 @@ export default {
       return new Response("Invalid JSON", { status: 400, headers: cors });
     }
 
-    const model =
-      body._model || env.GEMINI_MODEL || "gemini-2.5-flash";
+    const model = body._model || env.GEMINI_MODEL || "gemini-2.5-flash";
     delete body._model;
 
     const geminiUrl =
