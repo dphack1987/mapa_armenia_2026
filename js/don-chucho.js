@@ -489,12 +489,41 @@ Armenia es la capital del departamento del Quindío, Colombia. Conocida como "La
       btn.setAttribute("aria-expanded", "true");
       const badge = btn.querySelector(".cafeto-btn-badge");
       if (badge) badge.style.display = "none";
-      setTimeout(() => win.classList.remove("cafeto-opening"), 350);
-      input.focus();
+      setTimeout(() => {
+        win.classList.remove("cafeto-opening");
+        layoutMobileChat();
+      }, 350);
+      requestAnimationFrame(layoutMobileChat);
+      input.focus({ preventScroll: true });
       if (!greeted) {
         greeted = true;
         setTimeout(() => addMessage(messages, "bot", aleatorio(SALUDOS), CHIPS_INICIO), 300);
       }
+    }
+
+    function isMobileChat() {
+      return window.matchMedia("(max-width: 768px)").matches;
+    }
+
+    function resetMobileLayout() {
+      win.style.top = "";
+      win.style.left = "";
+      win.style.right = "";
+      win.style.width = "";
+      win.style.height = "";
+      win.style.bottom = "";
+    }
+
+    function layoutMobileChat() {
+      if (!isOpen || !isMobileChat() || !window.visualViewport) return;
+      const vv = window.visualViewport;
+      win.style.top = vv.offsetTop + "px";
+      win.style.left = "0";
+      win.style.right = "0";
+      win.style.width = "100%";
+      win.style.height = vv.height + "px";
+      win.style.bottom = "auto";
+      scrollBottom(messages);
     }
 
     function closeChat() {
@@ -503,20 +532,20 @@ Armenia es la capital del departamento del Quindío, Colombia. Conocida como "La
       win.classList.remove("cafeto-window--open");
       btn.classList.remove("cafeto-btn--hidden");
       document.body.classList.remove("cafeto-chat-open");
+      resetMobileLayout();
       btn.setAttribute("aria-expanded", "false");
       btn.focus();
     }
 
     if (window.visualViewport) {
-      const onViewport = () => {
-        if (!isOpen) return;
-        const vv = window.visualViewport;
-        const kb = Math.max(0, window.innerHeight - vv.height - vv.offsetTop);
-        win.style.setProperty("--cafeto-kb-offset", kb + "px");
-      };
+      const onViewport = () => layoutMobileChat();
       window.visualViewport.addEventListener("resize", onViewport);
       window.visualViewport.addEventListener("scroll", onViewport);
     }
+
+    window.addEventListener("resize", () => {
+      if (isOpen) layoutMobileChat();
+    });
 
     btn.addEventListener("click", () => (isOpen ? closeChat() : openChat()));
     closeBtn.addEventListener("click", closeChat);
@@ -564,9 +593,14 @@ Armenia es la capital del departamento del Quindío, Colombia. Conocida como "La
         busy = false;
         sendBtn.disabled = false;
         input.disabled   = false;
-        input.focus();
+        input.focus({ preventScroll: true });
+        layoutMobileChat();
       }
     }
+
+    input.addEventListener("focus", () => {
+      setTimeout(layoutMobileChat, 300);
+    });
 
     /* ── Chips ── */
     messages.addEventListener("dc:chip", (e) => sendMessage(e.detail));

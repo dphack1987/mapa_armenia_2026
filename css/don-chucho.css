@@ -448,30 +448,38 @@ body.cafeto-chat-open .cafeto-btn--hidden {
     left: 0;
     width: 100%;
     max-width: none;
-    height: min(92dvh, calc(100dvh - env(safe-area-inset-top, 0px)));
-    max-height: 100dvh;
     border-radius: 20px 20px 0 0;
     border-bottom: none;
     border-left: none;
     border-right: none;
-    transform: translateY(var(--cafeto-kb-offset, 0px));
-    transition: transform 0.2s ease-out;
   }
 
+  /* Panel abierto: ocupa el viewport visible (sin cortar abajo) */
   .cafeto-window.cafeto-window--open {
+    top: env(safe-area-inset-top, 0px);
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: auto;
+    max-height: none;
+    min-height: 0;
+    border-radius: 16px 16px 0 0;
     box-shadow: 0 -8px 40px rgba(0, 0, 0, 0.28);
+    transform: none;
+    animation: none;
   }
 
   .cafeto-btn {
-    bottom: max(1rem, env(safe-area-inset-bottom));
-    right: max(0.75rem, env(safe-area-inset-right));
+    bottom: calc(1rem + env(safe-area-inset-bottom, 0px));
+    right: calc(0.75rem + env(safe-area-inset-right, 0px));
     transition: opacity 0.2s, transform 0.2s;
   }
 
   .cafeto-messages {
     padding: 0.85rem;
-    padding-bottom: calc(0.85rem + env(safe-area-inset-bottom, 0px));
     -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
   }
 
   .cafeto-msg {
@@ -490,9 +498,11 @@ body.cafeto-chat-open .cafeto-btn--hidden {
   }
 
   .cafeto-input-area {
+    flex-shrink: 0;
     padding: 0.65rem 0.85rem;
-    padding-bottom: max(0.65rem, env(safe-area-inset-bottom));
+    padding-bottom: calc(0.65rem + env(safe-area-inset-bottom, 12px));
     gap: 0.55rem;
+    background: #fff;
   }
 
   .cafeto-input {
@@ -513,8 +523,17 @@ body.cafeto-chat-open .cafeto-btn--hidden {
   }
 
   .cafeto-header {
+    flex-shrink: 0;
     padding: 0.65rem 0.85rem;
-    padding-top: max(0.65rem, env(safe-area-inset-top));
+  }
+}
+
+/* Fallback altura en navegadores sin visualViewport bien soportado */
+@supports (height: 100svh) {
+  @media (max-width: 768px) {
+    .cafeto-window.cafeto-window--open {
+      height: calc(100svh - env(safe-area-inset-top, 0px));
+    }
   }
 }
 
