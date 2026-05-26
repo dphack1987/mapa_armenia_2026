@@ -186,11 +186,11 @@ Armenia es la capital del departamento del Quindío, Colombia. Conocida como "La
     }
     
     const respuestasFallback = [
-      "¡Ah, interesante! La IA está descansando un rato ☕ — pero yo te ayudo con el mapa. ¿Quieres ver <strong>lugares turísticos</strong>, <strong>donde comer</strong> o <strong>pautas</strong>? ¡Toque un botón!",
-      "¡Ey, la IA se fue a tomar un tinto! ☕ Pero yo estoy aquí. ¿Por qué no exploramos el mapa? Tenemos <strong>sitios turísticos</strong>, <strong>restaurantes</strong> y <strong>tiendas</strong>. ¡Elige un chip!",
-      "La IA está descansando, pero Don Chucho no! 😊 ¿Qué te apetece hacer? Ver <strong>lugares</strong>, buscar <strong>comida</strong> o conocer las <strong>pautas</strong>? ¡Toque los botones!",
-      "¡Listo para ayudarte, parce! La IA está fuera un momento, pero yo te guío. ¿Por dónde empezamos? ¿<strong>Visitar</strong>, <strong>comer</strong> o <strong>comprar</strong>? ¡Elige!",
-      "¡Vamos a explorar Armenia juntos! ☕ La IA está descansando, pero yo sí te ayudo. Toca un botón de abajo y verás lo que hay en el mapa.",
+      "¡Ay, parce! La IA se fue a tomar un tinto calentito — pero Don Chucho está aquí para ayudarte! ☕ ¿Por dónde empezamos? ¿Querés ver sitios turísticos, dónde comer o conocer las pautas? ¡Toque un botón!",
+      "¡Ey, paisano! La IA está descansando un poquito, pero yo soy tu arriero digital! 😊 Vamos a explorar Armenia juntos — ¿qué te apetece? ¿Visitar, comer o comprar? ¡Toca los chips!",
+      "¡Listo para guiarte por la Ciudad Milagro! La IA está fuera un rato, pero Don Chucho no se va a ningún lado. ☕ ¿Por dónde empezamos? ¡Elige una opción de abajo!",
+      "¡Ay, qué chévere! Aunque la IA está descansando, yo te ayudo a descubrir lo mejor de Armenia. ¿Querés ver parques, restaurantes o tiendas? ¡Toque un botón y vamos!",
+      "¡Ey, parce! La IA se tomó un descanso para tomar café, pero yo estoy aquí para vos. Vamos a explorar el mapa — ¿qué querés hacer primero? ☕",
     ];
     
     let chipsSugeridos = [...CHIPS_INICIO];
@@ -283,7 +283,7 @@ Armenia es la capital del departamento del Quindío, Colombia. Conocida como "La
   /* ─── Intents locales (respuesta inmediata con botones del mapa) ── */
   const LOCAL_INTENTS = [
     {
-      keys: ["visitar", "turismo", "turístico", "turistico", "atractivo", "sitio turístico", "lugares", "que ver", "qué ver", "recomendar", "recomiendas", "me gusta", "me gustaria", "me gustaría", "quiero ver", "ver sitios", "ver lugares"],
+      keys: ["visitar", "turismo", "turístico", "turistico", "atractivo", "sitio turístico", "lugares", "que ver", "qué ver", "recomendar", "recomiendas", "me gusta", "me gustaria", "me gustaría", "quiero ver", "ver sitios", "ver lugares", "que hay pa hacer", "qué hay para hacer", "qué hacer", "que hacer", "que hacer en armenia", "qué hacer en armenia", "actividades", "que actividades", "qué actividades", "entretenimiento", "divertirse", "divertirme", "pasar el rato", "pasar el dia", "pasar el día"],
       reply: () => buildPoiList("turistico"),
       chips: ["Plaza de Bolívar", "Museo del Oro", "Parque de la Vida", "¿Dónde comer?"],
     },
