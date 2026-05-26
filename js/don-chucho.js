@@ -1,17 +1,14 @@
 /**
  * Don Chucho — Asistente turístico de Armenia 2026
  * Arriero quindiano con sombrero aguadeño
- * Respuestas locales para POIs/pautas + Gemini 1.5 Flash para todo lo demás
+ * Respuestas locales para POIs/pautas + Gemini vía Cloudflare Worker
  */
 
 (function () {
   "use strict";
 
-  /* ─── Config Gemini ──────────────────────────────────────── */
-  const GEMINI_KEY = "AIzaSyCiuzmYhLX4QxrMK3pm3go9e8ve8GZE4DY";
-  const GEMINI_URL =
-    "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=" +
-    GEMINI_KEY;
+  /* ─── Proxy Cloudflare Worker (GEMINI_KEY solo en el Worker) ─ */
+  const WORKER_URL = "https://don-chucho-proxy.parraprietodavid87.workers.dev";
 
   /* ─── Constantes UI ──────────────────────────────────────── */
   const AVATAR_SVG = `<img src="avatar_chucho/don-chucho-bust.png" alt="Don Chucho" width="40" height="40" style="border-radius:50%;display:block;object-fit:cover;object-position:center top;" />`;
@@ -96,7 +93,7 @@ Armenia es la capital del departamento del Quindío, Colombia. Conocida como "La
       ],
     };
 
-    const res = await fetch(GEMINI_URL, {
+    const res = await fetch(WORKER_URL, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(body),
@@ -112,7 +109,6 @@ Armenia es la capital del departamento del Quindío, Colombia. Conocida como "La
 
     if (text) {
       _history.push({ role: "model", parts: [{ text }] });
-      // Mantener historial corto (últimas 10 rondas = 20 entradas)
       if (_history.length > 20) _history.splice(0, 2);
     }
 

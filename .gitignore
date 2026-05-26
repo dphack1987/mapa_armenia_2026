@@ -2,4 +2,6 @@
 Thumbs.db
 *.log
 .env
+.env.local
+response.json
 node_modules/
