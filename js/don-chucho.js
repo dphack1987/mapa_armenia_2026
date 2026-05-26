@@ -176,16 +176,35 @@ Armenia es la capital del departamento del Quindío, Colombia. Conocida como "La
     const local = checkLocalIntent(userText);
     if (local) return { html: local.reply, chips: local.chips };
     
+    const q = normText(userText);
+    
+    if (q.length < 3) {
+      return {
+        html: "¡Ey, parce! ¡No seas tímido! Pregúntame algo sobre Armenia — ¿qué visitar, dónde comer, cómo llegar? ☕",
+        chips: CHIPS_INICIO,
+      };
+    }
+    
     const respuestasFallback = [
-      "Parce, la IA está descansando un rato ☕ — pero yo sí le ayudo con el mapa! Toque un botón de abajo o pregunte por <em>qué visitar</em>, <em>dónde comer</em> o <em>pautas</em>.",
-      "¡Ey, la IA se fue a tomar un tinto! ☕ Pero yo estoy aquí. Use los chips para explorar el mapa — hay mucho que ver en Armenia.",
-      "La IA está descansando, pero Don Chucho no! 😊 Pregúntame por lugares, comida o compras, o toque los botones de abajo.",
-      "¡Listo para ayudarte, parce! La IA está fuera de servicio por un momento, pero yo te guío por el mapa. ¿Por dónde empezamos? ☕",
+      "¡Ah, interesante! La IA está descansando un rato ☕ — pero yo te ayudo con el mapa. ¿Quieres ver <strong>lugares turísticos</strong>, <strong>donde comer</strong> o <strong>pautas</strong>? ¡Toque un botón!",
+      "¡Ey, la IA se fue a tomar un tinto! ☕ Pero yo estoy aquí. ¿Por qué no exploramos el mapa? Tenemos <strong>sitios turísticos</strong>, <strong>restaurantes</strong> y <strong>tiendas</strong>. ¡Elige un chip!",
+      "La IA está descansando, pero Don Chucho no! 😊 ¿Qué te apetece hacer? Ver <strong>lugares</strong>, buscar <strong>comida</strong> o conocer las <strong>pautas</strong>? ¡Toque los botones!",
+      "¡Listo para ayudarte, parce! La IA está fuera un momento, pero yo te guío. ¿Por dónde empezamos? ¿<strong>Visitar</strong>, <strong>comer</strong> o <strong>comprar</strong>? ¡Elige!",
+      "¡Vamos a explorar Armenia juntos! ☕ La IA está descansando, pero yo sí te ayudo. Toca un botón de abajo y verás lo que hay en el mapa.",
     ];
+    
+    let chipsSugeridos = [...CHIPS_INICIO];
+    if (/comer|comida|hambre|almorzar|cenar/.test(q)) {
+      chipsSugeridos = ["¿Dónde comer?", "¿Qué visitar?", "Pautas del mapa", "¿Dónde comprar?"];
+    } else if (/visitar|turismo|lugares|ver|parque/.test(q)) {
+      chipsSugeridos = ["¿Qué visitar?", "¿Dónde comer?", "Pautas del mapa"];
+    } else if (/comprar|tiendas|compras|shopping/.test(q)) {
+      chipsSugeridos = ["¿Dónde comprar?", "¿Dónde comer?", "¿Qué visitar?"];
+    }
     
     return {
       html: aleatorio(respuestasFallback),
-      chips: CHIPS_INICIO,
+      chips: chipsSugeridos,
     };
   }
 
@@ -259,22 +278,22 @@ Armenia es la capital del departamento del Quindío, Colombia. Conocida como "La
   /* ─── Intents locales (respuesta inmediata con botones del mapa) ── */
   const LOCAL_INTENTS = [
     {
-      keys: ["visitar", "turismo", "turístico", "turistico", "atractivo", "sitio turístico"],
+      keys: ["visitar", "turismo", "turístico", "turistico", "atractivo", "sitio turístico", "lugares", "que ver", "qué ver", "recomendar", "recomiendas", "me gusta", "me gustaria", "me gustaría", "quiero ver", "ver sitios", "ver lugares"],
       reply: () => buildPoiList("turistico"),
       chips: ["Plaza de Bolívar", "Museo del Oro", "Parque de la Vida", "¿Dónde comer?"],
     },
     {
-      keys: ["comer", "gastronomía", "gastronomia", "restaurante", "comida", "almorzar", "cenar"],
+      keys: ["comer", "gastronomía", "gastronomia", "restaurante", "comida", "almorzar", "cenar", "donde comer", "dónde comer", "comer bien", "comida típica", "comida tipica", "restaurantes", "hambre", "tengo hambre", "donde almorzar", "dónde almorzar", "donde cenar", "dónde cenar", "comer rico", "comer rico"],
       reply: () => buildPoiList("gastronomico"),
       chips: ["Anatolia", "Sol de Café", "¿Dónde comprar?", "¿Qué visitar?"],
     },
     {
-      keys: ["comprar", "comercial", "centro comercial", "shopping"],
+      keys: ["comprar", "comercial", "centro comercial", "shopping", "tiendas", "donde comprar", "dónde comprar", "compras", "mercado", "ir de compras", "de compras", "comprar algo", "que comprar", "qué comprar"],
       reply: () => buildPoiList("comercial"),
       chips: ["Portal del Quindío", "Unicentro", "¿Dónde comer?"],
     },
     {
-      keys: ["pauta", "pautas", "anunciante", "patrocinador"],
+      keys: ["pauta", "pautas", "anunciante", "patrocinador", "patrocinio", "publicidad", "sponsor"],
       reply: () => buildPautasList(),
       chips: ["Anatolia", "Diana Seguros", "Quindío Travel"],
     },
@@ -284,17 +303,17 @@ Armenia es la capital del departamento del Quindío, Colombia. Conocida como "La
       chips: ["¿Dónde comer?", "Quindío Travel"],
     },
     {
-      keys: ["diana seguros", "diana_seguros"],
+      keys: ["diana seguros", "diana_seguros", "diana"],
       reply: () => buildPautaDetalle("diana_seguros"),
       chips: ["Anatolia", "Quindío Travel"],
     },
     {
-      keys: ["quindío travel", "quindio travel"],
+      keys: ["quindío travel", "quindio travel", "quindio"],
       reply: () => buildPautaDetalle("quindio_travel"),
       chips: ["Anatolia", "¿Qué visitar?"],
     },
     {
-      keys: ["llegar", "llegada", "como llegar", "cómo llegar", "transporte", "aeropuerto", "bus"],
+      keys: ["llegar", "llegada", "como llegar", "cómo llegar", "transporte", "aeropuerto", "bus", "terminal", "taxi", "cómo ir", "como ir", "ir a armenia", "llegar a armenia", "venir a armenia"],
       reply: () =>
         "Para llegar a <strong>Armenia</strong>, parce:<br><br>" +
         "✈️ <strong>Aeropuerto El Edén</strong> (AXM) está a ~20 min del centro.<br>" +
@@ -304,8 +323,82 @@ Armenia es la capital del departamento del Quindío, Colombia. Conocida como "La
       chips: ["¿Qué visitar?", "¿Dónde comer?", "Pautas del mapa"],
     },
     {
-      keys: ["hola", "buenas", "buenos dias", "buenas tardes", "buenas noches", "ey", "hello"],
+      keys: ["hola", "buenas", "buenos dias", "buenas tardes", "buenas noches", "ey", "hello", "qué tal", "que tal", "cómo estás", "como estas", "holi", "buen día", "buen dia", "qué onda", "que onda", "qué hubo", "que hubo"],
       reply: () => aleatorio(SALUDOS),
+      chips: CHIPS_INICIO,
+    },
+    {
+      keys: ["café", "cafe", "tinto", "cafetera", "finca cafetera", "finca de café", "café quindío", "cafe quindio", "café armenia", "tomar café", "tomar un tinto", "un tinto", "cafecito", "cafecito"],
+      reply: () =>
+        "¡El café es la identidad del Quindío, parce! ☕<br><br>" +
+        "Le recomiendo visitar fincas cafeteras alrededor de Armenia, probar un tinto en el centro o conocer el <strong>Parque Nacional del Café</strong>.<br><br>" +
+        "Use los chips para ver lugares en el mapa. ¿Qué más le cuento?",
+      chips: ["¿Qué visitar?", "¿Dónde comer?", "Pautas del mapa"],
+    },
+    {
+      keys: ["clima", "tiempo", "lluvia", "sol", "nublado", "temperatura", "qué clima", "que clima", "hace frío", "hace calor", "va a llover", "qué tiempo", "que tiempo", "como está el clima", "cómo está el clima", "que tiempo hace", "qué tiempo hace"],
+      reply: () =>
+        "En Armenia el clima es <strong>templado perfecto</strong>, entre 18 y 22 °C todo el año. ☀️<br><br>" +
+        "Lleve chaqueta ligera para las noches y paraguas por si llueve — ¡es el Eje Cafetero!<br><br>" +
+        "¿Quiere ver sitios para disfrutar este clima? ☕",
+      chips: ["¿Qué visitar?", "¿Dónde comer?", "Pautas del mapa"],
+    },
+    {
+      keys: ["armenia", "quindio", "quindío", "eje cafetero", "ciudad milagro", "ciudad milagro", "qué es armenia", "que es armenia", "info armenia", "informacion armenia", "información armenia", "de que se trata", "de qué se trata", "cuéntame", "cuentame", "háblame", "hablame de armenia"],
+      reply: () =>
+        "<strong>Armenia</strong> es la capital del Quindío, conocida como <em>La Ciudad Milagro</em>. 🌆<br><br>" +
+        "Fundada en 1889, corazón del Eje Cafetero (Patrimonio UNESCO), famosa por el café, la arquitectura de bahareque y la amabilidad de su gente.<br><br>" +
+        "Use los chips para explorar el mapa — ¡hay mucho que ver! ☕",
+      chips: ["¿Qué visitar?", "¿Dónde comer?", "Pautas del mapa"],
+    },
+    {
+      keys: ["gracias", "muchas gracias", "vale", "ok", "bueno", "perfecto", "excelente", "genial", "chévere", "chevere", "bacano", "muy bien", "super", "muy buena", "muy buena", "listo", "de acuerdo", "deacuerdo"],
+      reply: () =>
+        "¡De nada, parce! ¡Es un placer ayudarte a explorar Armenia y el Quindío! ☕<br><br>" +
+        "Si necesitas algo más, ¡solo pregúntame! ¿Qué más quieres saber?",
+      chips: ["¿Qué visitar?", "¿Dónde comer?", "Pautas del mapa"],
+    },
+    {
+      keys: ["parque", "parques", "jardín", "jardin", "naturaleza", "aire libre", "pasear", "caminar", "dar una vuelta", "dar una caminata", "salir a caminar", "salir a pasear", "ver naturaleza"],
+      reply: () => {
+        const items = _pois.filter((p) => p.category === "turistico");
+        const parques = items.filter((p) => 
+          p.name.toLowerCase().includes("parque") || 
+          p.name.toLowerCase().includes("jardín") || 
+          p.name.toLowerCase().includes("jardin")
+        );
+        if (parques.length) {
+          const lista = parques
+            .map((p) => `• <button class="cafeto-poi-link" data-poi-id="${p.id}">${p.name}</button>`)
+            .join("<br>");
+          return `Aquí los <strong>parques y espacios naturales</strong> del mapa:<br><br>${lista}<br><br>Haga clic en el nombre para verlo en el mapa. ☕`;
+        }
+        return buildPoiList("turistico");
+      },
+      chips: ["Parque de la Vida", "Jardín Botánico", "¿Qué visitar?", "¿Dónde comer?"],
+    },
+    {
+      keys: ["hotel", "hoteles", "hostal", "hostales", "alojamiento", "dónde dormir", "donde dormir", "dormir", "hospedaje", "alojarse", "donde alojarse", "dónde alojarse", "hotel barato", "hostal barato", "hotel economico", "hotel económico"],
+      reply: () =>
+        "Para alojamiento en Armenia, parce:<br><br>" +
+        "Hay opciones para todos los presupuestos: hoteles en el centro, hostales y fincas cafeteras con hospedaje.<br><br>" +
+        "Use los chips para explorar el mapa — muchos lugares están cerca de opciones de alojamiento. ☕",
+      chips: ["¿Qué visitar?", "¿Dónde comer?", "Pautas del mapa"],
+    },
+    {
+      keys: ["no", "nada", "nada más", "nada mas", "no gracias", "no, gracias", "por ahora no", "por el momento no", "no quiero", "no quiero nada"],
+      reply: () =>
+        "¡Perfecto, parce! Si después necesitas algo, ¡aquí estoy! 😊<br><br>Siempre puedes abrir el chat y preguntarme de nuevo. ¡Disfruta Armenia! ☕",
+      chips: [],
+    },
+    {
+      keys: ["ayuda", "ayúdame", "ayudame", "qué puedo hacer", "que puedo hacer", "cómo te uso", "como te uso", "qué hago", "que hago", "instrucciones", "cómo funciona", "como funciona"],
+      reply: () =>
+        "¡Claro que sí, parce! Don Chucho te ayuda así:<br><br>" +
+        "🔍 <strong>Pregunta</strong> por lugares, comida, compras o cómo llegar<br>" +
+        "👆 <strong>Toca</strong> los chips para respuestas rápidas<br>" +
+        "🗺️ <strong>Ver en el mapa</strong>: los botones te llevan al punto<br><br>" +
+        "¿Por dónde empezamos? ☕",
       chips: CHIPS_INICIO,
     },
   ];
