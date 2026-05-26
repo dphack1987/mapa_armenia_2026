@@ -101,8 +101,18 @@
   z-index: 2;
   flex: 1;
   min-height: 0;
+  height: 100%;
   display: flex;
   flex-direction: column;
+  overflow: hidden;
+}
+
+.ficha-content > .ficha-inner {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+  height: 100%;
   overflow: hidden;
 }
 
@@ -270,6 +280,7 @@
 
 .ficha-actions {
   flex-shrink: 0;
+  margin-top: auto;
   padding: 1rem 1.25rem 1.1rem;
   background: linear-gradient(135deg, var(--green-mid) 0%, var(--green-dark) 100%);
   border-top: 3px solid var(--gold);
@@ -277,6 +288,7 @@
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
+  z-index: 4;
 }
 
 .ficha-actions-title {
@@ -425,19 +437,78 @@
   text-align: center;
 }
 
-@media (max-width: 480px) {
+/* Móvil y tablet: panel tipo hoja inferior (botones siempre visibles) */
+@media (max-width: 768px) {
   .ficha-modal {
-    padding: 0.5rem;
+    padding: 0;
+    align-items: flex-end;
+    justify-content: flex-end;
   }
 
   .ficha-dialog {
-    height: min(96dvh, 900px);
-    max-height: min(96dvh, 900px);
-    border-radius: 14px;
+    width: 100%;
+    max-width: 100%;
+    height: min(92svh, calc(100dvh - env(safe-area-inset-top, 0px)));
+    max-height: min(92svh, calc(100dvh - env(safe-area-inset-top, 0px)));
+    border-radius: 16px 16px 0 0;
+    border-left: none;
+    border-right: none;
+    border-bottom: none;
+  }
+
+  .ficha-close {
+    top: calc(0.5rem + env(safe-area-inset-top, 0px));
+    right: calc(0.5rem + env(safe-area-inset-right, 0px));
   }
 
   .ficha-hero img {
-    max-height: min(36vh, 200px);
+    max-height: min(24svh, 140px);
+  }
+
+  .ficha-scroll {
+    flex: 1 1 auto;
+    min-height: 0;
+  }
+
+  .ficha-body {
+    padding: 1rem 1.1rem 0.85rem;
+  }
+
+  .ficha-body h2 {
+    font-size: 1.45rem;
+  }
+
+  .ficha-actions {
+    padding: 0.75rem 1rem;
+    padding-bottom: calc(0.85rem + env(safe-area-inset-bottom, 12px));
+    gap: 0.45rem;
+  }
+
+  .ficha-actions .btn {
+    min-height: 44px;
+    padding: 0.65rem 0.9rem;
+    font-size: 0.9rem;
+  }
+
+  .btn-whatsapp {
+    font-size: 0.95rem;
+    padding: 0.7rem 0.9rem;
+  }
+
+  .ficha-link-mapa {
+    min-height: 40px;
+    padding: 0.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .ficha-dialog {
+    height: min(94svh, calc(100dvh - env(safe-area-inset-top, 0px)));
+    max-height: min(94svh, calc(100dvh - env(safe-area-inset-top, 0px)));
+  }
+
+  .ficha-hero img {
+    max-height: min(22svh, 120px);
   }
 }
 
