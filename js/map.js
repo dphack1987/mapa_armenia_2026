@@ -291,6 +291,8 @@ function openFicha(pautaId) {
   requestAnimationFrame(() => {
     const dialog = modal.querySelector(".ficha-dialog");
     if (dialog) dialog.scrollTop = 0;
+    const actions = content.querySelector(".ficha-actions");
+    if (actions) actions.scrollIntoView({ block: "end" });
   });
 }
 

@@ -111,8 +111,7 @@ body.decor-activo .pauta-card {
 
 .site-header,
 .app-layout,
-.site-footer,
-#ficha-modal {
+.site-footer {
   position: relative;
   z-index: 1;
 }

@@ -1,4 +1,5 @@
-.ficha-modal {
+/* position:fixed — no sobrescribir en decoraciones.css */
+#ficha-modal.ficha-modal {
   position: fixed;
   inset: 0;
   z-index: 10000;
@@ -6,9 +7,10 @@
   align-items: center;
   justify-content: center;
   padding: 1rem;
+  box-sizing: border-box;
 }
 
-.ficha-modal[hidden] {
+#ficha-modal.ficha-modal[hidden] {
   display: none;
 }
 
@@ -108,8 +110,8 @@
 }
 
 .ficha-content > .ficha-inner {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
   flex: 1;
   min-height: 0;
   height: 100%;
@@ -124,6 +126,7 @@
 }
 
 .ficha-hero {
+  grid-row: 1;
   position: relative;
   flex-shrink: 0;
   line-height: 0;
@@ -157,7 +160,7 @@
 }
 
 .ficha-scroll {
-  flex: 1;
+  grid-row: 2;
   min-height: 0;
   overflow-x: hidden;
   overflow-y: auto;
@@ -279,8 +282,8 @@
 }
 
 .ficha-actions {
+  grid-row: 3;
   flex-shrink: 0;
-  margin-top: auto;
   padding: 1rem 1.25rem 1.1rem;
   background: linear-gradient(135deg, var(--green-mid) 0%, var(--green-dark) 100%);
   border-top: 3px solid var(--gold);
@@ -439,7 +442,7 @@
 
 /* Móvil y tablet: panel tipo hoja inferior (botones siempre visibles) */
 @media (max-width: 768px) {
-  .ficha-modal {
+  #ficha-modal.ficha-modal {
     padding: 0;
     align-items: flex-end;
     justify-content: flex-end;
@@ -448,8 +451,10 @@
   .ficha-dialog {
     width: 100%;
     max-width: 100%;
-    height: min(92svh, calc(100dvh - env(safe-area-inset-top, 0px)));
-    max-height: min(92svh, calc(100dvh - env(safe-area-inset-top, 0px)));
+    height: calc(100dvh - env(safe-area-inset-top, 0px));
+    height: calc(100svh - env(safe-area-inset-top, 0px));
+    max-height: calc(100dvh - env(safe-area-inset-top, 0px));
+    max-height: calc(100svh - env(safe-area-inset-top, 0px));
     border-radius: 16px 16px 0 0;
     border-left: none;
     border-right: none;
@@ -466,8 +471,8 @@
   }
 
   .ficha-scroll {
-    flex: 1 1 auto;
     min-height: 0;
+    max-height: none;
   }
 
   .ficha-body {
@@ -502,13 +507,8 @@
 }
 
 @media (max-width: 480px) {
-  .ficha-dialog {
-    height: min(94svh, calc(100dvh - env(safe-area-inset-top, 0px)));
-    max-height: min(94svh, calc(100dvh - env(safe-area-inset-top, 0px)));
-  }
-
   .ficha-hero img {
-    max-height: min(22svh, 120px);
+    max-height: min(20svh, 110px);
   }
 }
 
