@@ -45,7 +45,7 @@ body {
   justify-content: space-between;
   gap: 1rem;
   padding: 0.5rem 1.25rem 0.75rem;
-  background: linear-gradient(135deg, rgba(255,255,255,1) 0%, rgba(232,245,233,1) 50%, rgba(255,255,255,1) 100%), url("../decoraciones/56855.jpg");
+  background: linear-gradient(135deg, rgba(255,255,255,0.92) 0%, rgba(232,245,233,0.92) 50%, rgba(255,255,255,0.92) 100%), url("../decoraciones/56855.jpg");
   background-size: cover;
   background-position: center;
   border-bottom: 4px solid var(--green-mid);
