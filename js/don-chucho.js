@@ -285,12 +285,12 @@ Armenia es la capital del departamento del Quindío, Colombia. Conocida como "La
   /* ─── Intents locales (respuesta inmediata con botones del mapa) ── */
   const LOCAL_INTENTS = [
     {
-      keys: ["visitar", "turismo", "turístico", "turistico", "atractivo", "sitio turístico", "lugares", "que ver", "qué ver", "recomendar", "recomiendas", "me gusta", "me gustaria", "me gustaría", "quiero ver", "ver sitios", "ver lugares", "que hay pa hacer", "qué hay para hacer", "qué hacer", "que hacer", "que hacer en armenia", "qué hacer en armenia", "actividades", "que actividades", "qué actividades", "entretenimiento", "divertirse", "divertirme", "pasar el rato", "pasar el dia", "pasar el día"],
+      keys: ["visitar", "turismo", "turístico", "turistico", "atractivo", "sitio turístico", "lugares", "que ver", "qué ver", "recomendar", "recomiendas", "me gusta", "me gustaria", "me gustaría", "quiero ver", "ver sitios", "ver lugares", "que hay pa hacer", "qué hay para hacer", "qué hacer", "que hacer", "que hacer en armenia", "qué hacer en armenia", "actividades", "que actividades", "qué actividades", "entretenimiento", "divertirse", "divertirme", "pasar el rato", "pasar el dia", "pasar el día", "sitios emblemáticos", "sitios emblematicos", "lugares turísticos", "lugares turisticos", "turísticos", "turisticos", "qué me recomiendas", "que me recomiendas", "qué recomendaciones", "que recomendaciones"],
       reply: () => buildPoiList("turistico"),
       chips: ["Plaza de Bolívar", "Museo del Oro", "Parque de la Vida", "¿Dónde comer?"],
     },
     {
-      keys: ["comer", "gastronomía", "gastronomia", "restaurante", "comida", "almorzar", "cenar", "donde comer", "dónde comer", "comer bien", "comida típica", "comida tipica", "restaurantes", "hambre", "tengo hambre", "donde almorzar", "dónde almorzar", "donde cenar", "dónde cenar", "comer rico", "comer rico"],
+      keys: ["comer", "gastronomía", "gastronomia", "restaurante", "comida", "almorzar", "cenar", "donde comer", "dónde comer", "comer bien", "comida típica", "comida tipica", "restaurantes", "hambre", "tengo hambre", "donde almorzar", "dónde almorzar", "donde cenar", "dónde cenar", "comer rico", "donde hay comida", "dónde hay comida", "sitios para comer", "lugares para comer", "comidas típicas", "comidas tipicas", "gastronomia local", "gastronomía local"],
       reply: () => buildPoiList("gastronomico"),
       chips: ["Anatolia", "Sol de Café", "¿Dónde comprar?", "¿Qué visitar?"],
     },
