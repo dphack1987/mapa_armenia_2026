@@ -40,7 +40,7 @@ body.decor-activo::after {
   background-image: var(--decor-header, none);
   background-size: cover;
   background-position: top center;
-  opacity: var(--decor-header-opacity, 0.08);
+  opacity: var(--decor-header-opacity, 0.03);
 }
 
 .site-header > * {
