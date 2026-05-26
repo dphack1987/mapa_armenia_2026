@@ -45,7 +45,7 @@ body {
   justify-content: space-between;
   gap: 1rem;
   padding: 0.5rem 1.25rem 0.75rem;
-  background: linear-gradient(135deg, rgba(255,255,255,0.95) 0%, rgba(232,245,233,0.95) 50%, rgba(255,255,255,0.95) 100%), url("../decoraciones/56855.jpg");
+  background: linear-gradient(135deg, rgba(255,255,255,1) 0%, rgba(232,245,233,1) 50%, rgba(255,255,255,1) 100%), url("../decoraciones/56855.jpg");
   background-size: cover;
   background-position: center;
   border-bottom: 4px solid var(--green-mid);
@@ -234,6 +234,7 @@ body.ficha-open {
   overscroll-behavior: contain;
   -webkit-overflow-scrolling: touch;
   padding: 1rem 1.25rem;
+  padding-bottom: calc(1rem + 60px);
   background: url("../decoraciones/9081966_4092826.jpg") center/cover no-repeat;
   background-color: var(--surface);
   border-right: 1px solid #d8e6df;
@@ -403,7 +404,7 @@ body.ficha-open {
 
 .cat-comercial .poi-cat {
   background: #f1c40f;
-  color: #fff;
+  color: #7d6a0c;
 }
 
 .cat-gastronomico .poi-cat {
@@ -658,7 +659,7 @@ body.ficha-open {
 
   .app-layout {
     grid-template-columns: 1fr;
-    grid-template-rows: minmax(0, 42vh) minmax(0, 1fr);
+    grid-template-rows: minmax(0, 36svh) minmax(0, 1fr);
   }
 
   .sidebar {
@@ -672,8 +673,21 @@ body.ficha-open {
   }
 
   .logo-main {
-    height: clamp(100px, 28vw, 140px);
+    height: clamp(60px, 20vw, 110px);
     max-width: 100%;
   }
 
+  .site-footer {
+    padding: 0.35rem 0.8rem;
+    padding-bottom: calc(0.35rem + env(safe-area-inset-bottom, 0px));
+    font-size: 0.7rem;
+  }
+}
+
+@supports not (height: 100svh) {
+  @media (max-width: 900px) {
+    .app-layout {
+      grid-template-rows: minmax(0, 36vh) minmax(0, 1fr);
+    }
+  }
 }
