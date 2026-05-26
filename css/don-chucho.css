@@ -386,6 +386,11 @@
   padding: 0.75rem 1rem;
   background: #fff;
   border-top: 1.5px solid #d8e6df;
+  margin: 0;
+}
+
+form.cafeto-input-area {
+  border: none;
 }
 
 .cafeto-input {

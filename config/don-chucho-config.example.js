@@ -6,6 +6,7 @@
 window.DON_CHUCHO_CONFIG = {
   GEMINI_KEY: "",
   GEMINI_MODEL: "gemini-2.5-flash",
+  GEMINI_MODELS_FALLBACK: ["gemini-2.5-flash", "gemini-2.0-flash-lite"],
   WORKER_URL: "https://don-chucho-proxy.parraprietodavid87.workers.dev",
-  PREFER_DIRECT: true,
+  PREFER_DIRECT: false,
 };
