@@ -98,6 +98,69 @@ body {
   align-items: center;
 }
 
+/* ─── Don Chucho en el Header ───────────────────────────── */
+.header-don-chucho {
+  background: linear-gradient(135deg, #198754 0%, #0f5132 100%);
+  border-radius: 16px;
+  padding: 0.75rem 1rem;
+  border: 2px solid #f1c40f;
+  flex-shrink: 0;
+}
+
+.hdch-wrap {
+  display: flex;
+  gap: 0.85rem;
+  align-items: center;
+}
+
+.hdch-avatar {
+  flex-shrink: 0;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 2px solid #f1c40f;
+  background: rgba(255, 255, 255, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hdch-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+}
+
+.hdch-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.hdch-name {
+  font-size: 1rem;
+  font-weight: 800;
+  color: #f1c40f;
+  margin: 0 0 0.15rem;
+  line-height: 1.1;
+}
+
+.hdch-role {
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.95);
+  margin: 0 0 0.35rem;
+  font-weight: 600;
+  line-height: 1.1;
+}
+
+.hdch-text {
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.9);
+  margin: 0;
+  line-height: 1.3;
+}
+
 .pautas-panel {
   margin-bottom: 1.25rem;
 }
@@ -657,6 +720,40 @@ body.ficha-open {
     overflow: hidden;
   }
 
+  .site-header {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.75rem;
+    padding: 0.6rem 1rem;
+  }
+
+  .header-brand {
+    min-width: 0;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 0.75rem;
+  }
+
+  .header-meta {
+    order: 3;
+  }
+
+  .header-don-chucho {
+    order: 2;
+    width: 100%;
+  }
+
+  .hdch-wrap {
+    justify-content: center;
+  }
+
+  .header-actions {
+    order: 4;
+    justify-content: center;
+    width: 100%;
+  }
+
   .app-layout {
     grid-template-columns: 1fr;
     grid-template-rows: minmax(0, 36svh) minmax(0, 1fr);
@@ -689,5 +786,87 @@ body.ficha-open {
     .app-layout {
       grid-template-rows: minmax(0, 36vh) minmax(0, 1fr);
     }
+  }
+}
+
+/* ─── Banner Don Chucho ──────────────────────────────────── */
+.don-chucho-intro {
+  background: linear-gradient(135deg, #198754 0%, #0f5132 100%);
+  border-radius: 16px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  border: 2px solid #f1c40f;
+}
+
+.dch-intro-wrap {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+}
+
+.dch-intro-avatar {
+  flex-shrink: 0;
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 2px solid #f1c40f;
+  background: rgba(255, 255, 255, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.dch-intro-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+}
+
+.dch-intro-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.dch-intro-name {
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: #f1c40f;
+  margin: 0 0 0.25rem;
+  line-height: 1.2;
+}
+
+.dch-intro-role {
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.95);
+  margin: 0 0 0.5rem;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.dch-intro-text {
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.9;
+  margin: 0;
+  line-height: 1.4;
+}
+
+@media (max-width: 900px) {
+  .don-chucho-intro {
+    padding: 0.85rem;
+  }
+  
+  .dch-intro-avatar {
+    width: 60px;
+    height: 60px;
+  }
+  
+  .dch-intro-name {
+    font-size: 1rem;
+  }
+  
+  .dch-intro-text {
+    font-size: 0.78rem;
   }
 }
