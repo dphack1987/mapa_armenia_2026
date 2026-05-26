@@ -418,7 +418,7 @@ Armenia es la capital del departamento del Quindío, Colombia. Conocida como "La
       chips: CHIPS_INICIO,
     },
     {
-      keys: ["quién eres", "quien eres", "qué eres", "que eres", "quien es don chucho", "quién es don chucho", "presentate", "presentarte"],
+      keys: ["quién eres", "quien eres", "qué eres", "que eres", "quien es don chucho", "quién es don chucho", "presentate", "presentarte", "cómo te llamas", "como te llamas", "cual es tu nombre", "cuál es tu nombre", "tu nombre", "tu nombre es"],
       reply: () =>
         "¡Ay, qué buena pregunta! Yo soy <strong>Don Chucho</strong>, tu arriero quindiano con sombrero aguadeño. 🧢<br><br>" +
         "Soy el guía turístico virtual del Mapa Digital de Armenia 2026. Conozco la región cafetera como la palma de mi mano — el café, las tradiciones, los mejores sitios para visitar, comer y comprar.<br><br>" +
