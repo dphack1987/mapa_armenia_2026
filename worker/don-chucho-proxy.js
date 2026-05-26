@@ -1,7 +1,8 @@
 /**
- * Cloudflare Worker: proxy seguro hacia Gemini para Don Chucho.
- * Secret requerido: GEMINI_KEY
- * Variable opcional: GEMINI_MODEL (default gemini-2.0-flash-lite)
+ * Proxy Gemini para Don Chucho.
+ * Secrets: GEMINI_KEY
+ * Vars:    GEMINI_MODEL (opcional)
+ * El cliente puede enviar "_model" en el JSON para forzar el modelo.
  */
 export default {
   async fetch(request, env) {
@@ -33,7 +34,10 @@ export default {
       return new Response("Invalid JSON", { status: 400, headers: cors });
     }
 
-    const model = env.GEMINI_MODEL || "gemini-2.0-flash-lite";
+    const model =
+      body._model || env.GEMINI_MODEL || "gemini-2.5-flash";
+    delete body._model;
+
     const geminiUrl =
       `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=` +
       env.GEMINI_KEY;
