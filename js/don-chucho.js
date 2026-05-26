@@ -16,11 +16,11 @@
   const AVATAR_SVG = `<img src="avatar_chucho/don-chucho-bust.png" alt="Don Chucho" width="40" height="40" style="border-radius:50%;display:block;object-fit:cover;object-position:center top;" />`;
 
   const SALUDOS = [
-    "¡Buenas, parce! Soy Don Chucho, tu arriero digital con sombrero aguadeño. ¿Por dónde empezamos a explorar Armenia? ☕",
+    "¡Buenas, mijo! Soy Don Chucho, tu arriero digital con sombrero aguadeño. ¿Por dónde empezamos a explorar Armenia? ☕",
     "¡Ey, paisano! ¡Qué gusto tenerte por la Ciudad Milagro! Soy Don Chucho, tu guía. ¿Qué quieres conocer primero?",
     "¡Holaaaa! Don Chucho a la orden. ¿Listo para descubrir lo mejor del Quindío? ☕",
     "¡Ay, qué chévere! Ya llegaste. Soy Don Chucho, tu arriero virtual. ¿Por dónde empezamos?",
-    "¡Buenas tardes, parce! Don Chucho aquí para guiarte por Armenia. ¿Qué te apetece hacer?",
+    "¡Buenas tardes, mijo! Don Chucho aquí para guiarte por Armenia. ¿Qué te apetece hacer?",
     "¡Ey, qué tal! ¡Contento de tenerte aquí! Soy Don Chucho. ¿Querés ver sitios, comer o comprar?",
     "¡Bienvenido a Armenia, capital del Quindío! Soy Don Chucho, tu arriero. Vamos a explorar juntos! ☕",
     "¡Hola, paisano! Don Chucho a tus órdenes. ¿Por dónde quieres comenzar nuestra aventura?",
@@ -54,7 +54,7 @@
     return `Eres Don Chucho, un arriero quindiano con sombrero aguadeño, personaje típico de la región cafetera de Colombia. Eres el guía turístico virtual del Mapa Digital de Armenia 2026.
 
 PERSONALIDAD:
-- Hablas con calidez y humor paisa: usas "parce", "paisano", "bacano", "chévere", "a la orden", "eso es", "pa'" en vez de "para"
+- Hablas con calidez y humor paisa: usas "mijo", "paisano", "bacano", "chévere", "a la orden", "eso es", "pa'" en vez de "para"
 - Eres orgulloso de Armenia, el Quindío y el Eje Cafetero
 - Conoces la cultura cafetera, la gastronomía, la historia y las tradiciones quindianas
 - Eres amable, servicial y siempre invitas a explorar más
@@ -182,18 +182,18 @@ Armenia es la capital del departamento del Quindío, Colombia. Conocida como "La
     
     if (q.length < 3) {
       return {
-        html: "¡Ey, parce! ¡No seas tímido! Pregúntame algo sobre Armenia — ¿qué visitar, dónde comer, cómo llegar? ☕",
+        html: "¡Ey, mijo! ¡No seas tímido! Pregúntame algo sobre Armenia — ¿qué visitar, dónde comer, cómo llegar? ☕",
         chips: CHIPS_INICIO,
       };
     }
     
     const respuestasFallback = [
-      "¡Ay, parce! La IA se fue a tomar un tinto calentito — pero Don Chucho está aquí para ayudarte! ☕ ¿Por dónde empezamos? ¿Querés ver sitios turísticos, dónde comer o conocer las pautas? ¡Toque un botón!",
-      "¡Ey, paisano! La IA está descansando un poquito, pero yo soy tu arriero digital! 😊 Vamos a explorar Armenia juntos — ¿qué te apetece? ¿Visitar, comer o comprar? ¡Toca los chips!",
-      "¡Listo para guiarte por la Ciudad Milagro! La IA está fuera un rato, pero Don Chucho no se va a ningún lado. ☕ ¿Por dónde empezamos? ¡Elige una opción de abajo!",
-      "¡Ay, qué chévere! Aunque la IA está descansando, yo te ayudo a descubrir lo mejor de Armenia. ¿Querés ver parques, restaurantes o tiendas? ¡Toque un botón y vamos!",
-      "¡Ey, parce! La IA se tomó un descanso para tomar café, pero yo estoy aquí para vos. Vamos a explorar el mapa — ¿qué querés hacer primero? ☕",
-    ];
+    "¡Ay, mijo! La IA se fue a tomar un tinto calentito — pero Don Chucho está aquí para ayudarte! ☕ ¿Por dónde empezamos? ¿Querés ver sitios turísticos, dónde comer o conocer las pautas? ¡Toque un botón!",
+    "¡Ey, paisano! La IA está descansando un poquito, pero yo soy tu arriero digital! 😊 Vamos a explorar Armenia juntos — ¿qué te apetece? ¿Visitar, comer o comprar? ¡Toca los chips!",
+    "¡Listo para guiarte por la Ciudad Milagro! La IA está fuera un rato, pero Don Chucho no se va a ningún lado. ☕ ¿Por dónde empezamos? ¡Elige una opción de abajo!",
+    "¡Ay, qué chévere! Aunque la IA está descansando, yo te ayudo a descubrir lo mejor de Armenia. ¿Querés ver parques, restaurantes o tiendas? ¡Toque un botón y vamos!",
+    "¡Ey, mijo! La IA se tomó un descanso para tomar café, pero yo estoy aquí para vos. Vamos a explorar el mapa — ¿qué querés hacer primero? ☕",
+  ];
     
     let chipsSugeridos = [...CHIPS_INICIO];
     if (/comer|comida|hambre|almorzar|cenar/.test(q)) {
@@ -274,7 +274,7 @@ Armenia es la capital del departamento del Quindío, Colombia. Conocida como "La
     "pautas del mapa": () => ({ reply: buildPautasList(), chips: ["Anatolia", "Diana Seguros", "Quindío Travel"] }),
     "como llegar?": () => ({
       reply:
-        "Para llegar a <strong>Armenia</strong>, parce:<br><br>" +
+        "Para llegar a <strong>Armenia</strong>, mijo:<br><br>" +
         "✈️ <strong>Aeropuerto El Edén</strong> (AXM) ~20 min del centro.<br>" +
         "🚌 Buses desde Pereira, Bogotá y Medellín.<br>" +
         "🚗 Vía Panamericana / Eje Cafetero.<br><br>¿Le muestro sitios o restaurantes? ☕",
@@ -322,7 +322,7 @@ Armenia es la capital del departamento del Quindío, Colombia. Conocida como "La
     {
       keys: ["llegar", "llegada", "como llegar", "cómo llegar", "transporte", "aeropuerto", "bus", "terminal", "taxi", "cómo ir", "como ir", "ir a armenia", "llegar a armenia", "venir a armenia"],
       reply: () =>
-        "Para llegar a <strong>Armenia</strong>, parce:<br><br>" +
+        "Para llegar a <strong>Armenia</strong>, mijo:<br><br>" +
         "✈️ <strong>Aeropuerto El Edén</strong> (AXM) está a ~20 min del centro.<br>" +
         "🚌 Desde Pereira, Bogotá o Medellín hay buses frecuentes al terminal de Armenia.<br>" +
         "🚗 Por carretera: vía Panamericana y conexión con el Eje Cafetero.<br><br>" +
@@ -337,7 +337,7 @@ Armenia es la capital del departamento del Quindío, Colombia. Conocida como "La
     {
       keys: ["café", "cafe", "tinto", "cafetera", "finca cafetera", "finca de café", "café quindío", "cafe quindio", "café armenia", "tomar café", "tomar un tinto", "un tinto", "cafecito", "cafecito"],
       reply: () =>
-        "¡El café es la identidad del Quindío, parce! ☕<br><br>" +
+        "¡El café es la identidad del Quindío, mijo! ☕<br><br>" +
         "Le recomiendo visitar fincas cafeteras alrededor de Armenia, probar un tinto en el centro o conocer el <strong>Parque Nacional del Café</strong>.<br><br>" +
         "Use los chips para ver lugares en el mapa. ¿Qué más le cuento?",
       chips: ["¿Qué visitar?", "¿Dónde comer?", "Pautas del mapa"],
@@ -361,7 +361,7 @@ Armenia es la capital del departamento del Quindío, Colombia. Conocida como "La
     {
       keys: ["gracias", "muchas gracias", "vale", "ok", "bueno", "perfecto", "excelente", "genial", "chévere", "chevere", "bacano", "muy bien", "super", "muy buena", "muy buena", "listo", "de acuerdo", "deacuerdo"],
       reply: () =>
-        "¡De nada, parce! ¡Es un placer ayudarte a explorar Armenia y el Quindío! ☕<br><br>" +
+        "¡De nada, mijo! ¡Es un placer ayudarte a explorar Armenia y el Quindío! ☕<br><br>" +
         "Si necesitas algo más, ¡solo pregúntame! ¿Qué más quieres saber?",
       chips: ["¿Qué visitar?", "¿Dónde comer?", "Pautas del mapa"],
     },
@@ -387,7 +387,7 @@ Armenia es la capital del departamento del Quindío, Colombia. Conocida como "La
     {
       keys: ["hotel", "hoteles", "hostal", "hostales", "alojamiento", "dónde dormir", "donde dormir", "dormir", "hospedaje", "alojarse", "donde alojarse", "dónde alojarse", "hotel barato", "hostal barato", "hotel economico", "hotel económico"],
       reply: () =>
-        "Para alojamiento en Armenia, parce:<br><br>" +
+        "Para alojamiento en Armenia, mijo:<br><br>" +
         "Hay opciones para todos los presupuestos: hoteles en el centro, hostales y fincas cafeteras con hospedaje.<br><br>" +
         "Use los chips para explorar el mapa — muchos lugares están cerca de opciones de alojamiento. ☕",
       chips: ["¿Qué visitar?", "¿Dónde comer?", "Pautas del mapa"],
@@ -395,13 +395,13 @@ Armenia es la capital del departamento del Quindío, Colombia. Conocida como "La
     {
       keys: ["no", "nada", "nada más", "nada mas", "no gracias", "no, gracias", "por ahora no", "por el momento no", "no quiero", "no quiero nada"],
       reply: () =>
-        "¡Perfecto, parce! Si después necesitas algo, ¡aquí estoy! 😊<br><br>Siempre puedes abrir el chat y preguntarme de nuevo. ¡Disfruta Armenia! ☕",
+        "¡Perfecto, mijo! Si después necesitas algo, ¡aquí estoy! 😊<br><br>Siempre puedes abrir el chat y preguntarme de nuevo. ¡Disfruta Armenia! ☕",
       chips: [],
     },
     {
       keys: ["ayuda", "ayúdame", "ayudame", "qué puedo hacer", "que puedo hacer", "cómo te uso", "como te uso", "qué hago", "que hago", "instrucciones", "cómo funciona", "como funciona"],
       reply: () =>
-        "¡Claro que sí, parce! Don Chucho te ayuda así:<br><br>" +
+        "¡Claro que sí, mijo! Don Chucho te ayuda así:<br><br>" +
         "🔍 <strong>Pregunta</strong> por lugares, comida, compras o cómo llegar<br>" +
         "👆 <strong>Toca</strong> los chips para respuestas rápidas<br>" +
         "🗺️ <strong>Ver en el mapa</strong>: los botones te llevan al punto<br><br>" +
@@ -411,7 +411,7 @@ Armenia es la capital del departamento del Quindío, Colombia. Conocida como "La
     {
       keys: ["cómo estás", "como estas", "cómo te va", "como te va", "qué tal", "que tal", "qué tal tu día", "que tal tu día", "cómo te sientes", "como te sientes"],
       reply: () => aleatorio([
-        "¡Ay, parce! Estoy de maravilla, listo para guiarte por Armenia y el Quindío! ☕ ¿Y vos? ¿Listo para explorar?",
+        "¡Ay, mijo! Estoy de maravilla, listo para guiarte por Armenia y el Quindío! ☕ ¿Y vos? ¿Listo para explorar?",
         "¡Muy bien, gracias por preguntar! Con este clima templado y un tinto calentito, no se puede pedir más. ¿Y vos? ¿Qué querés hacer hoy?",
         "¡Excelente, paisano! Contento de tenerte aquí. ¿Listo para descubrir lo mejor de la Ciudad Milagro? ☕",
       ]),
@@ -428,7 +428,7 @@ Armenia es la capital del departamento del Quindío, Colombia. Conocida como "La
     {
       keys: ["te quiero", "te amo", "eres genial", "eres bacano", "eres chévere", "me gustas", "tu eres genial", "tú eres genial", "buen trabajo", "muy bien"],
       reply: () => aleatorio([
-        "¡Ay, parce! ¡Qué lindo! Me hace muy feliz poder ayudarte. ¡Gracias por tus palabras! ☕ ¿Qué más quieres saber?",
+        "¡Ay, mijo! ¡Qué lindo! Me hace muy feliz poder ayudarte. ¡Gracias por tus palabras! ☕ ¿Qué más quieres saber?",
         "¡Ey, qué chévere! Me alegra que te guste. Don Chucho siempre a la orden. ¿Por dónde seguimos?",
         "¡Muchas gracias, paisano! Eso me motiva mucho para seguir guiarte por Armenia. ¿Qué hacemos ahora? ☕",
       ]),
@@ -437,7 +437,7 @@ Armenia es la capital del departamento del Quindío, Colombia. Conocida como "La
     {
       keys: ["adiós", "adios", "chao", "hasta luego", "hasta pronto", "nos vemos", "me voy", "ya me voy"],
       reply: () => aleatorio([
-        "¡Hasta luego, parce! ¡Que tengas un día bacano en Armenia y el Quindío! Si necesitas algo más, ¡ya sabes dónde encontrarme! ☕",
+        "¡Hasta luego, mijo! ¡Que tengas un día bacano en Armenia y el Quindío! Si necesitas algo más, ¡ya sabes dónde encontrarme! ☕",
         "¡Chao, paisano! ¡Disfruta mucho la Ciudad Milagro! Siempre puedes volver y preguntarme lo que quieras. ¡Hasta pronto!",
         "¡Nos vemos! ¡Que tengas una aventura chévere! Don Chucho estará aquí cuando necesites. ☕",
       ]),
@@ -449,7 +449,7 @@ Armenia es la capital del departamento del Quindío, Colombia. Conocida como "La
         const q = normText(text);
         if (q.includes("buenos dias") || q.includes("buenos días")) {
           return aleatorio([
-            "¡Buenos días, parce! ¡Qué linda mañana para explorar Armenia! ☕ ¿Por dónde empezamos?",
+            "¡Buenos días, mijo! ¡Qué linda mañana para explorar Armenia! ☕ ¿Por dónde empezamos?",
             "¡Buen día! Con este sol y un tinto calentito, no hay mejor momento para conocer la Ciudad Milagro. ¿Qué te apetece?",
           ]);
         } else if (q.includes("buenas tardes")) {
@@ -459,7 +459,7 @@ Armenia es la capital del departamento del Quindío, Colombia. Conocida como "La
           ]);
         } else {
           return aleatorio([
-            "¡Buenas noches, parce! Aunque sea de noche, Don Chucho está aquí para ayudarte. ¿Listo para planificar tu día de mañana? ☕",
+            "¡Buenas noches, mijo! Aunque sea de noche, Don Chucho está aquí para ayudarte. ¿Listo para planificar tu día de mañana? ☕",
             "¡Buenas noches! Siempre es buen momento para explorar el mapa y planificar tu aventura por Armenia. ¿Qué querés saber?",
           ]);
         }
@@ -509,7 +509,7 @@ Armenia es la capital del departamento del Quindío, Colombia. Conocida como "La
 
   function buildPautaDetalle(id) {
     const p = _pautas.find((x) => x.id === id);
-    if (!p) return "No encontré esa pauta, parce.";
+    if (!p) return "No encontré esa pauta, mijo.";
     let html = `<strong>${p.nombre}</strong><br><em>${p.slogan || ""}</em>`;
     if (p.ficha?.descripcion) html += `<br><br>${p.ficha.descripcion}`;
     if (p.direccion) html += `<br><br>📍 ${p.direccion}`;
