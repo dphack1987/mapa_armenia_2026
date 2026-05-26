@@ -1,6 +1,6 @@
 /**
  * Don Chucho — Asistente turístico de Armenia 2026
- * Arriero quindiano con sombrero aguadeño
+ * Arriero quindiano con poncho y carriel
  * Respuestas locales para POIs/pautas + Gemini vía Cloudflare Worker
  */
 
@@ -16,7 +16,7 @@
   const AVATAR_SVG = `<img src="avatar_chucho/don-chucho-bust.png" alt="Don Chucho" width="40" height="40" style="border-radius:50%;display:block;object-fit:cover;object-position:center top;" />`;
 
   const SALUDOS = [
-    "¡Buenas, mijo! Soy Don Chucho, tu arriero digital con sombrero aguadeño. ¿Por dónde empezamos a explorar Armenia? ☕",
+    "¡Buenas, mijo! Soy Don Chucho, tu arriero digital con poncho y carriel. ¿Por dónde empezamos a explorar Armenia? ☕",
     "¡Ey, paisano! ¡Qué gusto tenerte por la Ciudad Milagro! Soy Don Chucho, tu guía. ¿Qué quieres conocer primero?",
     "¡Holaaaa! Don Chucho a la orden. ¿Listo para descubrir lo mejor del Quindío? ☕",
     "¡Ay, qué chévere! Ya llegaste. Soy Don Chucho, tu arriero virtual. ¿Por dónde empezamos?",
@@ -30,16 +30,77 @@
     "¿Qué visitar?",
     "¿Dónde comer?",
     "¿Dónde comprar?",
-    "Pautas del mapa",
-    "¿Cómo llegar?",
+    "Qué hay cerca?",
+    "Armar ruta",
   ];
+
+  const ROUTE_MODES = {
+    cafe: {
+      label: "Ruta café",
+      color: "#8d5a2b",
+      chips: ["Ruta cultural", "Ruta exprés", "Qué hay cerca?"],
+    },
+    familiar: {
+      label: "Ruta familiar",
+      color: "#198754",
+      chips: ["Ruta café", "Ruta exprés", "¿Qué visitar?"],
+    },
+    cultural: {
+      label: "Ruta cultural",
+      color: "#0f5132",
+      chips: ["Ruta café", "Ruta familiar", "Qué hay cerca?"],
+    },
+    express: {
+      label: "Ruta exprés",
+      color: "#d35400",
+      chips: ["Ruta café", "Ruta cultural", "¿Dónde comer?"],
+    },
+    compras: {
+      label: "Ruta de compras",
+      color: "#f1c40f",
+      chips: ["Ruta exprés", "¿Dónde comprar?", "¿Dónde comer?"],
+    },
+  };
 
   /* ─── Datos del mapa ─────────────────────────────────────── */
   let _pois = [];
   let _pautas = [];
+  const _visitorProfile = {
+    interests: [],
+    companions: null,
+    budget: null,
+    pace: null,
+    duration: null,
+  };
 
   function setPoisData(pois)   { _pois   = pois   || []; }
   function setPautasData(p)    { _pautas = p      || []; }
+
+  function uniqueList(items) {
+    return [...new Set((items || []).filter(Boolean))];
+  }
+
+  function mergeVisitorProfile(next) {
+    if (!next) return false;
+    let changed = false;
+
+    if (next.interests?.length) {
+      const merged = uniqueList([..._visitorProfile.interests, ...next.interests]);
+      if (merged.join("|") !== _visitorProfile.interests.join("|")) {
+        _visitorProfile.interests = merged;
+        changed = true;
+      }
+    }
+
+    ["companions", "budget", "pace", "duration"].forEach((key) => {
+      if (next[key] && _visitorProfile[key] !== next[key]) {
+        _visitorProfile[key] = next[key];
+        changed = true;
+      }
+    });
+
+    return changed;
+  }
 
   /* ─── System prompt para Gemini ──────────────────────────── */
   function buildSystemPrompt() {
@@ -51,7 +112,7 @@
       `- ${p.nombre}: ${p.ficha?.descripcion || p.slogan || ""}. Tel: ${p.telefono || "N/A"}. Horario: ${p.horario || "N/A"}`
     ).join("\n");
 
-    return `Eres Don Chucho, un arriero quindiano con sombrero aguadeño, personaje típico de la región cafetera de Colombia. Eres el guía turístico virtual del Mapa Digital de Armenia 2026.
+    return `Eres Don Chucho, un arriero quindiano con poncho y carriel, personaje típico de la región cafetera de Colombia. Eres el guía turístico virtual del Mapa Digital de Armenia 2026.
 
 PERSONALIDAD:
 - Hablas con calidez y humor paisa: usas "mijo", "paisano", "bacano", "chévere", "a la orden", "eso es", "pa'" en vez de "para"
@@ -76,6 +137,120 @@ ${pautasResumen}
 
 CONTEXTO GENERAL:
 Armenia es la capital del departamento del Quindío, Colombia. Conocida como "La Ciudad Milagro", fue fundada el 14 de octubre de 1889. Es el corazón del Eje Cafetero, Patrimonio de la Humanidad UNESCO. Tiene clima templado (~18-22°C), es famosa por el café, la arquitectura de bahareque, el paisaje cultural cafetero, el Parque Nacional del Café, el Jardín Botánico del Quindío y la amabilidad de su gente.`;
+  }
+
+  function getMapApi() {
+    return window.ArmeniaMap || null;
+  }
+
+  function getVisitorLocation() {
+    const api = getMapApi();
+    if (!api?.getUserLocation) return null;
+    return api.getUserLocation();
+  }
+
+  function buildProfileSummary() {
+    const parts = [];
+    if (_visitorProfile.interests.length) {
+      parts.push(`intereses: ${_visitorProfile.interests.join(", ")}`);
+    }
+    if (_visitorProfile.companions) {
+      parts.push(`viaje: ${_visitorProfile.companions}`);
+    }
+    if (_visitorProfile.budget) {
+      parts.push(`presupuesto: ${_visitorProfile.budget}`);
+    }
+    if (_visitorProfile.pace) {
+      parts.push(`ritmo: ${_visitorProfile.pace}`);
+    }
+    if (_visitorProfile.duration) {
+      parts.push(`tiempo: ${_visitorProfile.duration}`);
+    }
+    return parts;
+  }
+
+  function extractVisitorSignals(text) {
+    const q = normText(text);
+    const patch = { interests: [] };
+
+    if (/cafe|cafecito|tinto|cafetera/.test(q)) patch.interests.push("cafe");
+    if (/comer|comida|restaurante|gastronom|almorzar|cenar/.test(q)) patch.interests.push("gastronomia");
+    if (/comprar|shopping|tienda|centro comercial|mercado/.test(q)) patch.interests.push("compras");
+    if (/museo|histori|catedral|plaza|cultural|patrimonio/.test(q)) patch.interests.push("cultura");
+    if (/parque|naturaleza|jardin|sendero|aire libre|ecoturismo/.test(q)) patch.interests.push("naturaleza");
+    if (/aventura|adrenalina|tour|recorrido/.test(q)) patch.interests.push("aventura");
+    if (/relax|tranquilo|descansar|suave/.test(q)) patch.interests.push("relax");
+
+    if (/ninos|niños|familia|familiar|con mis hijos|con los ninos|con los niños/.test(q)) {
+      patch.companions = "familia";
+    } else if (/pareja|novi[ao]s|romantico|romántico/.test(q)) {
+      patch.companions = "pareja";
+    } else if (/amigos|parceros|grupo/.test(q)) {
+      patch.companions = "amigos";
+    } else if (/solo|sola|por mi cuenta/.test(q)) {
+      patch.companions = "solo";
+    }
+
+    if (/economico|econ[oó]mico|barato|baratica|baratico|ahorrar/.test(q)) {
+      patch.budget = "economico";
+    } else if (/premium|lujo|exclusivo|especial/.test(q)) {
+      patch.budget = "premium";
+    }
+
+    if (/rapido|r[aá]pido|express|poco tiempo/.test(q)) {
+      patch.pace = "rapido";
+    } else if (/tranquilo|relajado|sin afan|sin af[aá]n|despacio/.test(q)) {
+      patch.pace = "tranquilo";
+    }
+
+    if (/una hora|1 hora|dos horas|2 horas|poquito tiempo|corto/.test(q)) {
+      patch.duration = "corta";
+    } else if (/medio dia|media jornada/.test(q)) {
+      patch.duration = "media";
+    } else if (/todo el dia|todo el día|jornada completa/.test(q)) {
+      patch.duration = "larga";
+    }
+
+    patch.interests = uniqueList(patch.interests);
+    if (!patch.interests.length) delete patch.interests;
+    if (!patch.companions) delete patch.companions;
+    if (!patch.budget) delete patch.budget;
+    if (!patch.pace) delete patch.pace;
+    if (!patch.duration) delete patch.duration;
+    return patch;
+  }
+
+  function hasVisitorSignals(patch) {
+    return Boolean(
+      patch &&
+      ((patch.interests && patch.interests.length) ||
+        patch.companions ||
+        patch.budget ||
+        patch.pace ||
+        patch.duration)
+    );
+  }
+
+  function buildVisitorContext(userText) {
+    const location = getVisitorLocation();
+    const profile = buildProfileSummary();
+    if (!location && !profile.length) return userText;
+
+    const lines = [userText, "", "Contexto del visitante:"];
+
+    if (location) {
+      lines.push("- El turista compartió su ubicación actual.");
+      lines.push(`- Latitud: ${location.latitude}`);
+      lines.push(`- Longitud: ${location.longitude}`);
+      lines.push("- Usa esa cercanía para priorizar recomendaciones, rutas y lugares del mapa.");
+    }
+
+    if (profile.length) {
+      lines.push("- Perfil del visitante:");
+      profile.forEach((item) => lines.push(`- ${item}`));
+    }
+
+    return lines.join("\n").trim();
   }
 
   /* ─── Historial de conversación para Gemini ─────────────── */
@@ -216,7 +391,7 @@ Armenia es la capital del departamento del Quindío, Colombia. Conocida como "La
       return { text: null, fallback: { html: local.reply, chips: local.chips || [] } };
     }
 
-    _history.push({ role: "user", parts: [{ text: userText }] });
+    _history.push({ role: "user", parts: [{ text: buildVisitorContext(userText) }] });
     const body = buildGeminiBody();
     const hasKey = Boolean((_cfg().GEMINI_KEY || "").trim());
     const preferDirect = hasKey && _cfg().PREFER_DIRECT !== false;
@@ -267,6 +442,333 @@ Armenia es la capital del departamento del Quindío, Colombia. Conocida como "La
     return text.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim();
   }
 
+  function getCategoryFromText(text) {
+    const q = normText(text);
+    if (/comer|comida|restaurante|almorzar|cenar|cafe|tinto/.test(q)) return ["gastronomico"];
+    if (/comprar|shopping|tienda|comercial|mercado/.test(q)) return ["comercial"];
+    if (/visitar|turismo|parque|museo|naturaleza|plan|hacer/.test(q)) return ["turistico"];
+    return null;
+  }
+
+  function inferCategoriesFromProfile() {
+    const cats = [];
+    if (_visitorProfile.interests.includes("gastronomia") || _visitorProfile.interests.includes("cafe")) {
+      cats.push("gastronomico");
+    }
+    if (_visitorProfile.interests.includes("compras")) {
+      cats.push("comercial");
+    }
+    if (
+      _visitorProfile.interests.includes("cultura") ||
+      _visitorProfile.interests.includes("naturaleza") ||
+      _visitorProfile.interests.includes("aventura") ||
+      _visitorProfile.interests.includes("relax")
+    ) {
+      cats.push("turistico");
+    }
+    return uniqueList(cats);
+  }
+
+  function resolvePreferredCategories(text) {
+    const direct = getCategoryFromText(text);
+    if (direct?.length) return direct;
+    const profileCats = inferCategoriesFromProfile();
+    return profileCats.length ? profileCats : null;
+  }
+
+  function detectRouteMode(text) {
+    const q = normText(text);
+    if (/ruta cafe|ruta de cafe|cafetera|tinto|cafecito/.test(q)) return "cafe";
+    if (/ruta familiar|familia|ninos|niños|con mis hijos/.test(q)) return "familiar";
+    if (/ruta cultural|cultura|museo|historia|plaza|catedral/.test(q)) return "cultural";
+    if (/ruta expres|ruta express|express|expr[eé]s|poco tiempo|rapido|r[aá]pido/.test(q)) return "express";
+    if (/ruta compras|compras|shopping|tiendas|centro comercial/.test(q)) return "compras";
+    return null;
+  }
+
+  function distanceMeters(aLat, aLng, bLat, bLng) {
+    const toRad = (deg) => (deg * Math.PI) / 180;
+    const R = 6371000;
+    const dLat = toRad(bLat - aLat);
+    const dLng = toRad(bLng - aLng);
+    const x =
+      Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+      Math.cos(toRad(aLat)) * Math.cos(toRad(bLat)) *
+      Math.sin(dLng / 2) * Math.sin(dLng / 2);
+    const y = 2 * Math.atan2(Math.sqrt(x), Math.sqrt(1 - x));
+    return R * y;
+  }
+
+  function getPoiTags(poi) {
+    const text = normText(`${poi.name} ${poi.description} ${poi.address || ""}`);
+    const tags = new Set([poi.category]);
+
+    if (/cafe|cafetera|tinto/.test(text)) tags.add("cafe");
+    if (/restaurante|comida|gastronom|arepas|empanadas/.test(text)) tags.add("gastronomia");
+    if (/parque|sendero|lago|cascada|jardin|jardin|verde|aire libre/.test(text)) tags.add("naturaleza");
+    if (/museo|histor|catedral|monumento|cultural|plaza|gobernacion/.test(text)) tags.add("cultura");
+    if (/tienda|comercial|marcas|shopping|casino|locales/.test(text)) tags.add("compras");
+    if (/tour|ecoturismo|aventura/.test(text)) tags.add("aventura");
+    if (/parque infantil|familia|familiar/.test(text)) tags.add("familia");
+
+    if (poi.category === "turistico") {
+      tags.add("cultura");
+      tags.add("naturaleza");
+    }
+    if (poi.category === "gastronomico") {
+      tags.add("gastronomia");
+    }
+    if (poi.category === "comercial") {
+      tags.add("compras");
+    }
+
+    return tags;
+  }
+
+  function scorePoiForProfile(poi, requestedCategories) {
+    let score = 0;
+    const tags = getPoiTags(poi);
+
+    if (requestedCategories?.includes(poi.category)) score += 30;
+
+    _visitorProfile.interests.forEach((interest) => {
+      if (tags.has(interest)) score += 22;
+      if (interest === "relax" && tags.has("naturaleza")) score += 10;
+      if (interest === "cafe" && poi.category === "gastronomico") score += 8;
+    });
+
+    if (_visitorProfile.companions === "familia" && (tags.has("familia") || tags.has("naturaleza"))) score += 16;
+    if (_visitorProfile.companions === "pareja" && (tags.has("cafe") || tags.has("naturaleza") || tags.has("cultura"))) score += 12;
+    if (_visitorProfile.companions === "amigos" && (tags.has("compras") || tags.has("gastronomia") || tags.has("aventura"))) score += 10;
+    if (_visitorProfile.companions === "solo" && (tags.has("cultura") || tags.has("cafe"))) score += 8;
+
+    if (_visitorProfile.budget === "economico" && poi.category !== "comercial") score += 6;
+    if (_visitorProfile.budget === "premium" && (poi.id === "anatolia" || poi.id === "portal-quindio" || poi.id === "unicentro")) score += 10;
+
+    return score;
+  }
+
+  function scorePoiForRouteMode(tags, poi, mode) {
+    if (!mode) return 0;
+
+    if (mode === "cafe") {
+      return (tags.has("cafe") ? 28 : 0) + (poi.category === "gastronomico" ? 10 : 0);
+    }
+    if (mode === "familiar") {
+      return (tags.has("familia") ? 18 : 0) + (tags.has("naturaleza") ? 12 : 0);
+    }
+    if (mode === "cultural") {
+      return (tags.has("cultura") ? 26 : 0) + (poi.category === "turistico" ? 8 : 0);
+    }
+    if (mode === "express") {
+      return 12;
+    }
+    if (mode === "compras") {
+      return (tags.has("compras") ? 28 : 0) + (poi.category === "comercial" ? 10 : 0);
+    }
+
+    return 0;
+  }
+
+  function planSmartRoute(text, mode = null) {
+    const location = getVisitorLocation();
+    if (!location) return [];
+
+    const routeMode = mode || detectRouteMode(text);
+    const requestedCategories =
+      routeMode === "cafe" ? ["gastronomico"] :
+      routeMode === "familiar" ? ["turistico", "gastronomico"] :
+      routeMode === "cultural" ? ["turistico"] :
+      routeMode === "express" ? resolvePreferredCategories(text) :
+      routeMode === "compras" ? ["comercial", "gastronomico"] :
+      resolvePreferredCategories(text);
+
+    const candidates = _pois
+      .filter((poi) => !requestedCategories || requestedCategories.includes(poi.category))
+      .map((poi) => {
+        const tags = getPoiTags(poi);
+        return {
+          poi,
+          score: scorePoiForProfile(poi, requestedCategories) + scorePoiForRouteMode(tags, poi, routeMode),
+          baseDistance: distanceMeters(location.latitude, location.longitude, poi.lat, poi.lng),
+        };
+      })
+      .sort((a, b) => (b.score - a.score) || (a.baseDistance - b.baseDistance))
+      .slice(0, 7);
+
+    const maxStops =
+      routeMode === "express" ? 2 :
+      _visitorProfile.duration === "corta" ? 2 :
+      _visitorProfile.duration === "larga" ? 4 : 3;
+
+    const route = [];
+    let currentLat = location.latitude;
+    let currentLng = location.longitude;
+    const remaining = candidates.slice();
+
+    while (remaining.length && route.length < maxStops) {
+      let bestIndex = 0;
+      let bestValue = -Infinity;
+
+      remaining.forEach((candidate, index) => {
+        const leg = distanceMeters(currentLat, currentLng, candidate.poi.lat, candidate.poi.lng);
+        const value = candidate.score - leg / 180;
+        if (value > bestValue) {
+          bestValue = value;
+          bestIndex = index;
+        }
+      });
+
+      const picked = remaining.splice(bestIndex, 1)[0];
+      const legDistance = distanceMeters(currentLat, currentLng, picked.poi.lat, picked.poi.lng);
+      route.push({ ...picked, legDistance });
+      currentLat = picked.poi.lat;
+      currentLng = picked.poi.lng;
+    }
+
+    return route;
+  }
+
+  function buildRouteProfileText() {
+    const parts = buildProfileSummary();
+    if (!parts.length) return "";
+    return `<br><br><em>Perfil detectado:</em> ${parts.join(" · ")}.`;
+  }
+
+  function buildSmartRouteHtml(route, mode = null) {
+    const api = getMapApi();
+    const formatDistance = api?.formatDistance || ((meters) => `${Math.round(meters)} m`);
+    const buildDirectionsUrl = api?.buildPoiDirectionsUrl || (() => "");
+    const modeConfig = mode ? ROUTE_MODES[mode] : null;
+
+    if (!route.length) {
+      return "Todavía no logré armar una ruta personalizada, mijo. Compárteme tu ubicación o dime si prefieres café, cultura, compras o naturaleza. ☕";
+    }
+
+    const steps = route
+      .map((item, index) => {
+        const url = buildDirectionsUrl(item.poi.id, getVisitorLocation());
+        const llegar = url
+          ? ` · <a href="${url}" target="_blank" rel="noopener" class="cafeto-poi-link">Cómo llegar</a>`
+          : "";
+        return `${index + 1}. <button class="cafeto-poi-link" data-poi-id="${item.poi.id}">${item.poi.name}</button> · tramo ${formatDistance(item.legDistance)}${llegar}`;
+      })
+      .join("<br>");
+
+    const title = modeConfig ? modeConfig.label : "ruta inteligente";
+    return `¡Eso es, mijo! Te armé una <strong>${title.toLowerCase()}</strong> con base en tu ubicación y tu perfil de viaje.${buildRouteProfileText()}<br><br>${steps}<br><br>Además, ya te la dejé marcada en el mapa para seguirla mejor. ☕`;
+  }
+
+  function buildProfileAcknowledgement() {
+    const parts = buildProfileSummary();
+    if (!parts.length) return null;
+    return {
+      html:
+        `¡Listo, mijo! Ya entendí mejor tu estilo de viaje.<br><br>` +
+        `<strong>Lo tendré en cuenta:</strong> ${parts.join(" · ")}.<br><br>` +
+        `Ahora sí puedo recomendarte lugares más a tu medida o armarte una ruta personalizada. ☕`,
+      chips: ["Qué hay cerca?", "Armar ruta", "¿Qué visitar?"],
+    };
+  }
+
+  function shouldReplyWithProfileOnly(text, patch) {
+    if (!hasVisitorSignals(patch)) return false;
+    const q = normText(text);
+    return !(
+      /ruta|cerca|ubicacion|ubicación|visitar|comer|comprar|hola|buenas|quien eres|como te llamas|gracias|adios|chao|pauta|anatolia|quindio travel|diana/.test(q)
+    );
+  }
+
+  function buildNearbyHtml(items, title, intro) {
+    const api = getMapApi();
+    const formatDistance = api?.formatDistance || ((meters) => `${Math.round(meters)} m`);
+    const buildDirectionsUrl = api?.buildPoiDirectionsUrl || (() => "");
+
+    if (!items.length) {
+      return `${intro}<br><br>No encontré lugares cercanos en esa categoría por ahora. Pruebe con otra búsqueda o explore el mapa. ☕`;
+    }
+
+    const lista = items
+      .map((poi) => {
+        const rutaUrl = buildDirectionsUrl(poi.id, getVisitorLocation());
+        const llegar = rutaUrl
+          ? ` · <a href="${rutaUrl}" target="_blank" rel="noopener" class="cafeto-poi-link">Cómo llegar</a>`
+          : "";
+        return `• <button class="cafeto-poi-link" data-poi-id="${poi.id}">${poi.name}</button> · a ${formatDistance(poi.distanceMeters)}${llegar}`;
+      })
+      .join("<br>");
+
+    return `${intro}<br><br><strong>${title}</strong><br><br>${lista}<br><br>Puede tocar el nombre para verlo en el mapa. ☕`;
+  }
+
+  async function handleGeoIntent(text) {
+    const q = normText(text);
+    const wantsNearby =
+      /usar mi ubicacion|usar mi ubicacion actual|que hay cerca|que tengo cerca|cerca de mi|cerca mio|alrededor de mi|alrededor mio|por aqui|por aca|sitios cerca|lugares cerca/.test(q);
+    const wantsRoute =
+      /armar ruta|crear ruta|ruta|recorrido|itinerario|plan de ruta|ruta personalizada|ruta desde aqui|ruta desde aqui/.test(q);
+    const wantsLocationStatus =
+      /donde estoy|donde estoy ubicado|mi ubicacion|mi ubicacion actual/.test(q);
+
+    if (!wantsNearby && !wantsRoute && !wantsLocationStatus) return null;
+
+    const api = getMapApi();
+    if (!api?.ensureUserLocation || !api?.getNearestPois) {
+      return {
+        html: "Todavía no tengo conexión con la ubicación del mapa, mijo. En cuanto esté activa, te recomendaré sitios cercanos y rutas personalizadas. ☕",
+        chips: ["¿Qué visitar?", "¿Dónde comer?", "¿Dónde comprar?"],
+      };
+    }
+
+    try {
+      const location = await api.ensureUserLocation({ center: true });
+      const categories = resolvePreferredCategories(text);
+
+      if (wantsLocationStatus) {
+        return {
+          html:
+            `Ya tomé tu ubicación actual, mijo.<br><br>` +
+            `📍 Lat: ${location.latitude.toFixed(5)}<br>` +
+            `📍 Lng: ${location.longitude.toFixed(5)}<br><br>` +
+            `Con esto ya puedo recomendarte sitios cercanos y armarte rutas personalizadas. ☕`,
+          chips: ["Qué hay cerca?", "Armar ruta", "¿Dónde comer?"],
+        };
+      }
+
+      if (wantsRoute) {
+        const routeMode = detectRouteMode(text);
+        const route = planSmartRoute(text, routeMode);
+        if (route.length) {
+          api?.drawSuggestedRoute?.(route, routeMode ? ROUTE_MODES[routeMode] : { label: "Ruta inteligente", color: "#198754" });
+        }
+        return {
+          html: buildSmartRouteHtml(route, routeMode),
+          chips: route.length
+            ? (routeMode ? ROUTE_MODES[routeMode].chips : route.map((item) => item.poi.name).slice(0, 3))
+            : ["¿Qué visitar?", "¿Dónde comer?"],
+        };
+      }
+
+      const nearby = api.getNearestPois(4, categories);
+      return {
+        html: buildNearbyHtml(
+          nearby,
+          "Servicios y lugares cerca de ti",
+          "¡Listo, mijo! Con tu ubicación real ya puedo recomendarte opciones mucho más personalizadas."
+        ),
+        chips: nearby.length
+          ? nearby.map((poi) => poi.name).slice(0, 3)
+          : ["¿Qué visitar?", "¿Dónde comer?"],
+      };
+    } catch (err) {
+      return {
+        html:
+          "Para darte recomendaciones cercanas y rutas en tiempo real necesito permiso de ubicación. Toca `Mi ubicación` o acepta el permiso del navegador y te guío mejor. ☕",
+        chips: ["Qué hay cerca?", "Armar ruta", "¿Cómo llegar?"],
+      };
+    }
+  }
+
   const CHIP_REPLIES = {
     "que visitar?": () => ({ reply: buildPoiList("turistico"), chips: ["Plaza de Bolívar", "¿Dónde comer?", "Pautas del mapa"] }),
     "donde comer?": () => ({ reply: buildPoiList("gastronomico"), chips: ["Anatolia", "¿Qué visitar?", "Pautas del mapa"] }),
@@ -280,6 +782,12 @@ Armenia es la capital del departamento del Quindío, Colombia. Conocida como "La
         "🚗 Vía Panamericana / Eje Cafetero.<br><br>¿Le muestro sitios o restaurantes? ☕",
       chips: CHIPS_INICIO,
     }),
+    "que hay cerca?": () => null,
+    "armar ruta": () => null,
+    "ruta cafe": () => null,
+    "ruta familiar": () => null,
+    "ruta cultural": () => null,
+    "ruta expres": () => null,
   };
 
   /* ─── Intents locales (respuesta inmediata con botones del mapa) ── */
@@ -420,7 +928,7 @@ Armenia es la capital del departamento del Quindío, Colombia. Conocida como "La
     {
       keys: ["quién eres", "quien eres", "qué eres", "que eres", "quien es don chucho", "quién es don chucho", "presentate", "presentarte", "cómo te llamas", "como te llamas", "cual es tu nombre", "cuál es tu nombre", "tu nombre", "tu nombre es"],
       reply: () =>
-        "¡Ay, qué buena pregunta! Yo soy <strong>Don Chucho</strong>, tu arriero quindiano con sombrero aguadeño. 🧢<br><br>" +
+        "¡Ay, qué buena pregunta! Yo soy <strong>Don Chucho</strong>, tu arriero quindiano con poncho y carriel. 🧢<br><br>" +
         "Soy el guía turístico virtual del Mapa Digital de Armenia 2026. Conozco la región cafetera como la palma de mi mano — el café, las tradiciones, los mejores sitios para visitar, comer y comprar.<br><br>" +
         "¿Listo para explorar juntos? ☕",
       chips: CHIPS_INICIO,
@@ -756,23 +1264,45 @@ Armenia es la capital del departamento del Quindío, Colombia. Conocida como "La
       const typing = showTyping(messages);
 
       try {
-        // 1. Intentar respuesta local (POIs / pautas con botones del mapa)
-        const local = checkLocalIntent(text);
-        if (local) {
-          await new Promise((r) => setTimeout(r, 500)); // pequeña pausa natural
+        const profilePatch = extractVisitorSignals(text);
+        const profileChanged = mergeVisitorProfile(profilePatch);
+
+        const geoReply = await handleGeoIntent(text);
+        if (geoReply) {
+          await new Promise((r) => setTimeout(r, 350));
           typing.remove();
-          const msgEl = addMessage(messages, "bot", local.reply, local.chips);
+          const msgEl = addMessage(messages, "bot", geoReply.html, geoReply.chips);
           bindMsgEvents(msgEl, closeChat);
         } else {
-          const result = await askGemini(text);
-          typing.remove();
-          if (result.fallback) {
-            const msgEl = addMessage(messages, "bot", result.fallback.html, result.fallback.chips);
+          const profileReply = profileChanged && shouldReplyWithProfileOnly(text, profilePatch)
+            ? buildProfileAcknowledgement()
+            : null;
+
+          if (profileReply) {
+            await new Promise((r) => setTimeout(r, 350));
+            typing.remove();
+            const msgEl = addMessage(messages, "bot", profileReply.html, profileReply.chips);
             bindMsgEvents(msgEl, closeChat);
           } else {
-            const html = formatGeminiText(result.text);
-            const msgEl = addMessage(messages, "bot", html, CHIPS_INICIO);
-            bindMsgEvents(msgEl, closeChat);
+          // 1. Intentar respuesta local (POIs / pautas con botones del mapa)
+            const local = checkLocalIntent(text);
+            if (local) {
+              await new Promise((r) => setTimeout(r, 500)); // pequena pausa natural
+              typing.remove();
+              const msgEl = addMessage(messages, "bot", local.reply, local.chips);
+              bindMsgEvents(msgEl, closeChat);
+            } else {
+              const result = await askGemini(text);
+              typing.remove();
+              if (result.fallback) {
+                const msgEl = addMessage(messages, "bot", result.fallback.html, result.fallback.chips);
+                bindMsgEvents(msgEl, closeChat);
+              } else {
+                const html = formatGeminiText(result.text);
+                const msgEl = addMessage(messages, "bot", html, CHIPS_INICIO);
+                bindMsgEvents(msgEl, closeChat);
+              }
+            }
           }
         }
         requestAnimationFrame(() => scrollBottom(messages));
@@ -817,6 +1347,6 @@ Armenia es la capital del departamento del Quindío, Colombia. Conocida como "La
   }
 
   /* ─── API pública ────────────────────────────────────────── */
-  window.DonChucho = { setPoisData, setPautasData, init: initDonChucho };
+  window.DonChucho = { setPoisData, setPautasData, init: initDonChucho, getVisitorLocation };
 
 })();

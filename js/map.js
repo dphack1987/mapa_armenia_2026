@@ -12,6 +12,10 @@ let poisData = [];
 let pautasById = new Map();
 let activeCategories = new Set(["turistico", "comercial", "gastronomico"]);
 let markerById = new Map();
+let userLocationMarker = null;
+let userLocationAccuracy = null;
+let userLocationData = null;
+let routeLayer = null;
 
 // Cargar decoraciones
 async function loadDecoraciones() {
@@ -445,6 +449,207 @@ function showStatus(text) {
   showStatus._timer = setTimeout(() => el.classList.remove("visible"), 2500);
 }
 
+function haversineMeters(lat1, lng1, lat2, lng2) {
+  const toRad = (deg) => (deg * Math.PI) / 180;
+  const R = 6371000;
+  const dLat = toRad(lat2 - lat1);
+  const dLng = toRad(lng2 - lng1);
+  const a =
+    Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+    Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) *
+    Math.sin(dLng / 2) * Math.sin(dLng / 2);
+  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+  return R * c;
+}
+
+function formatDistance(meters) {
+  if (meters < 1000) return `${Math.round(meters)} m`;
+  return `${(meters / 1000).toFixed(1)} km`;
+}
+
+function setUserLocation(latitude, longitude, options = {}) {
+  const { accuracy = null, center = true, label = "Tu ubicación" } = options;
+  userLocationData = { latitude, longitude, accuracy, updatedAt: Date.now() };
+
+  if (userLocationMarker) map.removeLayer(userLocationMarker);
+  if (userLocationAccuracy) map.removeLayer(userLocationAccuracy);
+
+  userLocationMarker = L.circleMarker([latitude, longitude], {
+    radius: 8,
+    color: "#66c2be",
+    fillColor: "#66c2be",
+    fillOpacity: 0.5,
+  })
+    .addTo(map)
+    .bindPopup(label);
+
+  if (accuracy && Number.isFinite(accuracy)) {
+    userLocationAccuracy = L.circle([latitude, longitude], {
+      radius: accuracy,
+      color: "#66c2be",
+      weight: 1,
+      fillColor: "#66c2be",
+      fillOpacity: 0.12,
+    }).addTo(map);
+  } else {
+    userLocationAccuracy = null;
+  }
+
+  if (center) {
+    map.setView([latitude, longitude], 15);
+    userLocationMarker.openPopup();
+  }
+
+  window.dispatchEvent(
+    new CustomEvent("armenia:user-location-updated", {
+      detail: { ...userLocationData },
+    })
+  );
+
+  return userLocationData;
+}
+
+function ensureUserLocation(options = {}) {
+  const { force = false, center = false } = options;
+  if (userLocationData && !force) return Promise.resolve(userLocationData);
+  if (!navigator.geolocation) {
+    return Promise.reject(new Error("Geolocalización no disponible en este navegador"));
+  }
+
+  return new Promise((resolve, reject) => {
+    navigator.geolocation.getCurrentPosition(
+      (pos) => {
+        const { latitude, longitude, accuracy } = pos.coords;
+        const location = setUserLocation(latitude, longitude, {
+          accuracy,
+          center,
+          label: "Tu ubicación actual",
+        });
+        resolve(location);
+      },
+      () => reject(new Error("No se pudo obtener tu ubicación")),
+      { enableHighAccuracy: true, timeout: 10000, maximumAge: 60000 }
+    );
+  });
+}
+
+function getNearestPois(limit = 3, categories) {
+  if (!userLocationData) return [];
+  const allowed = Array.isArray(categories) && categories.length ? new Set(categories) : null;
+
+  return poisData
+    .filter((poi) => !allowed || allowed.has(poi.category))
+    .map((poi) => ({
+      ...poi,
+      distanceMeters: haversineMeters(
+        userLocationData.latitude,
+        userLocationData.longitude,
+        poi.lat,
+        poi.lng
+      ),
+    }))
+    .sort((a, b) => a.distanceMeters - b.distanceMeters)
+    .slice(0, limit);
+}
+
+function buildPoiDirectionsUrl(id, origin) {
+  const poi = poisData.find((p) => p.id === id);
+  if (!poi) return "";
+
+  const hasOrigin =
+    origin &&
+    Number.isFinite(origin.latitude) &&
+    Number.isFinite(origin.longitude);
+
+  const params = new URLSearchParams({
+    api: "1",
+    destination: `${poi.lat},${poi.lng}`,
+  });
+
+  if (hasOrigin) {
+    params.set("origin", `${origin.latitude},${origin.longitude}`);
+  }
+
+  return `https://www.google.com/maps/dir/?${params.toString()}`;
+}
+
+function clearSuggestedRoute() {
+  if (routeLayer) {
+    map.removeLayer(routeLayer);
+    routeLayer = null;
+  }
+}
+
+function drawSuggestedRoute(route, options = {}) {
+  if (!map || !Array.isArray(route) || !route.length) return false;
+
+  clearSuggestedRoute();
+
+  const label = options.label || "Ruta sugerida";
+  const color = options.color || "#198754";
+  const layers = [];
+  const latlngs = [];
+
+  if (userLocationData) {
+    latlngs.push([userLocationData.latitude, userLocationData.longitude]);
+    layers.push(
+      L.circleMarker([userLocationData.latitude, userLocationData.longitude], {
+        radius: 9,
+        color: "#0f5132",
+        fillColor: "#66c2be",
+        fillOpacity: 0.95,
+        weight: 3,
+      }).bindPopup("Inicio de tu ruta")
+    );
+  }
+
+  route.forEach((item, index) => {
+    const poi = item.poi || item;
+    const latlng = [poi.lat, poi.lng];
+    latlngs.push(latlng);
+
+    layers.push(
+      L.circleMarker(latlng, {
+        radius: 10,
+        color,
+        fillColor: "#ffffff",
+        fillOpacity: 1,
+        weight: 3,
+      }).bindTooltip(`${index + 1}`, {
+        permanent: true,
+        direction: "center",
+        className: "route-step-tooltip",
+        opacity: 1,
+      }).bindPopup(`${label}: parada ${index + 1} · ${poi.name}`)
+    );
+  });
+
+  if (latlngs.length >= 2) {
+    layers.unshift(
+      L.polyline(latlngs, {
+        color,
+        weight: 5,
+        opacity: 0.88,
+        dashArray: "10 8",
+        lineCap: "round",
+        lineJoin: "round",
+      })
+    );
+  }
+
+  routeLayer = L.featureGroup(layers).addTo(map);
+
+  if (routeLayer.getBounds().isValid()) {
+    map.fitBounds(routeLayer.getBounds(), {
+      padding: [32, 32],
+      maxZoom: 15,
+    });
+  }
+
+  showStatus(`${label} lista`);
+  return true;
+}
+
 function syncFiltersFromUI() {
   const allCheckbox = document.querySelector('.filter-all input[value="all"]');
   const catInputs = [...document.querySelectorAll('.filter-group input:not([value="all"])')];
@@ -505,27 +710,9 @@ function initSearch() {
 
 function initLocate() {
   document.getElementById("btn-locate").addEventListener("click", () => {
-    if (!navigator.geolocation) {
-      showStatus("Geolocalización no disponible en este navegador");
-      return;
-    }
-    navigator.geolocation.getCurrentPosition(
-      (pos) => {
-        const { latitude, longitude } = pos.coords;
-        map.setView([latitude, longitude], 15);
-        L.circleMarker([latitude, longitude], {
-          radius: 8,
-          color: "#66c2be",
-          fillColor: "#66c2be",
-          fillOpacity: 0.5,
-        })
-          .addTo(map)
-          .bindPopup("Tu ubicación")
-          .openPopup();
-        showStatus("Ubicación encontrada");
-      },
-      () => showStatus("No se pudo obtener tu ubicación")
-    );
+    ensureUserLocation({ force: true, center: true })
+      .then(() => showStatus("Ubicación encontrada"))
+      .catch((err) => showStatus(err.message || "No se pudo obtener tu ubicación"));
   });
 }
 
@@ -540,6 +727,17 @@ function initMap(meta) {
 
   markersLayer = L.layerGroup().addTo(map);
 }
+
+window.ArmeniaMap = {
+  focusPoi,
+  ensureUserLocation,
+  getUserLocation: () => (userLocationData ? { ...userLocationData } : null),
+  getNearestPois,
+  buildPoiDirectionsUrl,
+  formatDistance,
+  drawSuggestedRoute,
+  clearSuggestedRoute,
+};
 
 async function init() {
   try {

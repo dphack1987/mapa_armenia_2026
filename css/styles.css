@@ -715,6 +715,23 @@ body.ficha-open {
   line-height: 1.45;
 }
 
+.route-step-tooltip {
+  background: #ffffff;
+  color: var(--green-dark);
+  border: 2px solid var(--green-mid);
+  border-radius: 999px;
+  box-shadow: 0 4px 10px rgba(15, 81, 50, 0.22);
+  font-family: var(--font);
+  font-weight: 800;
+  font-size: 0.72rem;
+  min-width: 1.5rem;
+  text-align: center;
+}
+
+.route-step-tooltip::before {
+  display: none;
+}
+
 @media (max-width: 900px) {
   body {
     overflow: hidden;
