@@ -16,12 +16,14 @@
   const AVATAR_SVG = `<img src="avatar_chucho/don-chucho-bust.png" alt="Don Chucho" width="40" height="40" style="border-radius:50%;display:block;object-fit:cover;object-position:center top;" />`;
 
   const SALUDOS = [
-    "¡Buenas, parce! Soy Don Chucho, su arriero digital. ¿Qué quiere conocer de Armenia?",
-    "¡Bienvenido a la Ciudad Milagro! Soy Don Chucho. ¿Lo llevo a algún rincón del Quindío?",
-    "¡Ey, paisano! Don Chucho a sus órdenes. ¿Qué le cuento de Armenia 2026?",
-    "¡Hola! ¡Qué gusto tenerte por aquí! Soy Don Chucho, tu guía por Armenia. ¿Por dónde empezamos? ☕",
-    "¡Buen día! Listo para explorar la capital del Quindío? Pregúntame lo que quieras.",
-    "¡Ey, qué tal! Don Chucho aquí para ayudarte a descubrir lo mejor de Armenia. ¿Qué te apetece?",
+    "¡Buenas, parce! Soy Don Chucho, tu arriero digital con sombrero aguadeño. ¿Por dónde empezamos a explorar Armenia? ☕",
+    "¡Ey, paisano! ¡Qué gusto tenerte por la Ciudad Milagro! Soy Don Chucho, tu guía. ¿Qué quieres conocer primero?",
+    "¡Holaaaa! Don Chucho a la orden. ¿Listo para descubrir lo mejor del Quindío? ☕",
+    "¡Ay, qué chévere! Ya llegaste. Soy Don Chucho, tu arriero virtual. ¿Por dónde empezamos?",
+    "¡Buenas tardes, parce! Don Chucho aquí para guiarte por Armenia. ¿Qué te apetece hacer?",
+    "¡Ey, qué tal! ¡Contento de tenerte aquí! Soy Don Chucho. ¿Querés ver sitios, comer o comprar?",
+    "¡Bienvenido a Armenia, capital del Quindío! Soy Don Chucho, tu arriero. Vamos a explorar juntos! ☕",
+    "¡Hola, paisano! Don Chucho a tus órdenes. ¿Por dónde quieres comenzar nuestra aventura?",
   ];
 
   const CHIPS_INICIO = [
@@ -406,6 +408,65 @@ Armenia es la capital del departamento del Quindío, Colombia. Conocida como "La
         "¿Por dónde empezamos? ☕",
       chips: CHIPS_INICIO,
     },
+    {
+      keys: ["cómo estás", "como estas", "cómo te va", "como te va", "qué tal", "que tal", "qué tal tu día", "que tal tu día", "cómo te sientes", "como te sientes"],
+      reply: () => aleatorio([
+        "¡Ay, parce! Estoy de maravilla, listo para guiarte por Armenia y el Quindío! ☕ ¿Y vos? ¿Listo para explorar?",
+        "¡Muy bien, gracias por preguntar! Con este clima templado y un tinto calentito, no se puede pedir más. ¿Y vos? ¿Qué querés hacer hoy?",
+        "¡Excelente, paisano! Contento de tenerte aquí. ¿Listo para descubrir lo mejor de la Ciudad Milagro? ☕",
+      ]),
+      chips: CHIPS_INICIO,
+    },
+    {
+      keys: ["quién eres", "quien eres", "qué eres", "que eres", "quien es don chucho", "quién es don chucho", "presentate", "presentarte"],
+      reply: () =>
+        "¡Ay, qué buena pregunta! Yo soy <strong>Don Chucho</strong>, tu arriero quindiano con sombrero aguadeño. 🧢<br><br>" +
+        "Soy el guía turístico virtual del Mapa Digital de Armenia 2026. Conozco la región cafetera como la palma de mi mano — el café, las tradiciones, los mejores sitios para visitar, comer y comprar.<br><br>" +
+        "¿Listo para explorar juntos? ☕",
+      chips: CHIPS_INICIO,
+    },
+    {
+      keys: ["te quiero", "te amo", "eres genial", "eres bacano", "eres chévere", "me gustas", "tu eres genial", "tú eres genial", "buen trabajo", "muy bien"],
+      reply: () => aleatorio([
+        "¡Ay, parce! ¡Qué lindo! Me hace muy feliz poder ayudarte. ¡Gracias por tus palabras! ☕ ¿Qué más quieres saber?",
+        "¡Ey, qué chévere! Me alegra que te guste. Don Chucho siempre a la orden. ¿Por dónde seguimos?",
+        "¡Muchas gracias, paisano! Eso me motiva mucho para seguir guiarte por Armenia. ¿Qué hacemos ahora? ☕",
+      ]),
+      chips: CHIPS_INICIO,
+    },
+    {
+      keys: ["adiós", "adios", "chao", "hasta luego", "hasta pronto", "nos vemos", "me voy", "ya me voy"],
+      reply: () => aleatorio([
+        "¡Hasta luego, parce! ¡Que tengas un día bacano en Armenia y el Quindío! Si necesitas algo más, ¡ya sabes dónde encontrarme! ☕",
+        "¡Chao, paisano! ¡Disfruta mucho la Ciudad Milagro! Siempre puedes volver y preguntarme lo que quieras. ¡Hasta pronto!",
+        "¡Nos vemos! ¡Que tengas una aventura chévere! Don Chucho estará aquí cuando necesites. ☕",
+      ]),
+      chips: [],
+    },
+    {
+      keys: ["buenos dias", "buenos días", "buenas tardes", "buenas noches"],
+      reply: (text) => {
+        const q = normText(text);
+        if (q.includes("buenos dias") || q.includes("buenos días")) {
+          return aleatorio([
+            "¡Buenos días, parce! ¡Qué linda mañana para explorar Armenia! ☕ ¿Por dónde empezamos?",
+            "¡Buen día! Con este sol y un tinto calentito, no hay mejor momento para conocer la Ciudad Milagro. ¿Qué te apetece?",
+          ]);
+        } else if (q.includes("buenas tardes")) {
+          return aleatorio([
+            "¡Buenas tardes, paisano! Listo para descubrir lo mejor de Armenia en esta tarde? ☕ ¿Qué hacemos?",
+            "¡Buenas tardes! Perfecto para ir a conocer un parque, tomar un café o explorar el centro. ¿Por dónde empezamos?",
+          ]);
+        } else {
+          return aleatorio([
+            "¡Buenas noches, parce! Aunque sea de noche, Don Chucho está aquí para ayudarte. ¿Listo para planificar tu día de mañana? ☕",
+            "¡Buenas noches! Siempre es buen momento para explorar el mapa y planificar tu aventura por Armenia. ¿Qué querés saber?",
+          ]);
+        }
+      },
+      chips: CHIPS_INICIO,
+      needsText: true,
+    },
   ];
 
   function checkLocalIntent(text) {
@@ -418,7 +479,8 @@ Armenia es la capital del departamento del Quindío, Colombia. Conocida como "La
         const kn = k.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
         return q.includes(kn);
       })) {
-        return { reply: intent.reply(), chips: intent.chips || [] };
+        const replyText = intent.needsText ? intent.reply(text) : intent.reply();
+        return { reply: replyText, chips: intent.chips || [] };
       }
     }
     return null;
