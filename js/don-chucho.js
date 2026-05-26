@@ -243,7 +243,7 @@ Armenia es la capital del departamento del Quindío, Colombia. Conocida como "La
     }
 
     _history.push({ role: "model", parts: [{ text }] });
-    while (_history.length > 12) _history.splice(0, 2);
+    while (_history.length > 8) _history.splice(0, 2);
 
     return { text, fallback: null };
   }
