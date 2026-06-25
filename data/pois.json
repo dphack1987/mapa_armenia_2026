@@ -151,6 +151,114 @@
       "pautaId": "quindio_travel",
       "telefono": "317 442 6044",
       "horario": "Lun–Dom 8:00 a. m. – 8:00 p. m."
+    },
+    {
+      "id": "arepa_town",
+      "name": "Arepa Town",
+      "category": "gastronomico",
+      "lat": 4.5350,
+      "lng": -75.6730,
+      "address": "Armenia, Quindío",
+      "description": "[Descripción pendiente]",
+      "pautaId": "arepa_town",
+      "telefono": "[Teléfono pendiente]",
+      "horario": "[Horario pendiente]"
+    },
+    {
+      "id": "cafeina",
+      "name": "Cafeína",
+      "category": "gastronomico",
+      "lat": 4.5360,
+      "lng": -75.6720,
+      "address": "Armenia, Quindío",
+      "description": "[Descripción pendiente]",
+      "pautaId": "cafeina",
+      "telefono": "[Teléfono pendiente]",
+      "horario": "[Horario pendiente]"
+    },
+    {
+      "id": "ccsansur",
+      "name": "CC Sansur",
+      "category": "comercial",
+      "lat": 4.5370,
+      "lng": -75.6710,
+      "address": "Armenia, Quindío",
+      "description": "[Descripción pendiente]",
+      "pautaId": "ccsansur",
+      "telefono": "[Teléfono pendiente]",
+      "horario": "[Horario pendiente]"
+    },
+    {
+      "id": "chewing",
+      "name": "Chewing",
+      "category": "gastronomico",
+      "lat": 4.5380,
+      "lng": -75.6700,
+      "address": "Armenia, Quindío",
+      "description": "[Descripción pendiente]",
+      "pautaId": "chewing",
+      "telefono": "[Teléfono pendiente]",
+      "horario": "[Horario pendiente]"
+    },
+    {
+      "id": "comfenalco",
+      "name": "Comfenalco",
+      "category": "comercial",
+      "lat": 4.5390,
+      "lng": -75.6690,
+      "address": "Armenia, Quindío",
+      "description": "[Descripción pendiente]",
+      "pautaId": "comfenalco",
+      "telefono": "[Teléfono pendiente]",
+      "horario": "[Horario pendiente]"
+    },
+    {
+      "id": "isa_victory",
+      "name": "Isa Victory",
+      "category": "comercial",
+      "lat": 4.5400,
+      "lng": -75.6680,
+      "address": "Armenia, Quindío",
+      "description": "[Descripción pendiente]",
+      "pautaId": "isa_victory",
+      "telefono": "[Teléfono pendiente]",
+      "horario": "[Horario pendiente]"
+    },
+    {
+      "id": "magangue",
+      "name": "Magangue",
+      "category": "gastronomico",
+      "lat": 4.5410,
+      "lng": -75.6670,
+      "address": "Armenia, Quindío",
+      "description": "[Descripción pendiente]",
+      "pautaId": "magangue",
+      "telefono": "[Teléfono pendiente]",
+      "horario": "[Horario pendiente]"
+    },
+    {
+      "id": "platano",
+      "name": "Plátano",
+      "category": "gastronomico",
+      "lat": 4.5420,
+      "lng": -75.6660,
+      "address": "Armenia, Quindío",
+      "description": "[Descripción pendiente]",
+      "pautaId": "platano",
+      "telefono": "[Teléfono pendiente]",
+      "horario": "[Horario pendiente]"
+    },
+    {
+      "id": "queso",
+      "name": "Queso",
+      "category": "gastronomico",
+      "lat": 4.5430,
+      "lng": -75.6650,
+      "address": "Armenia, Quindío",
+      "description": "[Descripción pendiente]",
+      "pautaId": "queso",
+      "telefono": "[Teléfono pendiente]",
+      "horario": "[Horario pendiente]"
     }
   ]
 }

@@ -29,7 +29,7 @@
       "nombre": "Diana Seguros",
       "categoria": "Comercial",
       "imagen": "pautas publicitarias/diana_seguros.jpg",
-      "poiId": "anatolia",
+      "poiId": "diana_seguros",
       "slogan": "Protección que cuida de lo que más valoras",
       "direccion": "Armenia, Quindío",
       "telefono": "315 4861761",
@@ -53,7 +53,7 @@
       "nombre": "Quindío Travel",
       "categoria": "Turístico",
       "imagen": "pautas publicitarias/quindio_travel.jpg",
-      "poiId": "anatolia",
+      "poiId": "quindio_travel",
       "slogan": "Explora la belleza del Quindío",
       "direccion": "Armenia, Quindío",
       "telefono": "317 442 6044",
@@ -69,6 +69,204 @@
           "Traslados privados",
           "Paquetes turísticos",
           "Guías certificados"
+        ]
+      }
+    },
+    {
+      "id": "arepa_town",
+      "nombre": "Arepa Town",
+      "categoria": "Gastronómico",
+      "imagen": "pautas publicitarias/arepa_town.png",
+      "poiId": "arepa_town",
+      "slogan": "[Slogan pendiente]",
+      "direccion": "Armenia, Quindío",
+      "telefono": "[Teléfono pendiente]",
+      "whatsapp": "[WhatsApp pendiente]",
+      "whatsappMensaje": "Hola, vi Arepa Town en el Mapa Turístico Armenia 2026. Me gustaría recibir información.",
+      "horario": "[Horario pendiente]",
+      "ficha": {
+        "destacado": "[Frase destacada pendiente]",
+        "descripcion": "[Descripción pendiente]",
+        "servicios": [
+          "[Servicio 1]",
+          "[Servicio 2]",
+          "[Servicio 3]"
+        ]
+      }
+    },
+    {
+      "id": "cafeina",
+      "nombre": "Cafeína",
+      "categoria": "Gastronómico",
+      "imagen": "pautas publicitarias/cafeina.png",
+      "poiId": "cafeina",
+      "slogan": "[Slogan pendiente]",
+      "direccion": "Armenia, Quindío",
+      "telefono": "[Teléfono pendiente]",
+      "whatsapp": "[WhatsApp pendiente]",
+      "whatsappMensaje": "Hola, vi Cafeína en el Mapa Turístico Armenia 2026. Me gustaría recibir información.",
+      "horario": "[Horario pendiente]",
+      "ficha": {
+        "destacado": "[Frase destacada pendiente]",
+        "descripcion": "[Descripción pendiente]",
+        "servicios": [
+          "[Servicio 1]",
+          "[Servicio 2]",
+          "[Servicio 3]"
+        ]
+      }
+    },
+    {
+      "id": "ccsansur",
+      "nombre": "CC Sansur",
+      "categoria": "Comercial",
+      "imagen": "pautas publicitarias/ccsansur.png",
+      "poiId": "ccsansur",
+      "slogan": "[Slogan pendiente]",
+      "direccion": "Armenia, Quindío",
+      "telefono": "[Teléfono pendiente]",
+      "whatsapp": "[WhatsApp pendiente]",
+      "whatsappMensaje": "Hola, vi CC Sansur en el Mapa Turístico Armenia 2026. Me gustaría recibir información.",
+      "horario": "[Horario pendiente]",
+      "ficha": {
+        "destacado": "[Frase destacada pendiente]",
+        "descripcion": "[Descripción pendiente]",
+        "servicios": [
+          "[Servicio 1]",
+          "[Servicio 2]",
+          "[Servicio 3]"
+        ]
+      }
+    },
+    {
+      "id": "chewing",
+      "nombre": "Chewing",
+      "categoria": "Gastronómico",
+      "imagen": "pautas publicitarias/chewing.png",
+      "poiId": "chewing",
+      "slogan": "[Slogan pendiente]",
+      "direccion": "Armenia, Quindío",
+      "telefono": "[Teléfono pendiente]",
+      "whatsapp": "[WhatsApp pendiente]",
+      "whatsappMensaje": "Hola, vi Chewing en el Mapa Turístico Armenia 2026. Me gustaría recibir información.",
+      "horario": "[Horario pendiente]",
+      "ficha": {
+        "destacado": "[Frase destacada pendiente]",
+        "descripcion": "[Descripción pendiente]",
+        "servicios": [
+          "[Servicio 1]",
+          "[Servicio 2]",
+          "[Servicio 3]"
+        ]
+      }
+    },
+    {
+      "id": "comfenalco",
+      "nombre": "Comfenalco",
+      "categoria": "Comercial",
+      "imagen": "pautas publicitarias/comfenalco.png",
+      "poiId": "comfenalco",
+      "slogan": "[Slogan pendiente]",
+      "direccion": "Armenia, Quindío",
+      "telefono": "[Teléfono pendiente]",
+      "whatsapp": "[WhatsApp pendiente]",
+      "whatsappMensaje": "Hola, vi Comfenalco en el Mapa Turístico Armenia 2026. Me gustaría recibir información.",
+      "horario": "[Horario pendiente]",
+      "ficha": {
+        "destacado": "[Frase destacada pendiente]",
+        "descripcion": "[Descripción pendiente]",
+        "servicios": [
+          "[Servicio 1]",
+          "[Servicio 2]",
+          "[Servicio 3]"
+        ]
+      }
+    },
+    {
+      "id": "isa_victory",
+      "nombre": "Isa Victory",
+      "categoria": "Comercial",
+      "imagen": "pautas publicitarias/isa_victory.png",
+      "poiId": "isa_victory",
+      "slogan": "[Slogan pendiente]",
+      "direccion": "Armenia, Quindío",
+      "telefono": "[Teléfono pendiente]",
+      "whatsapp": "[WhatsApp pendiente]",
+      "whatsappMensaje": "Hola, vi Isa Victory en el Mapa Turístico Armenia 2026. Me gustaría recibir información.",
+      "horario": "[Horario pendiente]",
+      "ficha": {
+        "destacado": "[Frase destacada pendiente]",
+        "descripcion": "[Descripción pendiente]",
+        "servicios": [
+          "[Servicio 1]",
+          "[Servicio 2]",
+          "[Servicio 3]"
+        ]
+      }
+    },
+    {
+      "id": "magangue",
+      "nombre": "Magangue",
+      "categoria": "Gastronómico",
+      "imagen": "pautas publicitarias/magangue.png",
+      "poiId": "magangue",
+      "slogan": "[Slogan pendiente]",
+      "direccion": "Armenia, Quindío",
+      "telefono": "[Teléfono pendiente]",
+      "whatsapp": "[WhatsApp pendiente]",
+      "whatsappMensaje": "Hola, vi Magangue en el Mapa Turístico Armenia 2026. Me gustaría recibir información.",
+      "horario": "[Horario pendiente]",
+      "ficha": {
+        "destacado": "[Frase destacada pendiente]",
+        "descripcion": "[Descripción pendiente]",
+        "servicios": [
+          "[Servicio 1]",
+          "[Servicio 2]",
+          "[Servicio 3]"
+        ]
+      }
+    },
+    {
+      "id": "platano",
+      "nombre": "Plátano",
+      "categoria": "Gastronómico",
+      "imagen": "pautas publicitarias/platano.png",
+      "poiId": "platano",
+      "slogan": "[Slogan pendiente]",
+      "direccion": "Armenia, Quindío",
+      "telefono": "[Teléfono pendiente]",
+      "whatsapp": "[WhatsApp pendiente]",
+      "whatsappMensaje": "Hola, vi Plátano en el Mapa Turístico Armenia 2026. Me gustaría recibir información.",
+      "horario": "[Horario pendiente]",
+      "ficha": {
+        "destacado": "[Frase destacada pendiente]",
+        "descripcion": "[Descripción pendiente]",
+        "servicios": [
+          "[Servicio 1]",
+          "[Servicio 2]",
+          "[Servicio 3]"
+        ]
+      }
+    },
+    {
+      "id": "queso",
+      "nombre": "Queso",
+      "categoria": "Gastronómico",
+      "imagen": "pautas publicitarias/queso.png",
+      "poiId": "queso",
+      "slogan": "[Slogan pendiente]",
+      "direccion": "Armenia, Quindío",
+      "telefono": "[Teléfono pendiente]",
+      "whatsapp": "[WhatsApp pendiente]",
+      "whatsappMensaje": "Hola, vi Queso en el Mapa Turístico Armenia 2026. Me gustaría recibir información.",
+      "horario": "[Horario pendiente]",
+      "ficha": {
+        "destacado": "[Frase destacada pendiente]",
+        "descripcion": "[Descripción pendiente]",
+        "servicios": [
+          "[Servicio 1]",
+          "[Servicio 2]",
+          "[Servicio 3]"
         ]
       }
     }
