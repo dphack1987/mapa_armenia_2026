@@ -249,16 +249,16 @@
       }
     },
     {
-      "id": "queso",
-      "nombre": "Queso",
+      "id": "queso_y_cafe",
+      "nombre": "Queso y Café",
       "categoria": "Gastronómico",
       "imagen": "pautas publicitarias/queso.png",
-      "poiId": "queso",
+      "poiId": "queso_y_cafe",
       "slogan": "[Slogan pendiente]",
       "direccion": "Armenia, Quindío",
       "telefono": "[Teléfono pendiente]",
       "whatsapp": "[WhatsApp pendiente]",
-      "whatsappMensaje": "Hola, vi Queso en el Mapa Turístico Armenia 2026. Me gustaría recibir información.",
+      "whatsappMensaje": "Hola, vi Queso y Café en el Mapa Turístico Armenia 2026. Me gustaría recibir información.",
       "horario": "[Horario pendiente]",
       "ficha": {
         "destacado": "[Frase destacada pendiente]",

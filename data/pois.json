@@ -249,14 +249,14 @@
       "horario": "[Horario pendiente]"
     },
     {
-      "id": "queso",
-      "name": "Queso",
+      "id": "queso_y_cafe",
+      "name": "Queso y Café",
       "category": "gastronomico",
       "lat": 4.5430,
       "lng": -75.6650,
       "address": "Armenia, Quindío",
       "description": "[Descripción pendiente]",
-      "pautaId": "queso",
+      "pautaId": "queso_y_cafe",
       "telefono": "[Teléfono pendiente]",
       "horario": "[Horario pendiente]"
     }
