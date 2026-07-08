@@ -78,19 +78,19 @@
       "categoria": "Gastronómico",
       "imagen": "pautas publicitarias/arepa_town.png",
       "poiId": "arepa_town",
-      "slogan": "[Slogan pendiente]",
-      "direccion": "Armenia, Quindío",
-      "telefono": "[Teléfono pendiente]",
-      "whatsapp": "[WhatsApp pendiente]",
+      "slogan": "Arepas y sabores quindianos",
+      "direccion": "Calle 50 Containers de los Naranjos Local 10, Armenia, Colombia",
+      "telefono": "314 562 1785",
+      "whatsapp": "573145621785",
       "whatsappMensaje": "Hola, vi Arepa Town en el Mapa Turístico Armenia 2026. Me gustaría recibir información.",
-      "horario": "[Horario pendiente]",
+      "horario": "Lun–Dom 10:00 a. m. – 10:00 p. m.",
       "ficha": {
-        "destacado": "[Frase destacada pendiente]",
-        "descripcion": "[Descripción pendiente]",
+        "destacado": "Arepas artesanales con ambiente moderno",
+        "descripcion": "Arepa Town ofrece un espacio cómodo para disfrutar arepas y opciones de la gastronomía local con un concepto contemporáneo.",
         "servicios": [
-          "[Servicio 1]",
-          "[Servicio 2]",
-          "[Servicio 3]"
+          "Arepas especiales",
+          "Bebidas",
+          "Servicio para llevar"
         ]
       }
     },
@@ -100,19 +100,19 @@
       "categoria": "Gastronómico",
       "imagen": "pautas publicitarias/cafeina.png",
       "poiId": "cafeina",
-      "slogan": "[Slogan pendiente]",
-      "direccion": "Armenia, Quindío",
-      "telefono": "[Teléfono pendiente]",
-      "whatsapp": "[WhatsApp pendiente]",
+      "slogan": "Café, ambiente y sabor",
+      "direccion": "Calle 17N # 10-30 Barrio El Nogal, Armenia, Quindío",
+      "telefono": "317 439 3457",
+      "whatsapp": "573174393457",
       "whatsappMensaje": "Hola, vi Cafeína en el Mapa Turístico Armenia 2026. Me gustaría recibir información.",
-      "horario": "[Horario pendiente]",
+      "horario": "Lun–Dom 8:00 a. m. – 8:00 p. m.",
       "ficha": {
-        "destacado": "[Frase destacada pendiente]",
-        "descripcion": "[Descripción pendiente]",
+        "destacado": "Café especializado y espacio acogedor",
+        "descripcion": "Cafeína Coffee Shop combina un ambiente cómodo con café de calidad y opciones ideales para reuniones y pausas.",
         "servicios": [
-          "[Servicio 1]",
-          "[Servicio 2]",
-          "[Servicio 3]"
+          "Café especializado",
+          "Postres",
+          "Reuniones y trabajo ligero"
         ]
       }
     },
@@ -122,19 +122,19 @@
       "categoria": "Comercial",
       "imagen": "pautas publicitarias/ccsansur.png",
       "poiId": "ccsansur",
-      "slogan": "[Slogan pendiente]",
-      "direccion": "Armenia, Quindío",
-      "telefono": "[Teléfono pendiente]",
-      "whatsapp": "[WhatsApp pendiente]",
+      "slogan": "Centro comercial para disfrutar y comprar",
+      "direccion": "Carrera 18 # 59-37, Armenia, Quindío",
+      "telefono": "304 610 2606",
+      "whatsapp": "573046102606",
       "whatsappMensaje": "Hola, vi CC Sansur en el Mapa Turístico Armenia 2026. Me gustaría recibir información.",
-      "horario": "[Horario pendiente]",
+      "horario": "Lun–Dom 10:00 a. m. – 9:00 p. m.",
       "ficha": {
-        "destacado": "[Frase destacada pendiente]",
-        "descripcion": "[Descripción pendiente]",
+        "destacado": "Espacio comercial y de encuentro en Armenia",
+        "descripcion": "CC Sansur es un centro comercial que reúne negocios, servicios y opciones de esparcimiento para turistas y residentes.",
         "servicios": [
-          "[Servicio 1]",
-          "[Servicio 2]",
-          "[Servicio 3]"
+          "Tiendas",
+          "Servicios",
+          "Zona de comidas"
         ]
       }
     },
@@ -144,19 +144,19 @@
       "categoria": "Gastronómico",
       "imagen": "pautas publicitarias/chewing.png",
       "poiId": "chewing",
-      "slogan": "[Slogan pendiente]",
-      "direccion": "Armenia, Quindío",
-      "telefono": "[Teléfono pendiente]",
-      "whatsapp": "[WhatsApp pendiente]",
+      "slogan": "Comida rápida y sabor local",
+      "direccion": "Antiguo Estadio San José, frente a las canchas sintéticas, local 1, Armenia",
+      "telefono": "322 839 1293",
+      "whatsapp": "573228391293",
       "whatsappMensaje": "Hola, vi Chewing en el Mapa Turístico Armenia 2026. Me gustaría recibir información.",
-      "horario": "[Horario pendiente]",
+      "horario": "Lun–Dom 10:00 a. m. – 10:00 p. m.",
       "ficha": {
-        "destacado": "[Frase destacada pendiente]",
-        "descripcion": "[Descripción pendiente]",
+        "destacado": "Opciones de comida rápida y ambiente juvenil",
+        "descripcion": "John Chewing Food ofrece una propuesta práctica y cercana para quienes buscan probar sabores rápidos y divertidos en Armenia.",
         "servicios": [
-          "[Servicio 1]",
-          "[Servicio 2]",
-          "[Servicio 3]"
+          "Comida rápida",
+          "Bebidas",
+          "Servicio para llevar"
         ]
       }
     },
@@ -166,19 +166,19 @@
       "categoria": "Comercial",
       "imagen": "pautas publicitarias/comfenalco.png",
       "poiId": "comfenalco",
-      "slogan": "[Slogan pendiente]",
-      "direccion": "Armenia, Quindío",
+      "slogan": "Servicios y bienestar para todos",
+      "direccion": "soleden.co",
       "telefono": "[Teléfono pendiente]",
       "whatsapp": "[WhatsApp pendiente]",
       "whatsappMensaje": "Hola, vi Comfenalco en el Mapa Turístico Armenia 2026. Me gustaría recibir información.",
-      "horario": "[Horario pendiente]",
+      "horario": "Lun–Vie 8:00 a. m. – 6:00 p. m.",
       "ficha": {
-        "destacado": "[Frase destacada pendiente]",
-        "descripcion": "[Descripción pendiente]",
+        "destacado": "Soledén · Comfenalco Quindío",
+        "descripcion": "Soledén, aliado de Comfenalco Quindío, ofrece información y servicios orientados al bienestar y la vida en comunidad.",
         "servicios": [
-          "[Servicio 1]",
-          "[Servicio 2]",
-          "[Servicio 3]"
+          "Atención al usuario",
+          "Servicios institucionales",
+          "Información y orientación"
         ]
       }
     },
@@ -188,19 +188,19 @@
       "categoria": "Comercial",
       "imagen": "pautas publicitarias/isa_victory.png",
       "poiId": "isa_victory",
-      "slogan": "[Slogan pendiente]",
-      "direccion": "Armenia, Quindío",
-      "telefono": "[Teléfono pendiente]",
-      "whatsapp": "[WhatsApp pendiente]",
+      "slogan": "Hospedaje con comodidad y servicio",
+      "direccion": "Avenida Bolívar 21 Norte 47, Armenia, Quindío",
+      "telefono": "734 0909",
+      "whatsapp": "573207707079",
       "whatsappMensaje": "Hola, vi Isa Victory en el Mapa Turístico Armenia 2026. Me gustaría recibir información.",
-      "horario": "[Horario pendiente]",
+      "horario": "Lun–Dom 24/7",
       "ficha": {
-        "destacado": "[Frase destacada pendiente]",
-        "descripcion": "[Descripción pendiente]",
+        "destacado": "Hotel en el corazón de Armenia",
+        "descripcion": "Isa Victory Hotel ofrece alojamiento y servicios orientados a hacer más cómoda la estadía en la ciudad.",
         "servicios": [
-          "[Servicio 1]",
-          "[Servicio 2]",
-          "[Servicio 3]"
+          "Hospedaje",
+          "Recepción",
+          "Reservas"
         ]
       }
     },
@@ -210,19 +210,19 @@
       "categoria": "Gastronómico",
       "imagen": "pautas publicitarias/magangue.png",
       "poiId": "magangue",
-      "slogan": "[Slogan pendiente]",
-      "direccion": "Armenia, Quindío",
-      "telefono": "[Teléfono pendiente]",
-      "whatsapp": "[WhatsApp pendiente]",
+      "slogan": "Gastronomía y ambiente auténtico",
+      "direccion": "Calle 17 # 13-50, segundo piso, por Calle Real, Armenia",
+      "telefono": "318 601 1957",
+      "whatsapp": "573186011957",
       "whatsappMensaje": "Hola, vi Magangue en el Mapa Turístico Armenia 2026. Me gustaría recibir información.",
-      "horario": "[Horario pendiente]",
+      "horario": "Lun–Dom 11:00 a. m. – 10:00 p. m.",
       "ficha": {
-        "destacado": "[Frase destacada pendiente]",
-        "descripcion": "[Descripción pendiente]",
+        "destacado": "Restaurante Magangué Altavista",
+        "descripcion": "Magangué ofrece una experiencia gastronómica con platos tradicionales y un ambiente acogedor para compartir.",
         "servicios": [
-          "[Servicio 1]",
-          "[Servicio 2]",
-          "[Servicio 3]"
+          "Restaurante",
+          "Eventos",
+          "Atención personalizada"
         ]
       }
     },
@@ -232,19 +232,19 @@
       "categoria": "Gastronómico",
       "imagen": "pautas publicitarias/platano.png",
       "poiId": "platano",
-      "slogan": "[Slogan pendiente]",
-      "direccion": "Armenia, Quindío",
+      "slogan": "La feria del plátano en Armenia",
+      "direccion": "Sedes Sagrada Familia y Privilegio Mall, Armenia",
       "telefono": "[Teléfono pendiente]",
-      "whatsapp": "[WhatsApp pendiente]",
+      "whatsapp": "573164805446",
       "whatsappMensaje": "Hola, vi Plátano en el Mapa Turístico Armenia 2026. Me gustaría recibir información.",
-      "horario": "[Horario pendiente]",
+      "horario": "Lun–Dom 10:00 a. m. – 9:00 p. m.",
       "ficha": {
-        "destacado": "[Frase destacada pendiente]",
-        "descripcion": "[Descripción pendiente]",
+        "destacado": "Experiencia gastronómica con el plátano como protagonista",
+        "descripcion": "La Feria del Plátano reúne propuestas culinarias y comerciales que destacan la identidad del producto en la región.",
         "servicios": [
-          "[Servicio 1]",
-          "[Servicio 2]",
-          "[Servicio 3]"
+          "Gastronomía",
+          "Eventos",
+          "Presencia en múltiples sedes"
         ]
       }
     },
@@ -254,19 +254,19 @@
       "categoria": "Gastronómico",
       "imagen": "pautas publicitarias/queso.png",
       "poiId": "queso_y_cafe",
-      "slogan": "[Slogan pendiente]",
-      "direccion": "Armenia, Quindío",
+      "slogan": "Queso, café y buen ambiente",
+      "direccion": "Calle 22 Norte, Carrera 14-28, Edificio Torre Ele, Local 1, Laureles, Armenia",
       "telefono": "[Teléfono pendiente]",
       "whatsapp": "[WhatsApp pendiente]",
       "whatsappMensaje": "Hola, vi Queso y Café en el Mapa Turístico Armenia 2026. Me gustaría recibir información.",
-      "horario": "[Horario pendiente]",
+      "horario": "Lun–Dom 9:00 a. m. – 9:00 p. m.",
       "ficha": {
-        "destacado": "[Frase destacada pendiente]",
-        "descripcion": "[Descripción pendiente]",
+        "destacado": "Espacio ideal para disfrutar café y quesos artesanales",
+        "descripcion": "Queso & Café combina el sabor del café con propuestas gastronómicas y un ambiente relajado para pasar el rato.",
         "servicios": [
-          "[Servicio 1]",
-          "[Servicio 2]",
-          "[Servicio 3]"
+          "Café",
+          "Quesos",
+          "Ambiente relajado"
         ]
       }
     },
@@ -452,19 +452,19 @@
       "categoria": "Comercial",
       "imagen": "pautas publicitarias/reina_querida.png",
       "poiId": "reina_querida",
-      "slogan": "[Slogan pendiente]",
-      "direccion": "Armenia, Quindío",
+      "slogan": "Piononos y cremas con identidad",
+      "direccion": "Calle 22 Norte 14-40, Edificio Zona-L, Local 6, Armenia, Quindío",
       "telefono": "[Teléfono pendiente]",
       "whatsapp": "[WhatsApp pendiente]",
       "whatsappMensaje": "Hola, vi Reina Querida en el Mapa Turístico Armenia 2026. Me gustaría recibir información.",
-      "horario": "[Horario pendiente]",
+      "horario": "Lun–Dom 10:00 a. m. – 9:00 p. m.",
       "ficha": {
-        "destacado": "[Frase destacada pendiente]",
-        "descripcion": "[Descripción pendiente]",
+        "destacado": "Dulce y artesanal para compartir",
+        "descripcion": "Reina Querida destaca por sus piononos y cremas con una propuesta artesanal y cercana para los visitantes de Armenia.",
         "servicios": [
-          "[Servicio 1]",
-          "[Servicio 2]",
-          "[Servicio 3]"
+          "Piononos",
+          "Cremas",
+          "Dulces artesanales"
         ]
       }
     },
@@ -496,19 +496,19 @@
       "categoria": "Gastronómico",
       "imagen": "pautas publicitarias/restaurante_fogon.png",
       "poiId": "restaurante_fogon",
-      "slogan": "[Slogan pendiente]",
-      "direccion": "Armenia, Quindío",
-      "telefono": "[Teléfono pendiente]",
-      "whatsapp": "[WhatsApp pendiente]",
+      "slogan": "Sabor tradicional en el centro",
+      "direccion": "Parque Sucre, Carrera 14 # 12-48, Armenia",
+      "telefono": "311 386 2329",
+      "whatsapp": "573113862329",
       "whatsappMensaje": "Hola, vi Restaurante Fogón en el Mapa Turístico Armenia 2026. Me gustaría recibir información.",
-      "horario": "[Horario pendiente]",
+      "horario": "Lun–Dom 11:00 a. m. – 10:00 p. m.",
       "ficha": {
-        "destacado": "[Frase destacada pendiente]",
-        "descripcion": "[Descripción pendiente]",
+        "destacado": "Restaurante El Fogón Cuyabro",
+        "descripcion": "El Fogón Cuyabro ofrece una experiencia gastronómica tradicional en una ubicación estratégica del centro de Armenia.",
         "servicios": [
-          "[Servicio 1]",
-          "[Servicio 2]",
-          "[Servicio 3]"
+          "Restaurante",
+          "Domicilios",
+          "Opciones tradicionales"
         ]
       }
     },
@@ -518,19 +518,19 @@
       "categoria": "Gastronómico",
       "imagen": "pautas publicitarias/sandukes.png",
       "poiId": "sandukes",
-      "slogan": "[Slogan pendiente]",
+      "slogan": "Sabor y experiencia en cada visita",
       "direccion": "Armenia, Quindío",
-      "telefono": "[Teléfono pendiente]",
-      "whatsapp": "[WhatsApp pendiente]",
+      "telefono": "321 4077 605",
+      "whatsapp": "573214077605",
       "whatsappMensaje": "Hola, vi Sandukes en el Mapa Turístico Armenia 2026. Me gustaría recibir información.",
-      "horario": "[Horario pendiente]",
+      "horario": "Lun–Dom 11:00 a. m. – 10:00 p. m.",
       "ficha": {
-        "destacado": "[Frase destacada pendiente]",
-        "descripcion": "[Descripción pendiente]",
+        "destacado": "Propuesta cercana y diferente para disfrutar en Armenia",
+        "descripcion": "Sandukes se presenta como una opción de encuentro y sabor para quienes desean conocer nuevas propuestas en la ciudad.",
         "servicios": [
-          "[Servicio 1]",
-          "[Servicio 2]",
-          "[Servicio 3]"
+          "Experiencia gastronómica",
+          "Atención personalizada",
+          "Ambiente relajado"
         ]
       }
     }
