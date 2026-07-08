@@ -42,10 +42,34 @@ export default {
       env.GEMINI_KEY;
 
     try {
-      // Build the request payload from the parsed `body` and forward it
-      // to the Generative Language API. Previously `geminiBody` was
-      // referenced but not defined.
-      const geminiBody = body;
+      // Prepare the payload to send to the Generative Language API.
+      // If the client already provided a well-formed payload (with
+      // `contents` or generationConfig) we forward it as-is. Otherwise
+      // we build a minimal example payload so the Worker can be tested
+      // without the client having to craft the full body.
+      let geminiBody = null;
+
+      const looksLikeGemini = (obj) => obj && (obj.contents || obj.system_instruction || obj.generationConfig);
+      if (looksLikeGemini(body)) {
+        geminiBody = body;
+      } else {
+        // Build a minimal, safe payload using the user's `text` if present
+        // or a default short prompt. This avoids runtime errors when
+        // callers send a simplified JSON.
+        const text = (body && (body.text || body.prompt)) || "Hola Don Chucho, dame 3 recomendaciones turísticas cortas.";
+        geminiBody = {
+          contents: [
+            {
+              role: "user",
+              parts: [{ text }],
+            },
+          ],
+          generationConfig: {
+            temperature: 0.6,
+            maxOutputTokens: 256,
+          },
+        };
+      }
 
       const controller = new AbortController();
       const timeoutId = setTimeout(() => controller.abort(), 25000);

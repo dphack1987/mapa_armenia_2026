@@ -281,6 +281,12 @@ function openFicha(pautaId) {
   const content = document.getElementById("ficha-content");
   const actions = document.getElementById("ficha-actions");
   if (!pauta || !modal || !content || !actions) return;
+  // Save the element that had focus so we can restore it when closing
+  try {
+    window._lastFocusBeforeFicha = document.activeElement;
+  } catch (e) {
+    window._lastFocusBeforeFicha = null;
+  }
 
   content.innerHTML = buildFichaBodyHtml(pauta);
   actions.innerHTML = buildFichaActionsHtml(pauta);
@@ -289,6 +295,15 @@ function openFicha(pautaId) {
   modal.hidden = false;
   modal.setAttribute("aria-hidden", "false");
   document.body.classList.add("ficha-open");
+
+  // Focus first focusable element inside modal for accessibility
+  const focusable = modal.querySelectorAll(
+    'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+  );
+  const firstFocusable = Array.from(focusable).find((el) => !el.hasAttribute("disabled"));
+  if (firstFocusable && typeof firstFocusable.focus === "function") {
+    firstFocusable.focus();
+  }
 
   const scrollEl = content.querySelector(".ficha-scroll");
   if (scrollEl) scrollEl.scrollTop = 0;
@@ -310,6 +325,16 @@ function closeFicha() {
     actions.hidden = true;
     actions.innerHTML = "";
   }
+
+  // Restore focus to the element that had it before opening the modal
+  try {
+    if (window._lastFocusBeforeFicha && typeof window._lastFocusBeforeFicha.focus === "function") {
+      window._lastFocusBeforeFicha.focus();
+    }
+  } catch (e) {
+    // ignore
+  }
+  window._lastFocusBeforeFicha = null;
 }
 
 function initFichaModal() {
@@ -320,8 +345,34 @@ function initFichaModal() {
     el.addEventListener("click", closeFicha);
   });
 
+  // Key handling while modal is open: Escape to close and Tab trapping
   document.addEventListener("keydown", (e) => {
-    if (e.key === "Escape" && !modal.hidden) closeFicha();
+    if (modal.hidden) return;
+    if (e.key === "Escape") {
+      e.preventDefault();
+      closeFicha();
+      return;
+    }
+
+    if (e.key === "Tab") {
+      const focusable = Array.from(
+        modal.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])')
+      ).filter((el) => !el.hasAttribute("disabled") && el.offsetParent !== null);
+      if (!focusable.length) return;
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (e.shiftKey) {
+        if (document.activeElement === first) {
+          e.preventDefault();
+          last.focus();
+        }
+      } else {
+        if (document.activeElement === last) {
+          e.preventDefault();
+          first.focus();
+        }
+      }
+    }
   });
 
   document.getElementById("map")?.addEventListener("click", (e) => {
