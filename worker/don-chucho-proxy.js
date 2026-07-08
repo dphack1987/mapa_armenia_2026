@@ -42,6 +42,11 @@ export default {
       env.GEMINI_KEY;
 
     try {
+      // Build the request payload from the parsed `body` and forward it
+      // to the Generative Language API. Previously `geminiBody` was
+      // referenced but not defined.
+      const geminiBody = body;
+
       const controller = new AbortController();
       const timeoutId = setTimeout(() => controller.abort(), 25000);
 
