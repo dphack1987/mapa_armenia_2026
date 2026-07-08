@@ -4,10 +4,7 @@
     "department": "Quindío",
     "country": "Colombia",
     "year": 2026,
-    "center": [
-      4.5339,
-      -75.6811
-    ],
+    "center": [4.5339, -75.6811],
     "defaultZoom": 14
   },
   "pois": [
@@ -160,26 +157,24 @@
       "name": "Arepa Town",
       "category": "gastronomico",
       "lat": 4.5335,
-      "lng": -75.678,
+      "lng": -75.6780,
       "address": "Calle 50 Containers de los Naranjos, local 10, Armenia",
-      "description": "",
+      "description": "[Descripción pendiente]",
       "pautaId": "arepa_town",
-      "telefono": "",
-      "horario": "",
-      "needsReview": true
+      "telefono": "[Teléfono pendiente]",
+      "horario": "[Horario pendiente]"
     },
     {
       "id": "cafeina",
       "name": "Cafeína",
       "category": "gastronomico",
-      "lat": 4.534,
+      "lat": 4.5340,
       "lng": -75.6734,
       "address": "Calle 17N # 10-30, Barrio El Nogal, Armenia",
-      "description": "",
+      "description": "[Descripción pendiente]",
       "pautaId": "cafeina",
-      "telefono": "",
-      "horario": "",
-      "needsReview": true
+      "telefono": "[Teléfono pendiente]",
+      "horario": "[Horario pendiente]"
     },
     {
       "id": "ccsansur",
@@ -188,11 +183,10 @@
       "lat": 4.5313,
       "lng": -75.6788,
       "address": "Carrera 18 # 59-37, Armenia",
-      "description": "",
+      "description": "[Descripción pendiente]",
       "pautaId": "ccsansur",
-      "telefono": "",
-      "horario": "",
-      "needsReview": true
+      "telefono": "[Teléfono pendiente]",
+      "horario": "[Horario pendiente]"
     },
     {
       "id": "chewing",
@@ -201,11 +195,10 @@
       "lat": 4.5399393,
       "lng": -75.6849717,
       "address": "Antiguo Estadio San José, Armenia",
-      "description": "",
+      "description": "[Descripción pendiente]",
       "pautaId": "chewing",
-      "telefono": "",
-      "horario": "",
-      "needsReview": true
+      "telefono": "[Teléfono pendiente]",
+      "horario": "[Horario pendiente]"
     },
     {
       "id": "comfenalco",
@@ -214,11 +207,10 @@
       "lat": 4.4795465,
       "lng": -75.7508934,
       "address": "Soledén / Comfenalco Quindío, Armenia",
-      "description": "",
+      "description": "[Descripción pendiente]",
       "pautaId": "comfenalco",
-      "telefono": "",
-      "horario": "",
-      "needsReview": true
+      "telefono": "[Teléfono pendiente]",
+      "horario": "[Horario pendiente]"
     },
     {
       "id": "isa_victory",
@@ -227,11 +219,10 @@
       "lat": 4.5411,
       "lng": -75.6649,
       "address": "Avenida Bolívar 21 Norte 47, Armenia",
-      "description": "",
+      "description": "[Descripción pendiente]",
       "pautaId": "isa_victory",
-      "telefono": "",
-      "horario": "",
-      "needsReview": true
+      "telefono": "[Teléfono pendiente]",
+      "horario": "[Horario pendiente]"
     },
     {
       "id": "magangue",
@@ -240,11 +231,10 @@
       "lat": 4.5342045,
       "lng": -75.6713467,
       "address": "Calle 17 # 13-50, segundo piso, Armenia",
-      "description": "",
+      "description": "[Descripción pendiente]",
       "pautaId": "magangue",
-      "telefono": "",
-      "horario": "",
-      "needsReview": true
+      "telefono": "[Teléfono pendiente]",
+      "horario": "[Horario pendiente]"
     },
     {
       "id": "platano",
@@ -253,11 +243,10 @@
       "lat": 4.5384297,
       "lng": -75.6676478,
       "address": "Sedes Sagrada Familia y Privilegio Mall, Armenia",
-      "description": "",
+      "description": "[Descripción pendiente]",
       "pautaId": "platano",
-      "telefono": "",
-      "horario": "",
-      "needsReview": true
+      "telefono": "[Teléfono pendiente]",
+      "horario": "[Horario pendiente]"
     },
     {
       "id": "queso_y_cafe",
@@ -266,11 +255,10 @@
       "lat": 4.5601469,
       "lng": -75.6554146,
       "address": "Calle 22 Norte, Carrera 14-28, Torre Ele, Armenia",
-      "description": "",
+      "description": "[Descripción pendiente]",
       "pautaId": "queso_y_cafe",
-      "telefono": "",
-      "horario": "",
-      "needsReview": true
+      "telefono": "[Teléfono pendiente]",
+      "horario": "[Horario pendiente]"
     },
     {
       "id": "cafe_sensorial",
@@ -281,9 +269,8 @@
       "address": "Parque Fundadores, local 07, Armenia",
       "description": "Pauta publicitaria visible en el mapa de Armenia 2026.",
       "pautaId": "cafe_sensorial",
-      "telefono": "",
-      "horario": "",
-      "needsReview": true
+      "telefono": "[Teléfono pendiente]",
+      "horario": "[Horario pendiente]"
     },
     {
       "id": "cafe_terraza",
@@ -294,9 +281,8 @@
       "address": "Plaza de Bolívar, calle 20, Armenia",
       "description": "Pauta publicitaria visible en el mapa de Armenia 2026.",
       "pautaId": "cafe_terraza",
-      "telefono": "",
-      "horario": "",
-      "needsReview": true
+      "telefono": "[Teléfono pendiente]",
+      "horario": "[Horario pendiente]"
     },
     {
       "id": "camino_futbol",
@@ -307,22 +293,20 @@
       "address": "Armenia, Quindío",
       "description": "Pauta publicitaria visible en el mapa de Armenia 2026.",
       "pautaId": "camino_futbol",
-      "telefono": "",
-      "horario": "",
-      "needsReview": true
+      "telefono": "[Teléfono pendiente]",
+      "horario": "[Horario pendiente]"
     },
     {
       "id": "guia_turismo",
       "name": "Guía Turismo",
       "category": "turistico",
-      "lat": 4.534,
+      "lat": 4.5340,
       "lng": -75.6764,
       "address": "Armenia, Quindío",
       "description": "Pauta publicitaria visible en el mapa de Armenia 2026.",
       "pautaId": "guia_turismo",
-      "telefono": "",
-      "horario": "",
-      "needsReview": true
+      "telefono": "[Teléfono pendiente]",
+      "horario": "[Horario pendiente]"
     },
     {
       "id": "hotel_san_jeronimo",
@@ -333,9 +317,8 @@
       "address": "Carrera 14 # 14-14, Armenia",
       "description": "Pauta publicitaria visible en el mapa de Armenia 2026.",
       "pautaId": "hotel_san_jeronimo",
-      "telefono": "",
-      "horario": "",
-      "needsReview": true
+      "telefono": "[Teléfono pendiente]",
+      "horario": "[Horario pendiente]"
     },
     {
       "id": "licores",
@@ -346,9 +329,8 @@
       "address": "Carrera 14 # 14Norte-30, Armenia",
       "description": "Pauta publicitaria visible en el mapa de Armenia 2026.",
       "pautaId": "licores",
-      "telefono": "",
-      "horario": "",
-      "needsReview": true
+      "telefono": "[Teléfono pendiente]",
+      "horario": "[Horario pendiente]"
     },
     {
       "id": "mapa_armenia_2026_cara_1",
@@ -359,22 +341,20 @@
       "address": "Armenia, Quindío",
       "description": "Pauta publicitaria visible en el mapa de Armenia 2026.",
       "pautaId": "mapa_armenia_2026_cara_1",
-      "telefono": "",
-      "horario": "",
-      "needsReview": true
+      "telefono": "[Teléfono pendiente]",
+      "horario": "[Horario pendiente]"
     },
     {
       "id": "qr_mapa_armenia",
       "name": "QR Mapa Armenia",
       "category": "turistico",
-      "lat": 4.539,
+      "lat": 4.5390,
       "lng": -75.6765,
       "address": "Armenia, Quindío",
       "description": "Pauta publicitaria visible en el mapa de Armenia 2026.",
       "pautaId": "qr_mapa_armenia",
-      "telefono": "",
-      "horario": "",
-      "needsReview": true
+      "telefono": "[Teléfono pendiente]",
+      "horario": "[Horario pendiente]"
     },
     {
       "id": "reina_querida",
@@ -385,9 +365,8 @@
       "address": "Calle 22 Norte 14-40, Edificio Zona-L, Armenia",
       "description": "Pauta publicitaria visible en el mapa de Armenia 2026.",
       "pautaId": "reina_querida",
-      "telefono": "",
-      "horario": "",
-      "needsReview": true
+      "telefono": "[Teléfono pendiente]",
+      "horario": "[Horario pendiente]"
     },
     {
       "id": "restaurante_feria_platano",
@@ -398,9 +377,8 @@
       "address": "Sede Sagrada Familia / Privilegio Mall, Armenia",
       "description": "Pauta publicitaria visible en el mapa de Armenia 2026.",
       "pautaId": "restaurante_feria_platano",
-      "telefono": "",
-      "horario": "",
-      "needsReview": true
+      "telefono": "[Teléfono pendiente]",
+      "horario": "[Horario pendiente]"
     },
     {
       "id": "restaurante_fogon",
@@ -411,22 +389,20 @@
       "address": "Parque Sucre, carrera 14 # 12-48, Armenia",
       "description": "Pauta publicitaria visible en el mapa de Armenia 2026.",
       "pautaId": "restaurante_fogon",
-      "telefono": "",
-      "horario": "",
-      "needsReview": true
+      "telefono": "[Teléfono pendiente]",
+      "horario": "[Horario pendiente]"
     },
     {
       "id": "sandukes",
       "name": "Sandukes",
       "category": "gastronomico",
-      "lat": 4.533,
+      "lat": 4.5330,
       "lng": -75.6773,
       "address": "Armenia, Quindío",
       "description": "Pauta publicitaria visible en el mapa de Armenia 2026.",
       "pautaId": "sandukes",
-      "telefono": "",
-      "horario": "",
-      "needsReview": true
+      "telefono": "[Teléfono pendiente]",
+      "horario": "[Horario pendiente]"
     }
   ]
 }
