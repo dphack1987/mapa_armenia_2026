@@ -269,6 +269,270 @@
           "[Servicio 3]"
         ]
       }
+    },
+    {
+      "id": "cafe_sensorial",
+      "nombre": "Café Sensorial",
+      "categoria": "Gastronómico",
+      "imagen": "pautas publicitarias/cafe_sensorial.png",
+      "poiId": "cafe_sensorial",
+      "slogan": "[Slogan pendiente]",
+      "direccion": "Armenia, Quindío",
+      "telefono": "[Teléfono pendiente]",
+      "whatsapp": "[WhatsApp pendiente]",
+      "whatsappMensaje": "Hola, vi Café Sensorial en el Mapa Turístico Armenia 2026. Me gustaría recibir información.",
+      "horario": "[Horario pendiente]",
+      "ficha": {
+        "destacado": "[Frase destacada pendiente]",
+        "descripcion": "[Descripción pendiente]",
+        "servicios": [
+          "[Servicio 1]",
+          "[Servicio 2]",
+          "[Servicio 3]"
+        ]
+      }
+    },
+    {
+      "id": "cafe_terraza",
+      "nombre": "Café Terraza",
+      "categoria": "Gastronómico",
+      "imagen": "pautas publicitarias/cafe_terraza.png",
+      "poiId": "cafe_terraza",
+      "slogan": "[Slogan pendiente]",
+      "direccion": "Armenia, Quindío",
+      "telefono": "[Teléfono pendiente]",
+      "whatsapp": "[WhatsApp pendiente]",
+      "whatsappMensaje": "Hola, vi Café Terraza en el Mapa Turístico Armenia 2026. Me gustaría recibir información.",
+      "horario": "[Horario pendiente]",
+      "ficha": {
+        "destacado": "[Frase destacada pendiente]",
+        "descripcion": "[Descripción pendiente]",
+        "servicios": [
+          "[Servicio 1]",
+          "[Servicio 2]",
+          "[Servicio 3]"
+        ]
+      }
+    },
+    {
+      "id": "camino_futbol",
+      "nombre": "Camino Fútbol",
+      "categoria": "Turístico",
+      "imagen": "pautas publicitarias/camino_futbol.png",
+      "poiId": "camino_futbol",
+      "slogan": "[Slogan pendiente]",
+      "direccion": "Armenia, Quindío",
+      "telefono": "[Teléfono pendiente]",
+      "whatsapp": "[WhatsApp pendiente]",
+      "whatsappMensaje": "Hola, vi Camino Fútbol en el Mapa Turístico Armenia 2026. Me gustaría recibir información.",
+      "horario": "[Horario pendiente]",
+      "ficha": {
+        "destacado": "[Frase destacada pendiente]",
+        "descripcion": "[Descripción pendiente]",
+        "servicios": [
+          "[Servicio 1]",
+          "[Servicio 2]",
+          "[Servicio 3]"
+        ]
+      }
+    },
+    {
+      "id": "guia_turismo",
+      "nombre": "Guía Turismo",
+      "categoria": "Turístico",
+      "imagen": "pautas publicitarias/guia_turismo.png",
+      "poiId": "guia_turismo",
+      "slogan": "[Slogan pendiente]",
+      "direccion": "Armenia, Quindío",
+      "telefono": "[Teléfono pendiente]",
+      "whatsapp": "[WhatsApp pendiente]",
+      "whatsappMensaje": "Hola, vi Guía Turismo en el Mapa Turístico Armenia 2026. Me gustaría recibir información.",
+      "horario": "[Horario pendiente]",
+      "ficha": {
+        "destacado": "[Frase destacada pendiente]",
+        "descripcion": "[Descripción pendiente]",
+        "servicios": [
+          "[Servicio 1]",
+          "[Servicio 2]",
+          "[Servicio 3]"
+        ]
+      }
+    },
+    {
+      "id": "hotel_san_jeronimo",
+      "nombre": "Hotel San Jerónimo",
+      "categoria": "Comercial",
+      "imagen": "pautas publicitarias/hotel_san_jeronimo.png",
+      "poiId": "hotel_san_jeronimo",
+      "slogan": "[Slogan pendiente]",
+      "direccion": "Armenia, Quindío",
+      "telefono": "[Teléfono pendiente]",
+      "whatsapp": "[WhatsApp pendiente]",
+      "whatsappMensaje": "Hola, vi Hotel San Jerónimo en el Mapa Turístico Armenia 2026. Me gustaría recibir información.",
+      "horario": "[Horario pendiente]",
+      "ficha": {
+        "destacado": "[Frase destacada pendiente]",
+        "descripcion": "[Descripción pendiente]",
+        "servicios": [
+          "[Servicio 1]",
+          "[Servicio 2]",
+          "[Servicio 3]"
+        ]
+      }
+    },
+    {
+      "id": "licores",
+      "nombre": "Licores",
+      "categoria": "Gastronómico",
+      "imagen": "pautas publicitarias/licores.png",
+      "poiId": "licores",
+      "slogan": "[Slogan pendiente]",
+      "direccion": "Armenia, Quindío",
+      "telefono": "[Teléfono pendiente]",
+      "whatsapp": "[WhatsApp pendiente]",
+      "whatsappMensaje": "Hola, vi Licores en el Mapa Turístico Armenia 2026. Me gustaría recibir información.",
+      "horario": "[Horario pendiente]",
+      "ficha": {
+        "destacado": "[Frase destacada pendiente]",
+        "descripcion": "[Descripción pendiente]",
+        "servicios": [
+          "[Servicio 1]",
+          "[Servicio 2]",
+          "[Servicio 3]"
+        ]
+      }
+    },
+    {
+      "id": "mapa_armenia_2026_cara_1",
+      "nombre": "Mapa Armenia 2026 Cara 1",
+      "categoria": "Turístico",
+      "imagen": "pautas publicitarias/mapa armenia 2026 cara 1.png",
+      "poiId": "mapa_armenia_2026_cara_1",
+      "slogan": "[Slogan pendiente]",
+      "direccion": "Armenia, Quindío",
+      "telefono": "[Teléfono pendiente]",
+      "whatsapp": "[WhatsApp pendiente]",
+      "whatsappMensaje": "Hola, vi Mapa Armenia 2026 Cara 1 en el Mapa Turístico Armenia 2026. Me gustaría recibir información.",
+      "horario": "[Horario pendiente]",
+      "ficha": {
+        "destacado": "[Frase destacada pendiente]",
+        "descripcion": "[Descripción pendiente]",
+        "servicios": [
+          "[Servicio 1]",
+          "[Servicio 2]",
+          "[Servicio 3]"
+        ]
+      }
+    },
+    {
+      "id": "qr_mapa_armenia",
+      "nombre": "QR Mapa Armenia",
+      "categoria": "Turístico",
+      "imagen": "pautas publicitarias/qr_mapa_armenia.png",
+      "poiId": "qr_mapa_armenia",
+      "slogan": "[Slogan pendiente]",
+      "direccion": "Armenia, Quindío",
+      "telefono": "[Teléfono pendiente]",
+      "whatsapp": "[WhatsApp pendiente]",
+      "whatsappMensaje": "Hola, vi QR Mapa Armenia en el Mapa Turístico Armenia 2026. Me gustaría recibir información.",
+      "horario": "[Horario pendiente]",
+      "ficha": {
+        "destacado": "[Frase destacada pendiente]",
+        "descripcion": "[Descripción pendiente]",
+        "servicios": [
+          "[Servicio 1]",
+          "[Servicio 2]",
+          "[Servicio 3]"
+        ]
+      }
+    },
+    {
+      "id": "reina_querida",
+      "nombre": "Reina Querida",
+      "categoria": "Comercial",
+      "imagen": "pautas publicitarias/reina_querida.png",
+      "poiId": "reina_querida",
+      "slogan": "[Slogan pendiente]",
+      "direccion": "Armenia, Quindío",
+      "telefono": "[Teléfono pendiente]",
+      "whatsapp": "[WhatsApp pendiente]",
+      "whatsappMensaje": "Hola, vi Reina Querida en el Mapa Turístico Armenia 2026. Me gustaría recibir información.",
+      "horario": "[Horario pendiente]",
+      "ficha": {
+        "destacado": "[Frase destacada pendiente]",
+        "descripcion": "[Descripción pendiente]",
+        "servicios": [
+          "[Servicio 1]",
+          "[Servicio 2]",
+          "[Servicio 3]"
+        ]
+      }
+    },
+    {
+      "id": "restaurante_feria_platano",
+      "nombre": "Restaurante Feria Plátano",
+      "categoria": "Gastronómico",
+      "imagen": "pautas publicitarias/restaurante_feria_platano.png",
+      "poiId": "restaurante_feria_platano",
+      "slogan": "[Slogan pendiente]",
+      "direccion": "Armenia, Quindío",
+      "telefono": "[Teléfono pendiente]",
+      "whatsapp": "[WhatsApp pendiente]",
+      "whatsappMensaje": "Hola, vi Restaurante Feria Plátano en el Mapa Turístico Armenia 2026. Me gustaría recibir información.",
+      "horario": "[Horario pendiente]",
+      "ficha": {
+        "destacado": "[Frase destacada pendiente]",
+        "descripcion": "[Descripción pendiente]",
+        "servicios": [
+          "[Servicio 1]",
+          "[Servicio 2]",
+          "[Servicio 3]"
+        ]
+      }
+    },
+    {
+      "id": "restaurante_fogon",
+      "nombre": "Restaurante Fogón",
+      "categoria": "Gastronómico",
+      "imagen": "pautas publicitarias/restaurante_fogon.png",
+      "poiId": "restaurante_fogon",
+      "slogan": "[Slogan pendiente]",
+      "direccion": "Armenia, Quindío",
+      "telefono": "[Teléfono pendiente]",
+      "whatsapp": "[WhatsApp pendiente]",
+      "whatsappMensaje": "Hola, vi Restaurante Fogón en el Mapa Turístico Armenia 2026. Me gustaría recibir información.",
+      "horario": "[Horario pendiente]",
+      "ficha": {
+        "destacado": "[Frase destacada pendiente]",
+        "descripcion": "[Descripción pendiente]",
+        "servicios": [
+          "[Servicio 1]",
+          "[Servicio 2]",
+          "[Servicio 3]"
+        ]
+      }
+    },
+    {
+      "id": "sandukes",
+      "nombre": "Sandukes",
+      "categoria": "Gastronómico",
+      "imagen": "pautas publicitarias/sandukes.png",
+      "poiId": "sandukes",
+      "slogan": "[Slogan pendiente]",
+      "direccion": "Armenia, Quindío",
+      "telefono": "[Teléfono pendiente]",
+      "whatsapp": "[WhatsApp pendiente]",
+      "whatsappMensaje": "Hola, vi Sandukes en el Mapa Turístico Armenia 2026. Me gustaría recibir información.",
+      "horario": "[Horario pendiente]",
+      "ficha": {
+        "destacado": "[Frase destacada pendiente]",
+        "descripcion": "[Descripción pendiente]",
+        "servicios": [
+          "[Servicio 1]",
+          "[Servicio 2]",
+          "[Servicio 3]"
+        ]
+      }
     }
   ]
 }

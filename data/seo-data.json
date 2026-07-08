@@ -1,0 +1,48 @@
+{
+  "municipios": [
+    "Armenia",
+    "Salento",
+    "Filandia",
+    "Montenegro",
+    "Quimbaya",
+    "Calarcá",
+    "Circasia",
+    "Génova",
+    "La Tebaida",
+    "Pijao",
+    "Córdoba",
+    "Buenavista"
+  ],
+  "categorias": [
+    {
+      "id": "alojamiento",
+      "nombre": "Alojamiento",
+      "keywords": ["hoteles", "fincas cafeteras", "glamping", "hostales", "cabañas"]
+    },
+    {
+      "id": "turismo-aventura",
+      "nombre": "Turismo de Aventura",
+      "keywords": ["senderismo", "rafting", "canopy", "parapente", "ciclomontañismo"]
+    },
+    {
+      "id": "cafeterias-especiales",
+      "nombre": "Cafeterías Especiales",
+      "keywords": ["café especial", "tiendas de café", "tostaderías"]
+    },
+    {
+      "id": "restaurantes",
+      "nombre": "Restaurantes",
+      "keywords": ["comida típica", "gastronomía", "restaurantes"]
+    },
+    {
+      "id": "turismo",
+      "nombre": "Atracciones Turísticas",
+      "keywords": ["parques", "museos", "miradores", "sitios históricos"]
+    },
+    {
+      "id": "comercial",
+      "nombre": "Centros Comerciales",
+      "keywords": ["shopping", "tiendas", "mercados"]
+    }
+  ]
+}
